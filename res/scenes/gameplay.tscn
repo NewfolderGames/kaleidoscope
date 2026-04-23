@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://lkhcslus2acq"]
+
+[ext_resource type="Shader" uid="uid://d22kn63ioq2xg" path="res://res/materials/gameplay_renderer.gdshader" id="1_rtblp"]
+[ext_resource type="Script" uid="uid://bxxpdemqwhd6g" path="res://src/Scripts/Managers/Gameplay/Renderer/GameplayRenderer.cs" id="2_b8435"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3dldi"]
+shader = ExtResource("1_rtblp")
+shader_parameter/fog_of_war_color_multiplier = 0.6
+
+[node name="Gameplay" type="CanvasLayer" unique_id=1901424504]
+
+[node name="GameplayView" type="SubViewportContainer" parent="." unique_id=28922328]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainSubViewport" type="SubViewport" parent="GameplayView" unique_id=621367931]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="GameCameraRoot" type="Node2D" parent="GameplayView/MainSubViewport" unique_id=918401150]
+
+[node name="GameCamera" type="Camera2D" parent="GameplayView/MainSubViewport/GameCameraRoot" unique_id=1332502696]
+
+[node name="SightWorkerRemoteTransform" type="RemoteTransform2D" parent="GameplayView/MainSubViewport/GameCameraRoot/GameCamera" unique_id=259156886]
+remote_path = NodePath("../../../../WorkerSightSubViewport/SightWorkerCamera")
+
+[node name="WorldWorkerRemoteTransform2" type="RemoteTransform2D" parent="GameplayView/MainSubViewport/GameCameraRoot/GameCamera" unique_id=213824883]
+remote_path = NodePath("../../../../WorkerWorldSubViewport/WorldWorkerCamera")
+
+[node name="GameWorld" type="Node2D" parent="GameplayView/MainSubViewport" unique_id=1092542680]
+
+[node name="GameWorldMap" type="Node2D" parent="GameplayView/MainSubViewport/GameWorld" unique_id=2064346623]
+
+[node name="GameWorldEntities" type="Node2D" parent="GameplayView/MainSubViewport/GameWorld" unique_id=415056218]
+
+[node name="WorkerSightSubViewport" type="SubViewport" parent="GameplayView" unique_id=591688136]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="SightWorkerCamera" type="Camera2D" parent="GameplayView/WorkerSightSubViewport" unique_id=533845326]
+
+[node name="WorkerWorldSubViewport" type="SubViewport" parent="GameplayView" unique_id=693062770]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="WorldWorkerCamera" type="Camera2D" parent="GameplayView/WorkerWorldSubViewport" unique_id=1518400650]
+
+[node name="GameplayRenderer" type="ColorRect" parent="." unique_id=267475855 node_paths=PackedStringArray("_gameViewport", "_sightViewport", "_worldViewport")]
+material = SubResource("ShaderMaterial_3dldi")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_b8435")
+_gameViewport = NodePath("../GameplayView/MainSubViewport")
+_sightViewport = NodePath("../GameplayView/WorkerSightSubViewport")
+_worldViewport = NodePath("../GameplayView/WorkerWorldSubViewport")
+
+[node name="GameplayInterface" type="Control" parent="." unique_id=519459843]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
