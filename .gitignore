@@ -22,3 +22,7 @@ mono_crash.*.json
 # Temp
 *.old*
 *.bak*
+
+# Raw files
+*.raw*
+*~

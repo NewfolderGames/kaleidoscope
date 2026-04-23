@@ -1,41 +1,7 @@
 [gd_scene format=3 uid="uid://ba3phlj23jjvt"]
 
-[node name="Root" type="CanvasLayer" unique_id=2078029835]
+[ext_resource type="PackedScene" uid="uid://lkhcslus2acq" path="res://res/scenes/gameplay.tscn" id="1_0yfge"]
 
-[node name="Gameplay" type="CanvasLayer" parent="." unique_id=1465924438]
+[node name="Root" type="Node2D" unique_id=433044723]
 
-[node name="GameplayView" type="SubViewportContainer" parent="Gameplay" unique_id=1763249433]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MainSubViewport" type="SubViewport" parent="Gameplay/GameplayView" unique_id=233998650]
-
-[node name="GameCamera" type="Node2D" parent="Gameplay/GameplayView/MainSubViewport" unique_id=1438161635]
-
-[node name="GameWorld" type="Node2D" parent="Gameplay/GameplayView/MainSubViewport" unique_id=1584012710]
-
-[node name="GameWorldMap" type="Node2D" parent="Gameplay/GameplayView/MainSubViewport/GameWorld" unique_id=294500716]
-
-[node name="GameWorldEntities" type="Node2D" parent="Gameplay/GameplayView/MainSubViewport/GameWorld" unique_id=1518597307]
-
-[node name="WorkerSightSubViewport" type="SubViewport" parent="Gameplay/GameplayView" unique_id=596229990]
-
-[node name="WorkerWorldSubViewport" type="SubViewport" parent="Gameplay/GameplayView" unique_id=251254644]
-
-[node name="GameplayRenderer" type="ColorRect" parent="Gameplay" unique_id=406892424]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GameplayInterface" type="Control" parent="Gameplay" unique_id=801349779]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Gameplay" parent="." unique_id=1901424504 instance=ExtResource("1_0yfge")]

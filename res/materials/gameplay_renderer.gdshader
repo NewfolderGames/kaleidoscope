@@ -10,14 +10,14 @@ void fragment() {
 	float sight_color_r = texture(sight_texture, SCREEN_UV).r;
 	vec3 output_color = texture(game_texture, SCREEN_UV).rgb;
 	
-	if (sight_color_r < 1.00) {
-		
-		output_color = texture(world_texture, SCREEN_UV).rgb;
-		output_color.r = output_color.r * fog_of_war_color_multiplier;
-		output_color.g = output_color.g * fog_of_war_color_multiplier;
-		output_color.b = output_color.b * fog_of_war_color_multiplier;
-		
-	}
+	//if (sight_color_r < 1.00) {
+		//
+		//output_color = texture(world_texture, SCREEN_UV).rgb;
+		//output_color.r = output_color.r * fog_of_war_color_multiplier;
+		//output_color.g = output_color.g * fog_of_war_color_multiplier;
+		//output_color.b = output_color.b * fog_of_war_color_multiplier;
+		//
+	//}
 	
 	COLOR.rgb = output_color.rgb;
 	

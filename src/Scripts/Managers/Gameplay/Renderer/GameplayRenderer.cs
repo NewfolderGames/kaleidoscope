@@ -12,6 +12,7 @@ public partial class GameplayRenderer : ColorRect
 
 	public override void _Ready()
 	{
+		_gameViewport = GetViewport();
 		_shaderMaterial = GetMaterial() as ShaderMaterial;
 	}
 
