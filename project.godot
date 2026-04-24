@@ -17,16 +17,18 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
-window/size/resizable=false
+window/size/viewport_width=640
+window/size/viewport_height=360
 window/stretch/mode="viewport"
-window/stretch/scale=2.0
 window/stretch/scale_mode="integer"
 
 [dotnet]
 
 project/assembly_name="Kaleidoscope"
+
+[gui]
+
+theme/custom_font="uid://dd4rxhb0u0k8w"
 
 [physics]
 
@@ -47,6 +49,7 @@ camera/depth_of_field/depth_of_field_bokeh_quality=0
 environment/ssao/quality=0
 environment/ssil/quality=0
 anti_aliasing/screen_space_roughness_limiter/enabled=false
+anti_aliasing/quality/smaa_edge_detection_threshold=0.01
 textures/decals/filter=0
 textures/light_projectors/filter=0
 environment/glow/upscale_mode=0

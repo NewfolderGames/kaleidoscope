@@ -1,46 +1,16 @@
 [gd_scene format=3 uid="uid://lkhcslus2acq"]
 
-[ext_resource type="Texture2D" uid="uid://cru3335f6t2jl" path="res://res/textures/background/plain.png" id="1_b8435"]
+[ext_resource type="PackedScene" uid="uid://c1humk0dhdrqd" path="res://res/scenes/game_root.tscn" id="1_b8435"]
 [ext_resource type="Shader" uid="uid://d22kn63ioq2xg" path="res://res/materials/gameplay_renderer.gdshader" id="1_rtblp"]
-[ext_resource type="Script" uid="uid://bxxpdemqwhd6g" path="res://src/Scripts/Managers/Gameplay/Renderer/GameplayRenderer.cs" id="2_b8435"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b8435"]
+[ext_resource type="Script" uid="uid://bxxpdemqwhd6g" path="res://src/Scripts/Managers/Gameplay/GameplayRenderer.cs" id="3_b8435"]
+[ext_resource type="LabelSettings" uid="uid://xn3tgfwm283w" path="res://res/themes/labels/health_current.tres" id="4_3dldi"]
+[ext_resource type="LabelSettings" uid="uid://ds7ufqpel2ho5" path="res://res/themes/labels/health_background.tres" id="4_a02fk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3dldi"]
 shader = ExtResource("1_rtblp")
 shader_parameter/fog_of_war_color_multiplier = 0.6
 
-[node name="Gameplay" type="Node2D" unique_id=76914717]
-
-[node name="Game" type="Node2D" parent="." unique_id=694328873]
-
-[node name="GameCameraRoot" type="Node2D" parent="Game" unique_id=918401150]
-z_index = 4096
-
-[node name="GameCamera" type="Camera2D" parent="Game/GameCameraRoot" unique_id=1332502696]
-z_index = 999
-
-[node name="SightWorkerRemoteTransform" type="RemoteTransform2D" parent="Game/GameCameraRoot/GameCamera" unique_id=259156886]
-remote_path = NodePath("../../../../GameplayViewport/WorkerSightSubViewport/SightWorkerCamera")
-
-[node name="WorldWorkerRemoteTransform2" type="RemoteTransform2D" parent="Game/GameCameraRoot/GameCamera" unique_id=213824883]
-remote_path = NodePath("../../../../GameplayViewport/WorkerWorldSubViewport/WorldWorkerCamera")
-
-[node name="GameWorld" type="Node2D" parent="Game" unique_id=1092542680]
-
-[node name="GameEnvironment" type="Node2D" parent="Game/GameWorld" unique_id=1747306585]
-
-[node name="Sprite2D" type="Sprite2D" parent="Game/GameWorld/GameEnvironment" unique_id=2014003452]
-texture = ExtResource("1_b8435")
-
-[node name="GameWorldMap" type="Node2D" parent="Game/GameWorld" unique_id=2064346623]
-
-[node name="GameWorldEntities" type="Node2D" parent="Game/GameWorld" unique_id=415056218]
-
-[node name="Player" type="CharacterBody2D" parent="Game/GameWorld/GameWorldEntities" unique_id=1989389040]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/GameWorld/GameWorldEntities/Player" unique_id=1413105828]
-shape = SubResource("RectangleShape2D_b8435")
+[node name="Gameplay" type="CanvasLayer" unique_id=2036589524]
 
 [node name="GameplayViewport" type="SubViewportContainer" parent="." unique_id=28922328]
 process_mode = 3
@@ -52,28 +22,50 @@ grow_vertical = 2
 stretch = true
 
 [node name="WorkerSightSubViewport" type="SubViewport" parent="GameplayViewport" unique_id=591688136]
+disable_3d = true
 handle_input_locally = false
-size = Vector2i(2, 2)
+canvas_item_default_texture_filter = 0
+size = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="SightWorkerCamera" type="Camera2D" parent="GameplayViewport/WorkerSightSubViewport" unique_id=533845326]
+editor_draw_screen = false
 
 [node name="WorkerWorldSubViewport" type="SubViewport" parent="GameplayViewport" unique_id=693062770]
+disable_3d = true
 handle_input_locally = false
-size = Vector2i(2, 2)
+canvas_item_default_texture_filter = 0
+size = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="WorldWorkerCamera" type="Camera2D" parent="GameplayViewport/WorkerWorldSubViewport" unique_id=1518400650]
+editor_draw_screen = false
 
-[node name="GameplayRenderer" type="ColorRect" parent="." unique_id=267475855 node_paths=PackedStringArray("_sightViewport", "_worldViewport")]
+[node name="GameSubViewport" type="SubViewport" parent="GameplayViewport" unique_id=270115245]
+disable_3d = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+canvas_item_default_texture_filter = 0
+audio_listener_enable_2d = true
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="GameRoot" parent="GameplayViewport/GameSubViewport" unique_id=954784124 node_paths=PackedStringArray("_sightWorkerCamera", "_worldWorkerCamera") instance=ExtResource("1_b8435")]
+_sightWorkerCamera = NodePath("../../WorkerSightSubViewport/SightWorkerCamera")
+_worldWorkerCamera = NodePath("../../WorkerWorldSubViewport/WorldWorkerCamera")
+
+[node name="GameplayRenderer" type="ColorRect" parent="." unique_id=267475855 node_paths=PackedStringArray("_gameViewport", "_sightViewport", "_worldViewport")]
 process_mode = 3
+visible = false
 material = SubResource("ShaderMaterial_3dldi")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_b8435")
+script = ExtResource("3_b8435")
+_gameViewport = NodePath("../GameplayViewport/GameSubViewport")
 _sightViewport = NodePath("../GameplayViewport/WorkerSightSubViewport")
 _worldViewport = NodePath("../GameplayViewport/WorkerWorldSubViewport")
 
@@ -84,3 +76,206 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GameplayInterface" unique_id=577416307]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="MainInterface" type="Control" parent="GameplayInterface/MarginContainer" unique_id=1094552491]
+layout_mode = 2
+
+[node name="Health" type="Control" parent="GameplayInterface/MarginContainer/MainInterface" unique_id=543790036]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Control" type="HBoxContainer" parent="GameplayInterface/MarginContainer/MainInterface/Health" unique_id=197515651]
+custom_minimum_size = Vector2(288, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_right = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="Control" type="Control" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control" unique_id=1657534505]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control" unique_id=1450639638]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -17.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "000"
+label_settings = ExtResource("4_a02fk")
+horizontal_alignment = 2
+
+[node name="Label" type="Label" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control" unique_id=259959051]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -17.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "42"
+label_settings = ExtResource("4_3dldi")
+horizontal_alignment = 2
+
+[node name="Control2" type="VBoxContainer" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control" unique_id=147320195]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2" unique_id=1851725108]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+color = Color(1, 1, 1, 0.12156863)
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect2" unique_id=1793144047]
+custom_minimum_size = Vector2(26, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+color = Color(0.33988306, 0.63568723, 0.73499745, 1)
+
+[node name="ColorRect" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2" unique_id=2092324231]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+color = Color(1, 1, 1, 0.12156863)
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect" unique_id=355836301]
+custom_minimum_size = Vector2(84, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="ColorRect3" type="HBoxContainer" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2" unique_id=1580129565]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="ColorRect" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect3" unique_id=518813241]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 0.12156863)
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect3/ColorRect" unique_id=2102601934]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect3" unique_id=959772112]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 0.12156863)
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect3/ColorRect2" unique_id=1000475801]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect3" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect3" unique_id=768139471]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 0.12156863)
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect3/ColorRect3" unique_id=1854411253]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect4" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect3" unique_id=151769756]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 0.12156863)
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect3/ColorRect4" unique_id=1904712054]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect5" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect3" unique_id=1290270938]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 0.12156863)
+
+[node name="ColorRect2" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2/ColorRect3/ColorRect5" unique_id=233650513]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control3" type="Control" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control" unique_id=726953208]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control3" unique_id=452926618]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -17.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "000"
+label_settings = ExtResource("4_a02fk")
+
+[node name="Label" type="Label" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control3" unique_id=1974788572]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -17.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = " 13"
+label_settings = ExtResource("4_3dldi")
+
+[node name="ColorRect" type="ColorRect" parent="GameplayInterface/MarginContainer" unique_id=23007689]
+visible = false
+layout_mode = 2

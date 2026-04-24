@@ -2,6 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://lkhcslus2acq" path="res://res/scenes/gameplay.tscn" id="1_0yfge"]
 
-[node name="Root" type="Node2D" unique_id=433044723]
+[node name="Root" type="Node" unique_id=2078017121]
 
 [node name="Gameplay" parent="." unique_id=1901424504 instance=ExtResource("1_0yfge")]

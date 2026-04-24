@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://c1humk0dhdrqd"]
+
+[ext_resource type="Script" uid="uid://ci5dx061s0iau" path="res://src/Scripts/Managers/Gameplay/Game/GameManager.cs" id="1_s4uip"]
+[ext_resource type="Texture2D" uid="uid://cru3335f6t2jl" path="res://res/textures/background/plain.png" id="1_t530p"]
+[ext_resource type="Texture2D" uid="uid://d1ag5fqvt6320" path="res://res/textures/player/player.png" id="2_s4uip"]
+[ext_resource type="Texture2D" uid="uid://bmn1rceprutij" path="res://res/textures/weapons/sword.png" id="3_07f4r"]
+[ext_resource type="Texture2D" uid="uid://ch4ek6s8r4ym8" path="res://res/textures/misc/shadow.png" id="3_edpjc"]
+[ext_resource type="Texture2D" uid="uid://cjvyppcf5as0v" path="res://res/textures/player/player_hand.png" id="4_edpjc"]
+[ext_resource type="Texture2D" uid="uid://cxwn531ihmlhe" path="res://res/textures/background/plain_border.png" id="5_nug2b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b8435"]
+size = Vector2(18, 11)
+
+[node name="GameRoot" type="Node2D" unique_id=954784124]
+script = ExtResource("1_s4uip")
+
+[node name="GameCameraRoot" type="Node2D" parent="." unique_id=479378271]
+z_index = 4096
+
+[node name="GameCamera" type="Camera2D" parent="GameCameraRoot" unique_id=345483302]
+z_index = 999
+
+[node name="SightWorkerRemoteTransform" type="RemoteTransform2D" parent="GameCameraRoot/GameCamera" unique_id=904948516]
+
+[node name="WorldWorkerRemoteTransform" type="RemoteTransform2D" parent="GameCameraRoot/GameCamera" unique_id=1531650514]
+
+[node name="GameWorld" type="Node2D" parent="." unique_id=842776096]
+
+[node name="GameEnvironmentBackground" type="Node2D" parent="GameWorld" unique_id=604282021]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameEnvironmentBackground" unique_id=417714155]
+texture = ExtResource("1_t530p")
+
+[node name="GameWorld" type="Node2D" parent="GameWorld" unique_id=2002473009]
+y_sort_enabled = true
+
+[node name="Player" type="CharacterBody2D" parent="GameWorld/GameWorld" unique_id=929958711]
+
+[node name="Render" type="Node2D" parent="GameWorld/GameWorld/Player" unique_id=231602113]
+
+[node name="Shadow" type="Node2D" parent="GameWorld/GameWorld/Player/Render" unique_id=119267936]
+
+[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameWorld/Player/Render/Shadow" unique_id=286419909]
+modulate = Color(0, 0, 0, 0.18431373)
+position = Vector2(0, 24)
+texture = ExtResource("3_edpjc")
+
+[node name="Player" type="Node2D" parent="GameWorld/GameWorld/Player/Render" unique_id=145842770]
+
+[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameWorld/Player/Render/Player" unique_id=445852037]
+texture = ExtResource("2_s4uip")
+
+[node name="HandRoot" type="Node2D" parent="GameWorld/GameWorld/Player/Render" unique_id=1998248138]
+position = Vector2(24, 0)
+
+[node name="Hand" type="Node2D" parent="GameWorld/GameWorld/Player/Render/HandRoot" unique_id=1859892688]
+position = Vector2(0, 8)
+rotation = 0.5235988
+
+[node name="Weapon" type="Node2D" parent="GameWorld/GameWorld/Player/Render/HandRoot/Hand" unique_id=570784134]
+position = Vector2(0, -17)
+
+[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameWorld/Player/Render/HandRoot/Hand/Weapon" unique_id=1698704309]
+texture = ExtResource("3_07f4r")
+
+[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameWorld/Player/Render/HandRoot/Hand" unique_id=667333604]
+position = Vector2(-2, 1)
+texture = ExtResource("4_edpjc")
+
+[node name="Sprite2D2" type="Sprite2D" parent="GameWorld/GameWorld/Player/Render/HandRoot/Hand" unique_id=972670640]
+position = Vector2(3, -2)
+texture = ExtResource("4_edpjc")
+
+[node name="BaseCollision" type="CollisionShape2D" parent="GameWorld/GameWorld/Player" unique_id=2044141516]
+position = Vector2(0, 18.5)
+shape = SubResource("RectangleShape2D_b8435")
+
+[node name="HitCollision" type="Area2D" parent="GameWorld/GameWorld/Player" unique_id=1979033323]
+
+[node name="GameEnvironmentForeground" type="Node2D" parent="GameWorld" unique_id=1567045833]
+
+[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameEnvironmentForeground" unique_id=1114967092]
+texture = ExtResource("5_nug2b")

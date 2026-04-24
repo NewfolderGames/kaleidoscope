@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Kaleidoscope.Scripts.Managers.Gameplay.Renderer;
+namespace Kaleidoscope.Scripts.Managers.Gameplay;
 
 public partial class GameplayRenderer : ColorRect
 {
@@ -12,7 +12,7 @@ public partial class GameplayRenderer : ColorRect
 
 	public override void _Ready()
 	{
-		_gameViewport = GetViewport();
+		// _gameViewport = GetViewport();
 		_shaderMaterial = GetMaterial() as ShaderMaterial;
 	}
 
