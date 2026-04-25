@@ -25,7 +25,7 @@ stretch = true
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(640, 360)
+size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="SightWorkerCamera" type="Camera2D" parent="GameplayViewport/WorkerSightSubViewport" unique_id=533845326]
@@ -35,7 +35,7 @@ editor_draw_screen = false
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(640, 360)
+size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="WorldWorkerCamera" type="Camera2D" parent="GameplayViewport/WorkerWorldSubViewport" unique_id=1518400650]
@@ -44,11 +44,9 @@ editor_draw_screen = false
 [node name="GameSubViewport" type="SubViewport" parent="GameplayViewport" unique_id=270115245]
 disable_3d = true
 handle_input_locally = false
-snap_2d_transforms_to_pixel = true
-snap_2d_vertices_to_pixel = true
 canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
-size = Vector2i(640, 360)
+size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="GameRoot" parent="GameplayViewport/GameSubViewport" unique_id=954784124 node_paths=PackedStringArray("_sightWorkerCamera", "_worldWorkerCamera") instance=ExtResource("1_b8435")]

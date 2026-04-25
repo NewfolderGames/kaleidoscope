@@ -15,9 +15,6 @@ public partial class Unit : CharacterBody2D
     [Export] protected float RenderHandRangeY = 12f;
     [Export] protected Node2D RenderHandCenterOffset;
     [Export] protected Node2D RenderHandOffset;
-    [Export] protected float RenderHandOffsetBobbleRange = 3f;
-    [Export] protected float RenderHandOffsetBobbleSpeed = 0.25f;
-    [Export] protected float RenderHandOffsetBobbleProgress = 0;
     [Export] protected Node2D RenderBodyRoot;
     
     [ExportCategory("Movement")]

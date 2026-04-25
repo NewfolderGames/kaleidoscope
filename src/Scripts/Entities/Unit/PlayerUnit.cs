@@ -45,8 +45,5 @@ public partial class PlayerUnit : Unit
         var normalizedAngle = normalized.Angle();
         RenderHandCenterOffset.Position = PositionCenterRoot.Position;
         RenderHandCenterOffset.Rotation = _mousePositionRelative.X < 0 ? -normalizedAngle - Mathf.Pi : normalizedAngle;
-        
-        RenderHandOffsetBobbleProgress += (float)delta * RenderHandOffsetBobbleSpeed;
-        RenderHandOffset.Position = new Vector2(0, Mathf.Sin(RenderHandOffsetBobbleProgress * Mathf.Pi * 2) * RenderHandOffsetBobbleRange);
     }
 }
