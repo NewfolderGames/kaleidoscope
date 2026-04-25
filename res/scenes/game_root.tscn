@@ -5,11 +5,27 @@
 [ext_resource type="Texture2D" uid="uid://d1ag5fqvt6320" path="res://res/textures/player/player.png" id="2_s4uip"]
 [ext_resource type="Texture2D" uid="uid://bmn1rceprutij" path="res://res/textures/weapons/sword.png" id="3_07f4r"]
 [ext_resource type="Texture2D" uid="uid://ch4ek6s8r4ym8" path="res://res/textures/misc/shadow.png" id="3_edpjc"]
+[ext_resource type="Script" uid="uid://bfd8ao35sde8h" path="res://src/Scripts/Entities/Unit/PlayerUnit.cs" id="3_nug2b"]
 [ext_resource type="Texture2D" uid="uid://cjvyppcf5as0v" path="res://res/textures/player/player_hand.png" id="4_edpjc"]
 [ext_resource type="Texture2D" uid="uid://cxwn531ihmlhe" path="res://res/textures/background/plain_border.png" id="5_nug2b"]
+[ext_resource type="Texture2D" uid="uid://48ascoj8uuri" path="res://res/textures/player/player.head.png" id="6_3cmld"]
+[ext_resource type="Texture2D" uid="uid://cudyd3maulus6" path="res://res/textures/player/player.legs.border.png" id="6_uvdgn"]
+[ext_resource type="Texture2D" uid="uid://idjconatc6sx" path="res://res/textures/player/player.body.png" id="7_nfysh"]
+[ext_resource type="Texture2D" uid="uid://b5fkbymdlmlqd" path="res://res/textures/player/player.ear_left.border.png" id="7_np0pd"]
+[ext_resource type="Texture2D" uid="uid://ny7e0qf2sme3" path="res://res/textures/player/player.ear_right.border.png" id="8_5pou3"]
+[ext_resource type="Texture2D" uid="uid://c1nrx5mpcthf" path="res://res/textures/player/player.head.border.png" id="9_5pou3"]
+[ext_resource type="Texture2D" uid="uid://berwfe5w6n3yr" path="res://res/textures/player/player.body.border.png" id="9_7x8gb"]
+[ext_resource type="Texture2D" uid="uid://cxkxamoea76d2" path="res://res/textures/player/player.ribbon.border.png" id="10_7x8gb"]
+[ext_resource type="Texture2D" uid="uid://bfxm5slt8v825" path="res://res/textures/player/player.legs.png" id="10_qahws"]
+[ext_resource type="Texture2D" uid="uid://d2xc0d353q50p" path="res://res/textures/player/player.ear_left.png" id="11_3b04u"]
+[ext_resource type="Texture2D" uid="uid://bxck5h7u1kqy" path="res://res/textures/player/player.ear_right.png" id="12_15eg8"]
+[ext_resource type="Texture2D" uid="uid://dptf30ywdojnv" path="res://res/textures/player/player.face.png" id="14_6kqrl"]
+[ext_resource type="Texture2D" uid="uid://cvcqa24n3upfi" path="res://res/textures/player/player.ribbon.png" id="15_qdkit"]
+[ext_resource type="Texture2D" uid="uid://bues0h8qfkhfn" path="res://res/textures/weapons/sword.border.png" id="19_qahws"]
+[ext_resource type="Texture2D" uid="uid://dg2ly2ws8lhip" path="res://res/textures/player/player_hand.border.png" id="20_3b04u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b8435"]
-size = Vector2(18, 11)
+size = Vector2(18, 7)
 
 [node name="GameRoot" type="Node2D" unique_id=954784124]
 script = ExtResource("1_s4uip")
@@ -35,45 +51,214 @@ texture = ExtResource("1_t530p")
 [node name="GameWorld" type="Node2D" parent="GameWorld" unique_id=2002473009]
 y_sort_enabled = true
 
-[node name="Player" type="CharacterBody2D" parent="GameWorld/GameWorld" unique_id=929958711]
+[node name="Player" type="CharacterBody2D" parent="GameWorld/GameWorld" unique_id=929958711 node_paths=PackedStringArray("PositionRoot", "PositionCenterRoot", "RenderRoot", "RenderHandRoot", "RenderHandCenterOffset", "RenderHandOffset", "RenderBodyRoot")]
+script = ExtResource("3_nug2b")
+PositionRoot = NodePath("PositionRoot")
+PositionCenterRoot = NodePath("PositionRoot/CenterRoot")
+RenderRoot = NodePath("RenderRoot")
+RenderHandRoot = NodePath("RenderRoot/HandRoot")
+RenderHandCenterOffset = NodePath("RenderRoot/HandRoot/HandCenterOffset")
+RenderHandOffset = NodePath("RenderRoot/HandRoot/HandCenterOffset/HandOffset")
+RenderHandOffsetBobbleRange = 4.0
+RenderBodyRoot = NodePath("RenderRoot/BodyRoot")
+MovementSpeedBase = Vector2(2, 2)
 
-[node name="Render" type="Node2D" parent="GameWorld/GameWorld/Player" unique_id=231602113]
+[node name="PositionRoot" type="Node2D" parent="GameWorld/GameWorld/Player" unique_id=1685051616]
 
-[node name="Shadow" type="Node2D" parent="GameWorld/GameWorld/Player/Render" unique_id=119267936]
+[node name="CenterRoot" type="Node2D" parent="GameWorld/GameWorld/Player/PositionRoot" unique_id=1221775941]
+position = Vector2(0, -18)
 
-[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameWorld/Player/Render/Shadow" unique_id=286419909]
+[node name="RenderRoot" type="Node2D" parent="GameWorld/GameWorld/Player" unique_id=231602113]
+y_sort_enabled = true
+
+[node name="Shadow" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot" unique_id=119267936]
+
+[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/Shadow" unique_id=286419909]
 modulate = Color(0, 0, 0, 0.18431373)
-position = Vector2(0, 24)
 texture = ExtResource("3_edpjc")
 
-[node name="Player" type="Node2D" parent="GameWorld/GameWorld/Player/Render" unique_id=145842770]
+[node name="BodyRoot" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot" unique_id=145842770]
 
-[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameWorld/Player/Render/Player" unique_id=445852037]
+[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot" unique_id=445852037]
+modulate = Color(1, 1, 1, 0.40392157)
+position = Vector2(0, -24)
 texture = ExtResource("2_s4uip")
 
-[node name="HandRoot" type="Node2D" parent="GameWorld/GameWorld/Player/Render" unique_id=1998248138]
-position = Vector2(24, 0)
+[node name="TransformRoot" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot" unique_id=911803418]
 
-[node name="Hand" type="Node2D" parent="GameWorld/GameWorld/Player/Render/HandRoot" unique_id=1859892688]
-position = Vector2(0, 8)
+[node name="Body" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/TransformRoot" unique_id=1052519669]
+position = Vector2(0, -13)
+remote_path = NodePath("../../ColorRoot/Body")
+
+[node name="Head" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/TransformRoot/Body" unique_id=771039698]
+position = Vector2(0, -14)
+remote_path = NodePath("../../../ColorRoot/Head")
+
+[node name="EarLeft" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/TransformRoot/Body/Head" unique_id=419524136]
+position = Vector2(4, -13)
+remote_path = NodePath("../../../../ColorRoot/EarLeft")
+
+[node name="EarRight" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/TransformRoot/Body/Head" unique_id=461426372]
+position = Vector2(-4, -13)
+remote_path = NodePath("../../../../ColorRoot/EarRight")
+
+[node name="Ribbon" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/TransformRoot/Body/Head" unique_id=1580227050]
+position = Vector2(2, -12)
+remote_path = NodePath("../../../../ColorRoot/Ribbon")
+
+[node name="Legs" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/TransformRoot/Body" unique_id=67010599]
+position = Vector2(0, 1)
+remote_path = NodePath("../../../ColorRoot/Legs")
+
+[node name="BorderRoot" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot" unique_id=2053314430]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(0, -24)
+
+[node name="Legs" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/BorderRoot" unique_id=420885975]
+position = Vector2(0, 12)
+texture = ExtResource("6_uvdgn")
+
+[node name="EarLeft" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/BorderRoot" unique_id=311606836]
+position = Vector2(4, -16)
+texture = ExtResource("7_np0pd")
+
+[node name="EarRight" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/BorderRoot" unique_id=673126917]
+position = Vector2(-4, -16)
+texture = ExtResource("8_5pou3")
+
+[node name="Head" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/BorderRoot" unique_id=1595241860]
+position = Vector2(0, -3)
+texture = ExtResource("9_5pou3")
+
+[node name="Ribbon" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/BorderRoot" unique_id=553857793]
+position = Vector2(2, -15)
+texture = ExtResource("10_7x8gb")
+
+[node name="Body" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/BorderRoot" unique_id=2015220]
+position = Vector2(0, 11)
+texture = ExtResource("9_7x8gb")
+
+[node name="ColorRoot" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot" unique_id=503087988]
+position = Vector2(0, -24)
+
+[node name="Legs" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot" unique_id=1796988212]
+modulate = Color(0.20055676, 0.2494792, 0.36439484, 1)
+position = Vector2(0, 12)
+texture = ExtResource("10_qahws")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot/Legs" unique_id=1103251036]
+remote_path = NodePath("../../../BorderRoot/Legs")
+
+[node name="EarLeft" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot" unique_id=1745515186]
+position = Vector2(4, -16)
+texture = ExtResource("11_3b04u")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot/EarLeft" unique_id=183923739]
+remote_path = NodePath("../../../BorderRoot/EarLeft")
+
+[node name="EarRight" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot" unique_id=595695070]
+position = Vector2(-4, -16)
+texture = ExtResource("12_15eg8")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot/EarRight" unique_id=1397137175]
+remote_path = NodePath("../../../BorderRoot/EarRight")
+
+[node name="Head" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot" unique_id=724545668]
+position = Vector2(0, -3)
+texture = ExtResource("6_3cmld")
+
+[node name="Face" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot/Head" unique_id=72978548]
+position = Vector2(1, 1)
+texture = ExtResource("14_6kqrl")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot/Head" unique_id=495090928]
+remote_path = NodePath("../../../BorderRoot/Head")
+
+[node name="Ribbon" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot" unique_id=1048955209]
+modulate = Color(0.77074045, 0.40001726, 0.4905616, 1)
+position = Vector2(2, -15)
+texture = ExtResource("15_qdkit")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot/Ribbon" unique_id=434920643]
+remote_path = NodePath("../../../BorderRoot/Ribbon")
+
+[node name="Body" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot" unique_id=203893483]
+modulate = Color(0.31197384, 0.37996402, 0.60390884, 1)
+position = Vector2(0, 11)
+texture = ExtResource("7_nfysh")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/BodyRoot/ColorRoot/Body" unique_id=425188389]
+remote_path = NodePath("../../../BorderRoot/Body")
+
+[node name="HandRoot" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot" unique_id=1998248138]
+
+[node name="HandCenterOffset" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot" unique_id=1217645010]
+position = Vector2(0, -18)
+
+[node name="HandOffset" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset" unique_id=1035327142]
 rotation = 0.5235988
 
-[node name="Weapon" type="Node2D" parent="GameWorld/GameWorld/Player/Render/HandRoot/Hand" unique_id=570784134]
-position = Vector2(0, -17)
+[node name="Hand" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset" unique_id=1859892688]
 
-[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameWorld/Player/Render/HandRoot/Hand/Weapon" unique_id=1698704309]
+[node name="TransformRoot" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand" unique_id=307626864]
+
+[node name="Weapon" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/TransformRoot" unique_id=1826339722]
+remote_path = NodePath("../../ColorRoot/Weapon")
+
+[node name="HandLeft" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/TransformRoot/Weapon" unique_id=81361865]
+position = Vector2(-2, 2)
+remote_path = NodePath("../../../ColorRoot/HandLeft")
+
+[node name="HandRight" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/TransformRoot/Weapon" unique_id=1474113652]
+position = Vector2(3, -1)
+remote_path = NodePath("../../../ColorRoot/HandRight")
+
+[node name="WeaponRoot" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand" unique_id=570784134]
+
+[node name="BorderRoot" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand" unique_id=1718896420]
+modulate = Color(0, 0, 0, 1)
+
+[node name="Weapon" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/BorderRoot" unique_id=30595370]
+position = Vector2(0, -16)
+texture = ExtResource("19_qahws")
+
+[node name="HandLeft" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/BorderRoot" unique_id=755492401]
+position = Vector2(-2, 2)
+texture = ExtResource("20_3b04u")
+
+[node name="HandRight" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/BorderRoot" unique_id=359931316]
+position = Vector2(2.999999, -1)
+texture = ExtResource("20_3b04u")
+
+[node name="ColorRoot" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand" unique_id=2092327369]
+
+[node name="HandRight" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/ColorRoot" unique_id=667333604]
+modulate = Color(0.2, 0.2509804, 0.3647059, 1)
+position = Vector2(2.9999995, -1)
+texture = ExtResource("4_edpjc")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/ColorRoot/HandRight" unique_id=1986585055]
+remote_path = NodePath("../../../BorderRoot/HandRight")
+
+[node name="Weapon" type="Node2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/ColorRoot" unique_id=370023127]
+
+[node name="Sprite" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/ColorRoot/Weapon" unique_id=1698704309]
+position = Vector2(0, -16)
 texture = ExtResource("3_07f4r")
 
-[node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameWorld/Player/Render/HandRoot/Hand" unique_id=667333604]
-position = Vector2(-2, 1)
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/ColorRoot/Weapon/Sprite" unique_id=1604313770]
+remote_path = NodePath("../../../../BorderRoot/Weapon")
+
+[node name="HandLeft" type="Sprite2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/ColorRoot" unique_id=972670640]
+modulate = Color(0.2, 0.2509804, 0.3647059, 1)
+position = Vector2(-2, 2)
 texture = ExtResource("4_edpjc")
 
-[node name="Sprite2D2" type="Sprite2D" parent="GameWorld/GameWorld/Player/Render/HandRoot/Hand" unique_id=972670640]
-position = Vector2(3, -2)
-texture = ExtResource("4_edpjc")
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="GameWorld/GameWorld/Player/RenderRoot/HandRoot/HandCenterOffset/HandOffset/Hand/ColorRoot/HandLeft" unique_id=2071362434]
+remote_path = NodePath("../../../BorderRoot/HandLeft")
 
 [node name="BaseCollision" type="CollisionShape2D" parent="GameWorld/GameWorld/Player" unique_id=2044141516]
-position = Vector2(0, 18.5)
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_b8435")
 
 [node name="HitCollision" type="Area2D" parent="GameWorld/GameWorld/Player" unique_id=1979033323]
