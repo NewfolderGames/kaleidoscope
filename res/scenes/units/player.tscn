@@ -30,8 +30,8 @@ animation = &"body_idle"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_leypg"]
 animation = &"body_moving"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_28774"]
-animation = &"legs_moving"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_637op"]
+animation = &"hand_attack_1"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6aj8c"]
 animation = &"hand_idle"
@@ -41,14 +41,17 @@ stretch_time_scale = false
 start_offset = 0.5
 loop_mode = 1
 
-[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_28774"]
-input_0/name = "idle"
-input_0/auto_advance = false
-input_0/break_loop_at_end = false
-input_0/reset = true
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h1bgi"]
 animation = &"legs_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_28774"]
+animation = &"legs_moving"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_pqha3"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_637op"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_pqha3"]
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_s6abk"]
 input_0/name = "idle"
@@ -59,6 +62,12 @@ input_1/name = "moving"
 input_1/auto_advance = false
 input_1/break_loop_at_end = false
 input_1/reset = true
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_28774"]
+input_0/name = "idle"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = true
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_leypg"]
 input_0/name = "idle"
@@ -71,36 +80,44 @@ input_1/break_loop_at_end = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_637op"]
-graph_offset = Vector2(-804.82587, -40.605377)
-nodes/output/position = Vector2(1020, 340)
-"nodes/Transition 3/node" = SubResource("AnimationNodeTransition_s6abk")
-"nodes/Transition 3/position" = Vector2(-100, -80)
-nodes/HandIdleAnimation/node = SubResource("AnimationNodeAnimation_6aj8c")
-nodes/HandIdleAnimation/position = Vector2(-440, 740)
-nodes/Transition/node = SubResource("AnimationNodeTransition_leypg")
-nodes/Transition/position = Vector2(-80, 180)
-"nodes/Transition 2/node" = SubResource("AnimationNodeAnimation_h1bgi")
-"nodes/Transition 2/position" = Vector2(-480, 160)
-"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_xtnnw")
-"nodes/Animation 2/position" = Vector2(-460, -220)
-nodes/HandTransition/node = SubResource("AnimationNodeTransition_28774")
-nodes/HandTransition/position = Vector2(-80, 460)
-nodes/Animation/node = SubResource("AnimationNodeAnimation_28774")
-nodes/Animation/position = Vector2(-480, 360)
-nodes/Add2/node = SubResource("AnimationNodeAdd2_637op")
-nodes/Add2/position = Vector2(280, 220)
-"nodes/Add2 2/node" = SubResource("AnimationNodeAdd2_pqha3")
-"nodes/Add2 2/position" = Vector2(100, 40)
-"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_leypg")
-"nodes/Animation 3/position" = Vector2(-520, -40)
-node_connections = [&"output", 0, &"Add2", &"Transition 3", 0, &"Animation 2", &"Transition 3", 1, &"Animation 3", &"Transition", 0, &"Transition 2", &"Transition", 1, &"Animation", &"HandTransition", 0, &"HandIdleAnimation", &"Add2", 0, &"Add2 2", &"Add2", 1, &"HandTransition", &"Add2 2", 0, &"Transition 3", &"Add2 2", 1, &"Transition"]
+graph_offset = Vector2(-826.84985, -6.4588623)
+nodes/output/position = Vector2(680, 500)
+nodes/TransitionBody/node = SubResource("AnimationNodeTransition_s6abk")
+nodes/TransitionBody/position = Vector2(-80, -260)
+nodes/AnimationHandIdle/node = SubResource("AnimationNodeAnimation_6aj8c")
+nodes/AnimationHandIdle/position = Vector2(-380, 720)
+nodes/AnimationBodyMoving/node = SubResource("AnimationNodeAnimation_leypg")
+nodes/AnimationBodyMoving/position = Vector2(-580, -80)
+nodes/AnimationLegsIdle/node = SubResource("AnimationNodeAnimation_h1bgi")
+nodes/AnimationLegsIdle/position = Vector2(-480, 160)
+nodes/AnimationBodyIdle/node = SubResource("AnimationNodeAnimation_xtnnw")
+nodes/AnimationBodyIdle/position = Vector2(-500, -260)
+nodes/TransitionHand/node = SubResource("AnimationNodeTransition_28774")
+nodes/TransitionHand/position = Vector2(-20, 720)
+nodes/AnimationLegsMoving/node = SubResource("AnimationNodeAnimation_28774")
+nodes/AnimationLegsMoving/position = Vector2(-560, 400)
+nodes/AdderFinal/node = SubResource("AnimationNodeAdd2_637op")
+nodes/AdderFinal/position = Vector2(520, 500)
+nodes/AdderCharacter/node = SubResource("AnimationNodeAdd2_pqha3")
+nodes/AdderCharacter/position = Vector2(120, 40)
+nodes/TransitionLegs/node = SubResource("AnimationNodeTransition_leypg")
+nodes/TransitionLegs/position = Vector2(-120, 240)
+nodes/OneShotHandAttack/node = SubResource("AnimationNodeOneShot_pqha3")
+nodes/OneShotHandAttack/position = Vector2(280, 700)
+nodes/AnimationHandAttack/node = SubResource("AnimationNodeAnimation_637op")
+nodes/AnimationHandAttack/position = Vector2(-20, 1000)
+nodes/TimeScaleLegsMoving/node = SubResource("AnimationNodeTimeScale_pqha3")
+nodes/TimeScaleLegsMoving/position = Vector2(-340, 380)
+nodes/TimeScaleBodyMoving/node = SubResource("AnimationNodeTimeScale_637op")
+nodes/TimeScaleBodyMoving/position = Vector2(-320, -100)
+node_connections = [&"output", 0, &"AdderFinal", &"TransitionBody", 0, &"AnimationBodyIdle", &"TransitionBody", 1, &"TimeScaleBodyMoving", &"TransitionHand", 0, &"AnimationHandIdle", &"AdderFinal", 0, &"AdderCharacter", &"AdderFinal", 1, &"OneShotHandAttack", &"AdderCharacter", 0, &"TransitionBody", &"AdderCharacter", 1, &"TransitionLegs", &"TransitionLegs", 0, &"AnimationLegsIdle", &"TransitionLegs", 1, &"TimeScaleLegsMoving", &"OneShotHandAttack", 0, &"TransitionHand", &"OneShotHandAttack", 1, &"AnimationHandAttack", &"TimeScaleLegsMoving", 0, &"AnimationLegsMoving", &"TimeScaleBodyMoving", 0, &"AnimationBodyMoving"]
 
 [sub_resource type="Animation" id="Animation_637op"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform:position")
+tracks/0/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -112,7 +129,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HandAnimationOffset:position")
+tracks/1/path = NodePath("HandRoot/TransformRoot/Weapon/WeaponRemoteTransform:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -124,7 +141,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HandAnimationOffset:rotation")
+tracks/2/path = NodePath("HandRoot/TransformRoot/Weapon/WeaponRemoteTransform:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -136,7 +153,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:position")
+tracks/3/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -148,7 +165,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:rotation")
+tracks/4/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -160,7 +177,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:position")
+tracks/5/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -172,7 +189,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:rotation")
+tracks/6/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:rotation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -184,7 +201,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:position")
+tracks/7/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -196,7 +213,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:position")
+tracks/8/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -208,7 +225,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:rotation")
+tracks/9/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:rotation")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -220,7 +237,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("../../../BodyRoot/ColorRoot/Legs:animation")
+tracks/10/path = NodePath("BodyRoot/ColorRoot/Legs:animation")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -232,7 +249,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("../../../BodyRoot/BorderRoot/Legs:animation")
+tracks/11/path = NodePath("BodyRoot/BorderRoot/Legs:animation")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -244,7 +261,7 @@ tracks/11/keys = {
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform:scale")
+tracks/12/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform:scale")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
@@ -256,7 +273,7 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:scale")
+tracks/13/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:scale")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
@@ -268,7 +285,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:scale")
+tracks/14/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:scale")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -280,7 +297,7 @@ tracks/14/keys = {
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:scale")
+tracks/15/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:scale")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
@@ -292,7 +309,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("../../../BodyRoot/ColorRoot/Legs:frame")
+tracks/16/path = NodePath("BodyRoot/ColorRoot/Legs:frame")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -304,7 +321,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("../../../BodyRoot/BorderRoot/Legs:frame")
+tracks/17/path = NodePath("BodyRoot/BorderRoot/Legs:frame")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -316,7 +333,7 @@ tracks/17/keys = {
 tracks/18/type = "value"
 tracks/18/imported = false
 tracks/18/enabled = true
-tracks/18/path = NodePath("../../../BodyRoot/TransformRoot/Legs/LegsRemoteTransform:position")
+tracks/18/path = NodePath("BodyRoot/TransformRoot/Legs/LegsRemoteTransform:position")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
@@ -328,7 +345,7 @@ tracks/18/keys = {
 tracks/19/type = "value"
 tracks/19/imported = false
 tracks/19/enabled = true
-tracks/19/path = NodePath("../../../BodyRoot/TransformRoot/Legs/LegsRemoteTransform:scale")
+tracks/19/path = NodePath("BodyRoot/TransformRoot/Legs/LegsRemoteTransform:scale")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
@@ -340,7 +357,7 @@ tracks/19/keys = {
 tracks/20/type = "value"
 tracks/20/imported = false
 tracks/20/enabled = true
-tracks/20/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform:rotation")
+tracks/20/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform:rotation")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
@@ -352,7 +369,7 @@ tracks/20/keys = {
 tracks/21/type = "value"
 tracks/21/imported = false
 tracks/21/enabled = true
-tracks/21/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:skew")
+tracks/21/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:skew")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
@@ -364,7 +381,7 @@ tracks/21/keys = {
 tracks/22/type = "value"
 tracks/22/imported = false
 tracks/22/enabled = true
-tracks/22/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:skew")
+tracks/22/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:skew")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
@@ -376,7 +393,7 @@ tracks/22/keys = {
 tracks/23/type = "value"
 tracks/23/imported = false
 tracks/23/enabled = true
-tracks/23/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:skew")
+tracks/23/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:skew")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = {
@@ -388,7 +405,7 @@ tracks/23/keys = {
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform:skew")
+tracks/24/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform:skew")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
@@ -409,7 +426,7 @@ step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform:position")
+tracks/0/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -421,7 +438,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:position")
+tracks/1/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -433,7 +450,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:rotation")
+tracks/2/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -445,7 +462,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:position")
+tracks/3/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -457,7 +474,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:rotation")
+tracks/4/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -469,7 +486,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:position")
+tracks/5/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -481,7 +498,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:position")
+tracks/6/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -493,7 +510,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:rotation")
+tracks/7/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:rotation")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -505,7 +522,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform:scale")
+tracks/8/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform:scale")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -517,7 +534,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:scale")
+tracks/9/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:scale")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -529,7 +546,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:scale")
+tracks/10/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:scale")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -541,7 +558,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:scale")
+tracks/11/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:scale")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -559,7 +576,7 @@ step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform:position")
+tracks/0/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -571,7 +588,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform:rotation")
+tracks/1/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -583,7 +600,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:position")
+tracks/2/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -595,7 +612,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:rotation")
+tracks/3/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -607,7 +624,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:position")
+tracks/4/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -619,7 +636,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:skew")
+tracks/5/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:skew")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -631,7 +648,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:position")
+tracks/6/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -643,7 +660,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:skew")
+tracks/7/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:skew")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -655,7 +672,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:position")
+tracks/8/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -667,7 +684,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:skew")
+tracks/9/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:skew")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -679,7 +696,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = false
-tracks/10/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform:skew")
+tracks/10/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform:skew")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -691,7 +708,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("../../../BodyRoot/TransformRoot/Body/BodyRemoteTransform:scale")
+tracks/11/path = NodePath("BodyRoot/TransformRoot/Body/BodyRemoteTransform:scale")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -699,6 +716,35 @@ tracks/11/keys = {
 "transitions": PackedFloat32Array(-2, -2),
 "update": 0,
 "values": [Vector2(1.015, 0.985), Vector2(0.985, 1.015)]
+}
+
+[sub_resource type="Animation" id="Animation_h1bgi"]
+resource_name = "hand_attack_1"
+length = 2.0000017
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HandRoot/TransformRoot/Weapon/WeaponRemoteTransform:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.083333336, 1.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HandRoot/TransformRoot/Weapon/WeaponRemoteTransform:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.083333336, 0.56666666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.5235987755982988, 3.141592653589793]
 }
 
 [sub_resource type="Animation" id="Animation_28774"]
@@ -709,7 +755,7 @@ step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("HandAnimationOffset:position")
+tracks/0/path = NodePath("HandRoot/TransformRoot/Weapon/WeaponRemoteTransform:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -721,7 +767,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HandAnimationOffset:rotation")
+tracks/1/path = NodePath("HandRoot/TransformRoot/Weapon/WeaponRemoteTransform:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -738,7 +784,7 @@ step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../../../BodyRoot/ColorRoot/Legs:animation")
+tracks/0/path = NodePath("BodyRoot/ColorRoot/Legs:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -750,7 +796,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../../../BodyRoot/BorderRoot/Legs:animation")
+tracks/1/path = NodePath("BodyRoot/BorderRoot/Legs:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -768,7 +814,7 @@ step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../../../BodyRoot/ColorRoot/Legs:animation")
+tracks/0/path = NodePath("BodyRoot/ColorRoot/Legs:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -780,7 +826,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../../../BodyRoot/BorderRoot/Legs:animation")
+tracks/1/path = NodePath("BodyRoot/BorderRoot/Legs:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -792,7 +838,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../../../BodyRoot/BorderRoot/Legs:frame")
+tracks/2/path = NodePath("BodyRoot/BorderRoot/Legs:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -804,7 +850,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../../../BodyRoot/ColorRoot/Legs:frame")
+tracks/3/path = NodePath("BodyRoot/ColorRoot/Legs:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = false
 tracks/3/keys = {
@@ -816,7 +862,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("../../../BodyRoot/TransformRoot/Legs/LegsRemoteTransform:position")
+tracks/4/path = NodePath("BodyRoot/TransformRoot/Legs/LegsRemoteTransform:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -828,7 +874,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("../../../BodyRoot/TransformRoot/Legs/LegsRemoteTransform:scale")
+tracks/5/path = NodePath("BodyRoot/TransformRoot/Legs/LegsRemoteTransform:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -847,6 +893,7 @@ _data = {
 &"all_moving": SubResource("Animation_5ci7q"),
 &"body_idle": SubResource("Animation_pqha3"),
 &"body_moving": SubResource("Animation_ja4uw"),
+&"hand_attack_1": SubResource("Animation_h1bgi"),
 &"hand_idle": SubResource("Animation_28774"),
 &"legs_idle": SubResource("Animation_6aj8c"),
 &"legs_moving": SubResource("Animation_xtnnw"),
@@ -856,52 +903,68 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b8435"]
 size = Vector2(18, 7)
 
-[node name="Player" type="CharacterBody2D" unique_id=1238900979 node_paths=PackedStringArray("PositionRoot", "PositionCenterRoot", "RenderRoot", "RenderHandRoot", "RenderHandCenterOffset", "RenderHandOffset", "RenderBodyRoot")]
+[node name="Player" type="CharacterBody2D" unique_id=1238900979 node_paths=PackedStringArray("PositionRoot", "PositionCenterRoot", "PositionHandRoot", "PositionHandOffset", "RenderRoot", "RenderBodyRoot", "RenderAnimationTree")]
+y_sort_enabled = true
 script = ExtResource("1_pqha3")
 PositionRoot = NodePath("PositionRoot")
 PositionCenterRoot = NodePath("PositionRoot/CenterRoot")
+PositionHandRoot = NodePath("PositionRoot/HandRoot")
+PositionHandOffset = NodePath("PositionRoot/HandRoot/HandOffset")
 RenderRoot = NodePath("RenderRoot")
-RenderHandRoot = NodePath("RenderRoot/HandRoot")
-RenderHandCenterOffset = NodePath("RenderRoot/HandRoot/HandCenterOffset")
-RenderHandOffset = NodePath("RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset")
 RenderBodyRoot = NodePath("RenderRoot/BodyRoot")
-MovementSpeedBase = Vector2(2, 2)
+RenderAnimationTree = NodePath("RenderRoot/AnimationTree")
+MovementSpeedBase = 120.0
+MovementSpeed = 120.0
 
 [node name="PositionRoot" type="Node2D" parent="." unique_id=717884564]
 
 [node name="CenterRoot" type="Node2D" parent="PositionRoot" unique_id=152873081]
 position = Vector2(0, -18)
 
+[node name="HandRoot" type="Node2D" parent="PositionRoot" unique_id=693615918]
+position = Vector2(23, 0)
+
+[node name="HandOffset" type="Node2D" parent="PositionRoot/HandRoot" unique_id=351347374]
+position = Vector2(0, -16)
+
+[node name="Rendering" type="RemoteTransform2D" parent="PositionRoot/HandRoot/HandOffset" unique_id=327035607]
+remote_path = NodePath("../../../../RenderRoot/HandRoot")
+
 [node name="RenderRoot" type="Node2D" parent="." unique_id=348596920]
 y_sort_enabled = true
 
 [node name="AnimationTree" type="AnimationTree" parent="RenderRoot" unique_id=1919286862]
-root_node = NodePath("../HandRoot/HandCenterOffset/HandBaseOffset")
 tree_root = SubResource("AnimationNodeBlendTree_637op")
 anim_player = NodePath("../AnimationPlayer")
-"parameters/Transition 3/current_state" = "idle"
-"parameters/Transition 3/transition_request" = ""
-"parameters/Transition 3/current_index" = 0
-parameters/Transition/current_state = "idle"
-parameters/Transition/transition_request = ""
-parameters/Transition/current_index = 0
-parameters/HandTransition/current_state = "idle"
-parameters/HandTransition/transition_request = ""
-parameters/HandTransition/current_index = 0
-parameters/Add2/add_amount = 1.0
-"parameters/Add2 2/add_amount" = 1.0
+parameters/TransitionBody/current_state = "idle"
+parameters/TransitionBody/transition_request = ""
+parameters/TransitionBody/current_index = 0
+parameters/TransitionHand/current_state = "idle"
+parameters/TransitionHand/transition_request = ""
+parameters/TransitionHand/current_index = 0
+parameters/AdderFinal/add_amount = 1.0
+parameters/AdderCharacter/add_amount = 1.0
+parameters/TransitionLegs/current_state = "idle"
+parameters/TransitionLegs/transition_request = ""
+parameters/TransitionLegs/current_index = 0
+parameters/OneShotHandAttack/active = false
+parameters/OneShotHandAttack/internal_active = false
+parameters/OneShotHandAttack/request = 0
+parameters/TimeScaleLegsMoving/scale = 1.0
+parameters/TimeScaleBodyMoving/scale = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RenderRoot" unique_id=1767796383]
-root_node = NodePath("../HandRoot/HandCenterOffset/HandBaseOffset")
 libraries/ = SubResource("AnimationLibrary_28774")
 
-[node name="Shadow" type="Node2D" parent="RenderRoot" unique_id=1870499081]
+[node name="Shadow" type="Node2D" parent="RenderRoot" unique_id=373883459]
+y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="RenderRoot/Shadow" unique_id=150738866]
 modulate = Color(0, 0, 0, 0.18431373)
 texture = ExtResource("2_28774")
 
-[node name="BodyRoot" type="CanvasGroup" parent="RenderRoot" unique_id=1570743532]
+[node name="BodyRoot" type="Node2D" parent="RenderRoot" unique_id=1803451428]
+y_sort_enabled = true
 
 [node name="TransformRoot" type="Node2D" parent="RenderRoot/BodyRoot" unique_id=879819342]
 
@@ -953,43 +1016,43 @@ animation = &"idle"
 offset = Vector2(0, -12)
 
 [node name="EarLeft" type="Sprite2D" parent="RenderRoot/BodyRoot/BorderRoot" unique_id=1979000987]
-position = Vector2(4.3757544, -16.47491)
-rotation = 0.09782183
-scale = Vector2(1.0014582, 0.9979039)
-skew = 0.006460309
+position = Vector2(3.5881186, -18.51995)
+rotation = 0.060145203
+scale = Vector2(0.9583047, 1.0266961)
+skew = -0.0075330734
 texture = ExtResource("5_h1bgi")
 
 [node name="EarRight" type="Sprite2D" parent="RenderRoot/BodyRoot/BorderRoot" unique_id=1658823561]
-position = Vector2(-3.75829, -16.654613)
-rotation = -0.053630676
-scale = Vector2(1.0019364, 0.99767476)
-skew = -0.004121423
+position = Vector2(-4.190865, -18.338001)
+rotation = -0.10690002
+scale = Vector2(0.9762031, 1.0240248)
+skew = 0.009829521
 texture = ExtResource("6_leypg")
 
 [node name="Head" type="Sprite2D" parent="RenderRoot/BodyRoot/BorderRoot" unique_id=1196781707]
-position = Vector2(0, -3.3013458)
-rotation = 0.022088803
-scale = Vector2(1.0170037, 0.9830988)
-skew = 0.0011839867
+position = Vector2(0, -4.869648)
+rotation = -0.02338551
+scale = Vector2(0.9726389, 1.0277388)
+skew = 0.0011628866
 texture = ExtResource("7_s6abk")
 
 [node name="Ribbon" type="Sprite2D" parent="RenderRoot/BodyRoot/BorderRoot" unique_id=25470917]
-position = Vector2(2.2737052, -14.835762)
-rotation = 0.1486906
-scale = Vector2(1.0162848, 0.98384196)
-skew = 0.009920597
+position = Vector2(1.6681433, -17.219906)
+rotation = 0.11486001
+scale = Vector2(0.97344923, 1.0269713)
+skew = -0.013145089
 texture = ExtResource("8_5ci7q")
 
 [node name="Body" type="Sprite2D" parent="RenderRoot/BodyRoot/BorderRoot" unique_id=657122571]
-position = Vector2(0, 11.685238)
-scale = Vector2(1.0130571, 0.9869429)
+position = Vector2(0, 10.824819)
+scale = Vector2(0.9872446, 1.0127554)
 texture = ExtResource("9_ja4uw")
 
 [node name="ColorRoot" type="Node2D" parent="RenderRoot/BodyRoot" unique_id=2011237609]
 position = Vector2(0, -24)
 
 [node name="Legs" type="AnimatedSprite2D" parent="RenderRoot/BodyRoot/ColorRoot" unique_id=1365554094]
-modulate = Color(0.20055676, 0.2494792, 0.36439484, 1)
+modulate = Color(0.06864312, 0.1664092, 0.29470032, 1)
 position = Vector2(0, 24)
 sprite_frames = ExtResource("9_pqha3")
 animation = &"idle"
@@ -999,30 +1062,30 @@ offset = Vector2(0, -12)
 remote_path = NodePath("../../../BorderRoot/Legs")
 
 [node name="EarLeft" type="Sprite2D" parent="RenderRoot/BodyRoot/ColorRoot" unique_id=943033058]
-position = Vector2(4.3757544, -16.47491)
-rotation = 0.09782183
-scale = Vector2(1.0014582, 0.9979039)
-skew = 0.006460309
+position = Vector2(3.5881186, -18.51995)
+rotation = 0.060145203
+scale = Vector2(0.9583047, 1.0266961)
+skew = -0.0075330734
 texture = ExtResource("11_p38lu")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/BodyRoot/ColorRoot/EarLeft" unique_id=1058133457]
 remote_path = NodePath("../../../BorderRoot/EarLeft")
 
 [node name="EarRight" type="Sprite2D" parent="RenderRoot/BodyRoot/ColorRoot" unique_id=1149102986]
-position = Vector2(-3.75829, -16.654613)
-rotation = -0.053630676
-scale = Vector2(1.0019364, 0.99767476)
-skew = -0.004121423
+position = Vector2(-4.190865, -18.338001)
+rotation = -0.10690002
+scale = Vector2(0.9762031, 1.0240248)
+skew = 0.009829521
 texture = ExtResource("12_qyds8")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/BodyRoot/ColorRoot/EarRight" unique_id=758582734]
 remote_path = NodePath("../../../BorderRoot/EarRight")
 
 [node name="Head" type="Sprite2D" parent="RenderRoot/BodyRoot/ColorRoot" unique_id=579158227]
-position = Vector2(0, -3.3013458)
-rotation = 0.022088803
-scale = Vector2(1.0170037, 0.9830988)
-skew = 0.0011839867
+position = Vector2(0, -4.869648)
+rotation = -0.02338551
+scale = Vector2(0.9726389, 1.0277388)
+skew = 0.0011628866
 texture = ExtResource("13_5m1pj")
 
 [node name="Face" type="Sprite2D" parent="RenderRoot/BodyRoot/ColorRoot/Head" unique_id=542040291]
@@ -1033,97 +1096,107 @@ texture = ExtResource("14_snju1")
 remote_path = NodePath("../../../BorderRoot/Head")
 
 [node name="Ribbon" type="Sprite2D" parent="RenderRoot/BodyRoot/ColorRoot" unique_id=1283913857]
-modulate = Color(0.77074045, 0.40001726, 0.4905616, 1)
-position = Vector2(2.2737052, -14.835762)
-rotation = 0.1486906
-scale = Vector2(1.0162848, 0.98384196)
-skew = 0.009920597
+modulate = Color(0.88816196, 0.26720858, 0.47181815, 1)
+position = Vector2(1.6681433, -17.219906)
+rotation = 0.11486001
+scale = Vector2(0.97344923, 1.0269713)
+skew = -0.013145089
 texture = ExtResource("15_wef7s")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/BodyRoot/ColorRoot/Ribbon" unique_id=524843729]
 remote_path = NodePath("../../../BorderRoot/Ribbon")
 
 [node name="Body" type="Sprite2D" parent="RenderRoot/BodyRoot/ColorRoot" unique_id=1950654830]
-modulate = Color(0.31197384, 0.37996402, 0.60390884, 1)
-position = Vector2(0, 11.685238)
-scale = Vector2(1.0130571, 0.9869429)
+modulate = Color(0.19848058, 0.3833921, 0.6725325, 1)
+position = Vector2(0, 10.824819)
+scale = Vector2(0.9872446, 1.0127554)
 texture = ExtResource("16_k5agn")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/BodyRoot/ColorRoot/Body" unique_id=1042880830]
 remote_path = NodePath("../../../BorderRoot/Body")
 
-[node name="HandRoot" type="CanvasGroup" parent="RenderRoot" unique_id=1274549795]
+[node name="HandRoot" type="Node2D" parent="RenderRoot" unique_id=682820255]
+y_sort_enabled = true
+position = Vector2(23, -16)
 
-[node name="HandCenterOffset" type="Node2D" parent="RenderRoot/HandRoot" unique_id=85607215]
-position = Vector2(23, -18)
+[node name="TransformRoot" type="Node2D" parent="RenderRoot/HandRoot" unique_id=497423635]
 
-[node name="HandBaseOffset" type="Node2D" parent="RenderRoot/HandRoot/HandCenterOffset" unique_id=1554681851]
+[node name="Weapon" type="Node2D" parent="RenderRoot/HandRoot/TransformRoot" unique_id=398934283]
 
-[node name="HandAnimationOffset" type="Node2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset" unique_id=682820255]
+[node name="WeaponRemoteTransform" type="RemoteTransform2D" parent="RenderRoot/HandRoot/TransformRoot/Weapon" unique_id=621397996]
+remote_path = NodePath("../../../ColorRoot/Weapon")
 
-[node name="Hand" type="Node2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset" unique_id=1332290848]
-
-[node name="TransformRoot" type="Node2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand" unique_id=497423635]
-
-[node name="Weapon" type="RemoteTransform2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/TransformRoot" unique_id=621397996]
-remote_path = NodePath("../../ColorRoot/Weapon")
-
-[node name="HandLeft" type="RemoteTransform2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/TransformRoot/Weapon" unique_id=1095168469]
-position = Vector2(-2, 2)
-remote_path = NodePath("../../../ColorRoot/HandLeft")
-
-[node name="HandRight" type="RemoteTransform2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/TransformRoot/Weapon" unique_id=483299342]
-position = Vector2(3, -1)
-remote_path = NodePath("../../../ColorRoot/HandRight")
-
-[node name="WeaponRoot" type="Node2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand" unique_id=1167288996]
-
-[node name="BorderRoot" type="Node2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand" unique_id=946584604]
-modulate = Color(0, 0, 0, 1)
-
-[node name="Weapon" type="Sprite2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/BorderRoot" unique_id=1737691555]
-position = Vector2(9.536743e-07, -16.000006)
-scale = Vector2(1.0000002, 1.0000002)
-texture = ExtResource("17_ruewx")
-
-[node name="HandLeft" type="Sprite2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/BorderRoot" unique_id=340057711]
-position = Vector2(-2, 1.9999981)
-scale = Vector2(1.0000002, 1.0000002)
-texture = ExtResource("18_bh8n3")
-
-[node name="HandRight" type="Sprite2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/BorderRoot" unique_id=903263305]
-position = Vector2(3.0000029, -1.0000019)
-scale = Vector2(1.0000002, 1.0000002)
-texture = ExtResource("18_bh8n3")
-
-[node name="ColorRoot" type="Node2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand" unique_id=451862267]
-
-[node name="Weapon" type="Node2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/ColorRoot" unique_id=1106315150]
+[node name="HandLeft" type="Node2D" parent="RenderRoot/HandRoot/TransformRoot/Weapon/WeaponRemoteTransform" unique_id=2134048591]
+position = Vector2(-2.0000038, 2)
 scale = Vector2(1.0000001, 1.0000001)
 
-[node name="Sprite" type="Sprite2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/ColorRoot/Weapon" unique_id=426330281]
+[node name="HandLeftRemoteTransform" type="RemoteTransform2D" parent="RenderRoot/HandRoot/TransformRoot/Weapon/WeaponRemoteTransform/HandLeft" unique_id=1095168469]
+position = Vector2(3.8146973e-06, 1.9073486e-06)
+remote_path = NodePath("../../../../../ColorRoot/HandLeft")
+
+[node name="HandRight" type="Node2D" parent="RenderRoot/HandRoot/TransformRoot/Weapon/WeaponRemoteTransform" unique_id=1894803932]
+position = Vector2(3, -1)
+
+[node name="HandRightRemoteTransform" type="RemoteTransform2D" parent="RenderRoot/HandRoot/TransformRoot/Weapon/WeaponRemoteTransform/HandRight" unique_id=483299342]
+remote_path = NodePath("../../../../../ColorRoot/HandRight")
+
+[node name="BorderRoot" type="Node2D" parent="RenderRoot/HandRoot" unique_id=946584604]
+modulate = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="Node2D" parent="RenderRoot/HandRoot/BorderRoot" unique_id=1592666539]
+position = Vector2(-0.91810226, 0.27873516)
+rotation = 0.34925783
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Weapon" type="Sprite2D" parent="RenderRoot/HandRoot/BorderRoot/Node2D" unique_id=1737691555]
+position = Vector2(0, -16)
+scale = Vector2(0.9999997, 0.9999997)
+texture = ExtResource("17_ruewx")
+
+[node name="HandLeft" type="Sprite2D" parent="RenderRoot/HandRoot/BorderRoot" unique_id=340057711]
+position = Vector2(-3.4817562, 1.4735899)
+rotation = 0.3492578
+scale = Vector2(1.0000001, 1.0000001)
+texture = ExtResource("18_bh8n3")
+
+[node name="HandRight" type="Sprite2D" parent="RenderRoot/HandRoot/BorderRoot" unique_id=903263305]
+position = Vector2(2.242979, 0.3657093)
+rotation = 0.34925783
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("18_bh8n3")
+
+[node name="ColorRoot" type="Node2D" parent="RenderRoot/HandRoot" unique_id=451862267]
+
+[node name="Weapon" type="Node2D" parent="RenderRoot/HandRoot/ColorRoot" unique_id=1106315150]
+position = Vector2(-0.91810226, 0.27873516)
+rotation = 0.34925783
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/HandRoot/ColorRoot/Weapon" unique_id=1912416594]
+remote_path = NodePath("../../../BorderRoot/Node2D")
+
+[node name="Sprite" type="Sprite2D" parent="RenderRoot/HandRoot/ColorRoot/Weapon" unique_id=426330281]
 position = Vector2(0, -16)
 texture = ExtResource("19_2qytc")
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/ColorRoot/Weapon/Sprite" unique_id=1912416594]
-remote_path = NodePath("../../../../BorderRoot/Weapon")
-
-[node name="HandRight" type="Sprite2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/ColorRoot" unique_id=290739156]
-modulate = Color(0.2, 0.2509804, 0.3647059, 1)
-position = Vector2(3.000001, -1.0000019)
-scale = Vector2(1.0000001, 1.0000001)
+[node name="HandRight" type="Sprite2D" parent="RenderRoot/HandRoot/ColorRoot" unique_id=290739156]
+modulate = Color(0.07058824, 0.16470589, 0.29411766, 1)
+position = Vector2(2.242979, 0.3657093)
+rotation = 0.34925783
+scale = Vector2(0.99999994, 0.99999994)
 texture = ExtResource("20_uqt1c")
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/ColorRoot/HandRight" unique_id=1973941038]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/HandRoot/ColorRoot/HandRight" unique_id=1973941038]
 remote_path = NodePath("../../../BorderRoot/HandRight")
 
-[node name="HandLeft" type="Sprite2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/ColorRoot" unique_id=912190849]
-modulate = Color(0.2, 0.2509804, 0.3647059, 1)
-position = Vector2(-2, 1.9999981)
+[node name="HandLeft" type="Sprite2D" parent="RenderRoot/HandRoot/ColorRoot" unique_id=912190849]
+modulate = Color(0.07058824, 0.16470589, 0.29411766, 1)
+position = Vector2(-3.4817562, 1.4735899)
+rotation = 0.3492578
 scale = Vector2(1.0000001, 1.0000001)
 texture = ExtResource("20_uqt1c")
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/HandRoot/HandCenterOffset/HandBaseOffset/HandAnimationOffset/Hand/ColorRoot/HandLeft" unique_id=622737984]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/HandRoot/ColorRoot/HandLeft" unique_id=622737984]
 remote_path = NodePath("../../../BorderRoot/HandLeft")
 
 [node name="BaseCollision" type="CollisionShape2D" parent="." unique_id=440577969]

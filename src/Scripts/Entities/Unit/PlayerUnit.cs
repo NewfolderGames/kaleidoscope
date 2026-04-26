@@ -19,10 +19,21 @@ public partial class PlayerUnit : Unit
 
     public override void _PhysicsProcess(double delta)
     {
-        var inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-        var movement = inputDir * MovementSpeedBase;
+        // Attack
         
-        ChangeMovement(movement);
+        if (Input.IsActionJustPressed("attack_primary"))
+        {
+            RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+        }
+        
+        // Movement
+        
+        var inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+        var movement = inputDir * MovementSpeed * (float)delta;
+        
+        IsMoving = movement != Vector2.Zero;
+        
+        AddMovement(movement);
         base._PhysicsProcess(delta);
     }
 
@@ -31,6 +42,20 @@ public partial class PlayerUnit : Unit
         base.ProcessBodyRendering(delta);
         
         RenderBodyRoot.Scale = new Vector2(_mousePositionRelative.X < 0 ? -1 : 1, 1);
+
+        if (IsMoving)
+        {
+            var speed = (MovementSpeedBase > 0 ? MovementSpeed / MovementSpeedBase : 1) * RenderAnimationMovingSpeedMultiplier;
+            RenderAnimationTree.Set("parameters/TimeScaleBodyMoving/scale", speed);
+            RenderAnimationTree.Set("parameters/TimeScaleLegsMoving/scale", speed);
+            RenderAnimationTree.Set("parameters/TransitionBody/transition_request", "moving");
+            RenderAnimationTree.Set("parameters/TransitionLegs/transition_request", "moving");
+        }
+        else
+        {
+            RenderAnimationTree.Set("parameters/TransitionBody/transition_request", "idle");
+            RenderAnimationTree.Set("parameters/TransitionLegs/transition_request", "idle");
+        }
     }
     
     public override void ProcessHandRendering(double delta)
@@ -39,11 +64,11 @@ public partial class PlayerUnit : Unit
 
         var normalized = _mousePositionRelative.Normalized();
 
-        RenderHandRoot.Position = new Vector2(normalized.X * RenderHandRangeX, normalized.Y * RenderHandRangeY);
-        RenderHandRoot.Scale = new Vector2(_mousePositionRelative.X < 0 ? -1 : 1, 1);
+        PositionHandRoot.Position = new Vector2(normalized.X * PositionHandRootRangeX, normalized.Y * PositionHandRootRangeY);
+        PositionHandRoot.Scale = new Vector2(_mousePositionRelative.X < 0 ? -1 : 1, 1);
 
         var normalizedAngle = normalized.Angle();
-        RenderHandCenterOffset.Position = PositionCenterRoot.Position;
-        RenderHandCenterOffset.Rotation = _mousePositionRelative.X < 0 ? -normalizedAngle - Mathf.Pi : normalizedAngle;
+        PositionHandOffset.Position = PositionCenterRoot.Position;
+        PositionHandOffset.Rotation = _mousePositionRelative.X < 0 ? -normalizedAngle - Mathf.Pi : normalizedAngle;
     }
 }

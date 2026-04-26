@@ -5,6 +5,31 @@
 [ext_resource type="PackedScene" uid="uid://dqokwhs34myvs" path="res://res/scenes/units/player.tscn" id="3_lbdwm"]
 [ext_resource type="Texture2D" uid="uid://cxwn531ihmlhe" path="res://res/textures/background/plain_border.png" id="5_nug2b"]
 
+[sub_resource type="Gradient" id="Gradient_lbdwm"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t530p"]
+gradient = SubResource("Gradient_lbdwm")
+width = 1
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s4uip"]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+emission_shape = 1
+emission_sphere_radius = 3.0
+angle_min = -360.0
+angle_max = 360.00003
+spread = 180.0
+initial_velocity_max = 3.0
+angular_velocity_min = -30.000015
+angular_velocity_max = 29.999983
+gravity = Vector3(0, 0, 0)
+damping_min = 50.000004
+damping_max = 50.000004
+scale_min = 3.0
+scale_max = 4.0
+color = Color(1, 1, 1, 0.24705882)
+
 [node name="GameRoot" type="Node2D" unique_id=954784124]
 script = ExtResource("1_s4uip")
 
@@ -28,6 +53,13 @@ texture = ExtResource("1_t530p")
 
 [node name="GameWorld" type="Node2D" parent="GameWorld" unique_id=2002473009]
 y_sort_enabled = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="GameWorld/GameWorld" unique_id=1224449504]
+y_sort_enabled = true
+amount = 1
+texture = SubResource("GradientTexture1D_t530p")
+visibility_rect = Rect2(-320, -180, 640, 360)
+process_material = SubResource("ParticleProcessMaterial_s4uip")
 
 [node name="Player" parent="GameWorld/GameWorld" unique_id=1238900979 instance=ExtResource("3_lbdwm")]
 
