@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://0lsbktdb05k7"]
+
+[ext_resource type="Texture2D" uid="uid://bues0h8qfkhfn" path="res://res/textures/weapons/sword.border.png" id="1_7e0av"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7e0av")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]

@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://b2ki0g2utnfq1"]
+
+[ext_resource type="Texture2D" uid="uid://bmn1rceprutij" path="res://res/textures/weapons/sword.png" id="1_7mccc"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7mccc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]

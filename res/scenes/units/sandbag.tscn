@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://chy0bxvjylwxu"]
+
+[ext_resource type="Script" uid="uid://26qp6bmpgtci" path="res://src/Scripts/Entities/Unit/Unit.cs" id="1_s7n0u"]
+[ext_resource type="Texture2D" uid="uid://ch4ek6s8r4ym8" path="res://res/textures/misc/shadow.png" id="2_hs77s"]
+[ext_resource type="Texture2D" uid="uid://cca5exge13y6i" path="res://res/textures/entities/sandbag/sandbag.border.png" id="3_738av"]
+[ext_resource type="Texture2D" uid="uid://bv8w4dcb4u2xs" path="res://res/textures/entities/sandbag/sandbag.png" id="4_7uk6b"]
+[ext_resource type="Texture2D" uid="uid://dk11i077gdehj" path="res://res/textures/entities/sandbag/sandbag.face.png" id="5_l45ct"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qvmtl"]
+size = Vector2(24, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_738av"]
+size = Vector2(27, 45.875)
+
+[node name="Sandbag" type="CharacterBody2D" unique_id=99993916 node_paths=PackedStringArray("PositionRoot", "PositionCenterRoot", "PositionHandRoot", "RenderRoot", "RenderBodyRoot", "RenderHandOffset")]
+script = ExtResource("1_s7n0u")
+PositionRoot = NodePath("PositionRoot")
+PositionCenterRoot = NodePath("PositionRoot/CenterRoot")
+PositionHandRoot = NodePath("PositionRoot/HandRoot")
+RenderRoot = NodePath("RenderRoot")
+RenderBodyRoot = NodePath("RenderRoot/BodyRoot")
+RenderHandOffset = NodePath("RenderRoot/HandRoot/HandOffset")
+
+[node name="PositionRoot" type="Node2D" parent="." unique_id=1096293347]
+
+[node name="CenterRoot" type="Node2D" parent="PositionRoot" unique_id=509874196]
+position = Vector2(0, -16)
+
+[node name="HandRoot" type="Node2D" parent="PositionRoot" unique_id=1488481898]
+position = Vector2(23, 0)
+
+[node name="Rendering" type="RemoteTransform2D" parent="PositionRoot/HandRoot" unique_id=761861939]
+remote_path = NodePath("../../../RenderRoot/HandRoot")
+
+[node name="RenderRoot" type="Node2D" parent="." unique_id=2072604066]
+y_sort_enabled = true
+
+[node name="ShadowRoot" type="Node2D" parent="RenderRoot" unique_id=802204531]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="RenderRoot/ShadowRoot" unique_id=150634864]
+modulate = Color(0, 0, 0, 0.18431373)
+texture = ExtResource("2_hs77s")
+
+[node name="BodyRoot" type="Node2D" parent="RenderRoot" unique_id=959543527]
+
+[node name="TransformRoot" type="Node2D" parent="RenderRoot/BodyRoot" unique_id=1977968245]
+
+[node name="Body" type="Node2D" parent="RenderRoot/BodyRoot/TransformRoot" unique_id=237663980]
+position = Vector2(0, -24)
+
+[node name="BodyRemoteTransform" type="RemoteTransform2D" parent="RenderRoot/BodyRoot/TransformRoot/Body" unique_id=1389546249]
+remote_path = NodePath("../../../ColorRoot/Body")
+
+[node name="BorderRoot" type="Node2D" parent="RenderRoot/BodyRoot" unique_id=559613017]
+modulate = Color(0, 0, 0, 1)
+
+[node name="Body" type="Sprite2D" parent="RenderRoot/BodyRoot/BorderRoot" unique_id=1202279719]
+position = Vector2(0, -24)
+texture = ExtResource("3_738av")
+
+[node name="ColorRoot" type="Node2D" parent="RenderRoot/BodyRoot" unique_id=1088981229]
+
+[node name="Body" type="Sprite2D" parent="RenderRoot/BodyRoot/ColorRoot" unique_id=1871877993]
+position = Vector2(0, -24)
+texture = ExtResource("4_7uk6b")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/BodyRoot/ColorRoot/Body" unique_id=783644919]
+remote_path = NodePath("../../../BorderRoot/Body")
+
+[node name="Sprite2D" type="Sprite2D" parent="RenderRoot/BodyRoot/ColorRoot/Body" unique_id=693807222]
+texture = ExtResource("5_l45ct")
+
+[node name="HandRoot" type="Node2D" parent="RenderRoot" unique_id=1321413912]
+position = Vector2(23, 0)
+
+[node name="HandOffset" type="Node2D" parent="RenderRoot/HandRoot" unique_id=1183615574]
+position = Vector2(0, -16)
+
+[node name="CollisionBase" type="CollisionShape2D" parent="." unique_id=792669364]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_qvmtl")
+
+[node name="CollisionRoot" type="Node2D" parent="." unique_id=1662681415]
+
+[node name="BodyCollision" type="Area2D" parent="CollisionRoot" unique_id=1990486826]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionRoot/BodyCollision" unique_id=1249644492]
+position = Vector2(-0.5, -23.0625)
+shape = SubResource("RectangleShape2D_738av")
