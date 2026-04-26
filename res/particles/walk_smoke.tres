@@ -1,0 +1,35 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://cct6o1g1ogqdh"]
+
+[sub_resource type="Curve" id="Curve_lbdwm"]
+_data = [Vector2(0, 0.72366357), 0.0, -1.6713032, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_t530p"]
+curve = SubResource("Curve_lbdwm")
+
+[sub_resource type="Curve" id="Curve_s4uip"]
+_limits = [1.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 3.1562324, 0, 0, Vector2(0.7988017, 2), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_07f4r"]
+curve = SubResource("Curve_s4uip")
+
+[resource]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+emission_shape = 1
+emission_sphere_radius = 3.0
+angle_min = -360.0
+angle_max = 360.00003
+spread = 180.0
+initial_velocity_max = 3.0
+angular_velocity_min = -30.000015
+angular_velocity_max = 29.999983
+gravity = Vector3(0, 0, 0)
+damping_min = 50.000004
+damping_max = 50.000004
+scale_min = 3.0
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_07f4r")
+alpha_curve = SubResource("CurveTexture_t530p")

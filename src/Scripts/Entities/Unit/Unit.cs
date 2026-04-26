@@ -9,13 +9,13 @@ public partial class Unit : CharacterBody2D
     [Export] protected Node2D PositionRoot;
     [Export] protected Node2D PositionCenterRoot;
     [Export] protected Node2D PositionHandRoot;
-    [Export] protected Node2D PositionHandOffset;
     [Export] protected float PositionHandRootRangeX = 24f;
     [Export] protected float PositionHandRootRangeY = 12f;
     
     [ExportCategory("Render")]
     [Export] protected Node2D RenderRoot;
     [Export] protected Node2D RenderBodyRoot;
+    [Export] protected Node2D RenderHandOffset;
     
     [ExportCategory("Render - Animation")]
     [Export] protected AnimationTree RenderAnimationTree;

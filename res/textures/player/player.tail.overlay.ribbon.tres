@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bj75r8vrrb13r"]
+
+[ext_resource type="Texture2D" uid="uid://b5cmab4pqw4uk" path="res://res/textures/player/player.tail.overlay.ribbon.png" id="1_jxf46"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jxf46")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]

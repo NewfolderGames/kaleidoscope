@@ -5,14 +5,15 @@ namespace Kaleidoscope.Scripts.Entities.Unit;
 
 public partial class PlayerUnit : Unit
 {
+    [ExportCategory("Movement")]
+    [Export] private Vector2 _movementInput;
+    
     [ExportCategory("Render States")]
     [Export] private Vector2 _mousePositionRelative;
 
     public override void _Process(double delta)
     {
-        var mousePosition = GetViewport().GetMousePosition();
-        var centerPosition = GetViewport().GetCamera2D().GetCanvasTransform().AffineInverse() * (PositionCenterRoot.GetGlobalPosition() + GetViewportRect().Size);
-        _mousePositionRelative = mousePosition - centerPosition;
+        _mousePositionRelative = GetGlobalMousePosition() - PositionCenterRoot.GetGlobalPosition() ;
         
         base._Process(delta);
     }
@@ -28,12 +29,10 @@ public partial class PlayerUnit : Unit
         
         // Movement
         
-        var inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-        var movement = inputDir * MovementSpeed * (float)delta;
+        _movementInput = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+        IsMoving = _movementInput != Vector2.Zero;
         
-        IsMoving = movement != Vector2.Zero;
-        
-        AddMovement(movement);
+        AddMovement(_movementInput * MovementSpeed * (float)delta);
         base._PhysicsProcess(delta);
     }
 
@@ -45,7 +44,8 @@ public partial class PlayerUnit : Unit
 
         if (IsMoving)
         {
-            var speed = (MovementSpeedBase > 0 ? MovementSpeed / MovementSpeedBase : 1) * RenderAnimationMovingSpeedMultiplier;
+            var isMovingAway = Mathf.Sign(_mousePositionRelative.X) != Mathf.Sign(_movementInput.X);
+            var speed = (MovementSpeedBase > 0 ? MovementSpeed / MovementSpeedBase : 1) * RenderAnimationMovingSpeedMultiplier * (isMovingAway ? -1 : 1);
             RenderAnimationTree.Set("parameters/TimeScaleBodyMoving/scale", speed);
             RenderAnimationTree.Set("parameters/TimeScaleLegsMoving/scale", speed);
             RenderAnimationTree.Set("parameters/TransitionBody/transition_request", "moving");
@@ -63,12 +63,12 @@ public partial class PlayerUnit : Unit
         base.ProcessHandRendering(delta);
 
         var normalized = _mousePositionRelative.Normalized();
-
+        var normalizedAngle = normalized.Angle();
+        
         PositionHandRoot.Position = new Vector2(normalized.X * PositionHandRootRangeX, normalized.Y * PositionHandRootRangeY);
         PositionHandRoot.Scale = new Vector2(_mousePositionRelative.X < 0 ? -1 : 1, 1);
 
-        var normalizedAngle = normalized.Angle();
-        PositionHandOffset.Position = PositionCenterRoot.Position;
-        PositionHandOffset.Rotation = _mousePositionRelative.X < 0 ? -normalizedAngle - Mathf.Pi : normalizedAngle;
+        RenderHandOffset.Position = PositionCenterRoot.Position;
+        RenderHandOffset.Rotation = _mousePositionRelative.X < 0 ? -normalizedAngle - Mathf.Pi : normalizedAngle;
     }
 }

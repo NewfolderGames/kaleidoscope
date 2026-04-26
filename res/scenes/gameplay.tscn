@@ -20,12 +20,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+stretch_shrink = 3
 
 [node name="WorkerSightSubViewport" type="SubViewport" parent="GameplayViewport" unique_id=591688136]
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(1920, 1080)
+size = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="SightWorkerCamera" type="Camera2D" parent="GameplayViewport/WorkerSightSubViewport" unique_id=533845326]
@@ -35,7 +36,7 @@ editor_draw_screen = false
 disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(1920, 1080)
+size = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="WorldWorkerCamera" type="Camera2D" parent="GameplayViewport/WorkerWorldSubViewport" unique_id=1518400650]
@@ -46,7 +47,7 @@ disable_3d = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
-size = Vector2i(1920, 1080)
+size = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="GameRoot" parent="GameplayViewport/GameSubViewport" unique_id=954784124 node_paths=PackedStringArray("_sightWorkerCamera", "_worldWorkerCamera") instance=ExtResource("1_b8435")]
@@ -92,14 +93,14 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 
 [node name="Health" type="Control" parent="GameplayInterface/MarginContainer/MainInterface" unique_id=543790036]
-custom_minimum_size = Vector2(0, 16)
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 
 [node name="Control" type="HBoxContainer" parent="GameplayInterface/MarginContainer/MainInterface/Health" unique_id=197515651]
-custom_minimum_size = Vector2(288, 0)
+custom_minimum_size = Vector2(616, 0)
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
@@ -112,7 +113,7 @@ grow_vertical = 2
 theme_override_constants/separation = 4
 
 [node name="Control" type="Control" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control" unique_id=1657534505]
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
 [node name="Label2" type="Label" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control" unique_id=1450639638]
@@ -135,8 +136,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -17.0
-offset_bottom = 13.0
+offset_top = -26.0
+offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "42"
@@ -146,10 +147,11 @@ horizontal_alignment = 2
 [node name="Control2" type="VBoxContainer" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control" unique_id=147320195]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 1
+size_flags_vertical = 4
+theme_override_constants/separation = 2
 
 [node name="ColorRect2" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2" unique_id=1851725108]
-custom_minimum_size = Vector2(0, 3)
+custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 color = Color(1, 1, 1, 0.12156863)
 
@@ -162,7 +164,7 @@ grow_vertical = 2
 color = Color(0.33988306, 0.63568723, 0.73499745, 1)
 
 [node name="ColorRect" type="ColorRect" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2" unique_id=2092324231]
-custom_minimum_size = Vector2(0, 8)
+custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 color = Color(1, 1, 1, 0.12156863)
 
@@ -174,7 +176,7 @@ anchor_bottom = 1.0
 grow_vertical = 2
 
 [node name="ColorRect3" type="HBoxContainer" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control2" unique_id=1580129565]
-custom_minimum_size = Vector2(0, 3)
+custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 theme_override_constants/separation = 1
 
@@ -245,7 +247,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Control3" type="Control" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control" unique_id=726953208]
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
 [node name="Label2" type="Label" parent="GameplayInterface/MarginContainer/MainInterface/Health/Control/Control3" unique_id=452926618]
