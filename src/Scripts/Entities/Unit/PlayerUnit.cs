@@ -21,10 +21,20 @@ public partial class PlayerUnit : Unit
     public override void _PhysicsProcess(double delta)
     {
         // Attack
-        
-        if (Input.IsActionJustPressed("attack_primary"))
+
+        if (!IsMainAttacking)
         {
-            RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+            if (Input.IsActionJustPressed("attack_primary"))
+            {
+                RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", "primary_1");
+                RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+                MainAttackStart();
+            } else if (Input.IsActionJustPressed("attack_secondary"))
+            {
+                RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", "secondary_1");
+                RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+                MainAttackStart();
+            }
         }
         
         // Movement

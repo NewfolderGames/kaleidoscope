@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dqokwhs34myvs" path="res://res/scenes/units/player.tscn" id="3_lbdwm"]
 [ext_resource type="Material" uid="uid://cct6o1g1ogqdh" path="res://res/particles/walk_smoke.tres" id="3_t530p"]
 [ext_resource type="Texture2D" uid="uid://cxwn531ihmlhe" path="res://res/textures/background/plain_border.png" id="5_nug2b"]
+[ext_resource type="PackedScene" uid="uid://chy0bxvjylwxu" path="res://res/scenes/units/sandbag.tscn" id="5_s4uip"]
 
 [sub_resource type="Gradient" id="Gradient_lbdwm"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -58,6 +59,15 @@ y_sort_enabled = true
 y_sort_enabled = true
 
 [node name="Player" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=1238900979 instance=ExtResource("3_lbdwm")]
+
+[node name="Sandbag" parent="GameWorld/GameWorld" unique_id=99993916 instance=ExtResource("5_s4uip")]
+position = Vector2(-121, 41)
+
+[node name="Sandbag2" parent="GameWorld/GameWorld" unique_id=1974570723 instance=ExtResource("5_s4uip")]
+position = Vector2(206, -23)
+
+[node name="Sandbag3" parent="GameWorld/GameWorld" unique_id=1500496213 instance=ExtResource("5_s4uip")]
+position = Vector2(-57, -58)
 
 [node name="GameEnvironmentForeground" type="Node2D" parent="GameWorld" unique_id=1567045833]
 

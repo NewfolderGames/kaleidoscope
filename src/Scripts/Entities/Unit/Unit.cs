@@ -1,4 +1,5 @@
 using Godot;
+using Kaleidoscope.Core.Resources;
 using Kaleidoscope.Scripts.Managers.Gameplay.Game;
 
 namespace Kaleidoscope.Scripts.Entities.Unit;
@@ -28,6 +29,15 @@ public partial class Unit : CharacterBody2D
     [Export] protected Vector2 MovementNext;
     [Export] protected float MovementSpeedBase = 5f;
     [Export] protected float MovementSpeed = 5f;
+    
+    [ExportCategory("Weapon")]
+    [Export] protected Weapon Weapon;
+    [Export] protected bool weaponSweetSpotActive;
+    [Export] protected float weaponDamageMultiplerBase = 1f;
+    [Export] protected float weaponDamageSweetSpotMultiplierBase = 1f;
+
+    [ExportCategory("Attack")]
+    [Export] protected bool IsMainAttacking;
     
     [ExportCategory("External")]
     [Export] protected GameManager GameManager;
@@ -71,5 +81,20 @@ public partial class Unit : CharacterBody2D
     public virtual void ProcessBodyRendering(double delta)
     {
         
+    }
+    
+    public void SetWeaponSweetSpotActive(bool active)
+    {
+        weaponSweetSpotActive = active;
+    }
+    
+    public void MainAttackStart()
+    {
+        IsMainAttacking = true;
+    }
+    
+    public void MainAttackEnd()
+    {
+        IsMainAttacking = false;
     }
 }
