@@ -1,5 +1,6 @@
 using Godot;
 using Kaleidoscope.Core.Resources;
+using Kaleidoscope.Core.System.Input;
 using Kaleidoscope.Scripts.Managers.Gameplay.Game;
 
 namespace Kaleidoscope.Scripts.Entities.Unit;
@@ -21,6 +22,10 @@ public partial class Unit : CharacterBody2D
     [ExportCategory("Render - Animation")]
     [Export] protected AnimationTree RenderAnimationTree;
     [Export] protected float RenderAnimationMovingSpeedMultiplier = 1f;
+
+    [ExportCategory("Input")]
+    [Export] protected bool AllowInput;
+    protected readonly InputBuffer InputBuffer = new();
     
     [ExportCategory("Movement")]
     [Export] protected bool IsMoving;
@@ -37,7 +42,9 @@ public partial class Unit : CharacterBody2D
     [Export] protected float weaponDamageSweetSpotMultiplierBase = 1f;
 
     [ExportCategory("Attack")]
-    [Export] protected bool IsMainAttacking;
+    [Export] protected bool IsAttackMainActive;
+    [Export] protected bool IsAttackSequenceAvailable;
+    [Export] protected bool LockHandRotationWhenAttacking;
     
     [ExportCategory("External")]
     [Export] protected GameManager GameManager;
@@ -45,6 +52,16 @@ public partial class Unit : CharacterBody2D
     public override void _Process(double delta)
     {
         base._Process(delta);
+        
+        // Before process
+        
+        // Process
+        
+        _ProcessSelf(delta);
+    }
+
+    public virtual void _ProcessSelf(double delta)
+    {
         ProcessBodyRendering(delta);
         ProcessHandRendering(delta);
     }
@@ -52,6 +69,18 @@ public partial class Unit : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
+     
+        // Before process
+        
+        InputBuffer.Process();
+        
+        // Process
+        
+        _PhysicsProcessSelf(delta);
+    }
+
+    public virtual void _PhysicsProcessSelf(double delta)
+    {
         Move();
     }
 
@@ -90,11 +119,21 @@ public partial class Unit : CharacterBody2D
     
     public void MainAttackStart()
     {
-        IsMainAttacking = true;
+        IsAttackMainActive = true;
     }
     
     public void MainAttackEnd()
     {
-        IsMainAttacking = false;
+        IsAttackMainActive = false;
+    }
+
+    public void AttackSequenceAvailableStart()
+    {
+        IsAttackSequenceAvailable = true;
+    }
+    
+    public void AttackSequenceAvailableEnd()
+    {
+        IsAttackSequenceAvailable = false;
     }
 }

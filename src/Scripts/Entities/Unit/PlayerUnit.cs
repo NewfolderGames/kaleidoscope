@@ -11,27 +11,44 @@ public partial class PlayerUnit : Unit
     [ExportCategory("Render States")]
     [Export] private Vector2 _mousePositionRelative;
 
-    public override void _Process(double delta)
+    public override void _ProcessSelf(double delta)
     {
-        _mousePositionRelative = GetGlobalMousePosition() - PositionCenterRoot.GetGlobalPosition() ;
+        _mousePositionRelative = GetGlobalMousePosition() - PositionCenterRoot.GetGlobalPosition();
         
-        base._Process(delta);
+        // Done
+        
+        base._ProcessSelf(delta);
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _PhysicsProcessSelf(double delta)
     {
+        // Input
+
+        if (Input.IsActionJustPressed("attack_primary"))
+        {
+            InputBuffer.Add("attack_primary", "attack_main", 1, 15);
+        }
+        if (Input.IsActionJustPressed("attack_secondary"))
+        {
+            InputBuffer.Add("attack_secondary", "attack_main", 1, 15);
+        }
+        
         // Attack
 
-        if (!IsMainAttacking)
+        if (!IsAttackMainActive)
         {
-            if (Input.IsActionJustPressed("attack_primary"))
+            var inputs = InputBuffer.TakeGroup("attack_main");
+            if (inputs.Count > 0)
             {
-                RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", "primary_1");
-                RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
-                MainAttackStart();
-            } else if (Input.IsActionJustPressed("attack_secondary"))
-            {
-                RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", "secondary_1");
+                switch (inputs[0].Name)
+                {
+                    case "attack_primary":
+                        RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", "primary_1");
+                        break;
+                    case "attack_secondary":
+                        RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", "secondary_1");
+                        break;
+                }
                 RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
                 MainAttackStart();
             }
@@ -43,7 +60,10 @@ public partial class PlayerUnit : Unit
         IsMoving = _movementInput != Vector2.Zero;
         
         AddMovement(_movementInput * MovementSpeed * (float)delta);
-        base._PhysicsProcess(delta);
+        
+        // Done
+        
+        base._PhysicsProcessSelf(delta);
     }
 
     public override void ProcessBodyRendering(double delta)
@@ -71,6 +91,8 @@ public partial class PlayerUnit : Unit
     public override void ProcessHandRendering(double delta)
     {
         base.ProcessHandRendering(delta);
+        
+        if (LockHandRotationWhenAttacking && IsAttackMainActive) return;
 
         var normalized = _mousePositionRelative.Normalized();
         var normalizedAngle = normalized.Angle();

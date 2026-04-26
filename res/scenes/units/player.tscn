@@ -116,7 +116,7 @@ input_1/break_loop_at_end = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_637op"]
-graph_offset = Vector2(-898.6311, 421.4643)
+graph_offset = Vector2(-1159.0156, -138.91641)
 nodes/output/position = Vector2(680, 500)
 nodes/TransitionBody/node = SubResource("AnimationNodeTransition_s6abk")
 nodes/TransitionBody/position = Vector2(-80, -260)
@@ -1110,6 +1110,23 @@ tracks/8/keys = {
 "method": &"MainAttackEnd"
 }]
 }
+tracks/9/type = "method"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("..")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"AttackSequenceAvailableStart"
+}, {
+"args": [],
+"method": &"AttackSequenceAvailableEnd"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_leypg"]
 resource_name = "hand_attack_secondary_1"
@@ -1445,6 +1462,7 @@ RenderHandOffset = NodePath("RenderRoot/HandRoot/HandOffset")
 RenderAnimationTree = NodePath("RenderRoot/AnimationTree")
 MovementSpeedBase = 120.0
 MovementSpeed = 120.0
+LockHandRotationWhenAttacking = true
 
 [node name="PositionRoot" type="Node2D" parent="." unique_id=717884564]
 
@@ -1463,17 +1481,17 @@ y_sort_enabled = true
 [node name="AnimationTree" type="AnimationTree" parent="RenderRoot" unique_id=1919286862]
 tree_root = SubResource("AnimationNodeBlendTree_637op")
 anim_player = NodePath("../AnimationPlayer")
-parameters/TransitionBody/current_state = ""
+parameters/TransitionBody/current_state = "idle"
 parameters/TransitionBody/transition_request = ""
-parameters/TransitionBody/current_index = -1
-parameters/TransitionHand/current_state = ""
+parameters/TransitionBody/current_index = 0
+parameters/TransitionHand/current_state = "idle"
 parameters/TransitionHand/transition_request = ""
-parameters/TransitionHand/current_index = -1
+parameters/TransitionHand/current_index = 0
 parameters/AdderFinal/add_amount = 1.0
 parameters/AdderCharacter/add_amount = 1.0
-parameters/TransitionLegs/current_state = ""
+parameters/TransitionLegs/current_state = "idle"
 parameters/TransitionLegs/transition_request = ""
-parameters/TransitionLegs/current_index = -1
+parameters/TransitionLegs/current_index = 0
 parameters/OneShotHandAttack/active = false
 parameters/OneShotHandAttack/internal_active = false
 parameters/OneShotHandAttack/request = 0
@@ -1715,6 +1733,9 @@ position = Vector2(0, -23.5)
 modulate = Color(0, 0, 0, 1)
 
 [node name="Weapon" type="Node2D" parent="RenderRoot/HandRoot/HandOffset/BorderRoot" unique_id=1592666539]
+position = Vector2(-2.0231209, 12.711876)
+rotation = -2.536206
+skew = -0.1954714
 
 [node name="Weapon" type="AnimatedSprite2D" parent="RenderRoot/HandRoot/HandOffset/BorderRoot/Weapon" unique_id=1900618281]
 position = Vector2(0, -16)
@@ -1722,17 +1743,24 @@ scale = Vector2(0.9999997, 0.9999997)
 sprite_frames = ExtResource("19_xtnnw")
 
 [node name="HandLeft" type="Sprite2D" parent="RenderRoot/HandRoot/HandOffset/BorderRoot" unique_id=340057711]
-position = Vector2(-2, 2.000002)
+position = Vector2(0.41850853, 12.015725)
+rotation = -2.536206
 scale = Vector2(1.0000001, 1.0000001)
+skew = -0.1954714
 texture = ExtResource("18_bh8n3")
 
 [node name="HandRight" type="Sprite2D" parent="RenderRoot/HandRoot/HandOffset/BorderRoot" unique_id=903263305]
-position = Vector2(3, -1)
+position = Vector2(-4.8884983, 11.921791)
+rotation = -2.536206
+skew = -0.1954714
 texture = ExtResource("18_bh8n3")
 
 [node name="ColorRoot" type="Node2D" parent="RenderRoot/HandRoot/HandOffset" unique_id=451862267]
 
 [node name="Weapon" type="Node2D" parent="RenderRoot/HandRoot/HandOffset/ColorRoot" unique_id=1106315150]
+position = Vector2(-2.0231209, 12.711876)
+rotation = -2.536206
+skew = -0.1954714
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/HandRoot/HandOffset/ColorRoot/Weapon" unique_id=1912416594]
 remote_path = NodePath("../../../BorderRoot/Weapon")
@@ -1743,7 +1771,9 @@ sprite_frames = ExtResource("21_xtnnw")
 
 [node name="HandRight" type="Sprite2D" parent="RenderRoot/HandRoot/HandOffset/ColorRoot" unique_id=290739156]
 modulate = Color(0.07058824, 0.16470589, 0.29411766, 1)
-position = Vector2(3, -1)
+position = Vector2(-4.8884983, 11.921791)
+rotation = -2.536206
+skew = -0.1954714
 texture = ExtResource("20_uqt1c")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/HandRoot/HandOffset/ColorRoot/HandRight" unique_id=1973941038]
@@ -1751,8 +1781,10 @@ remote_path = NodePath("../../../BorderRoot/HandRight")
 
 [node name="HandLeft" type="Sprite2D" parent="RenderRoot/HandRoot/HandOffset/ColorRoot" unique_id=912190849]
 modulate = Color(0.07058824, 0.16470589, 0.29411766, 1)
-position = Vector2(-2, 2.000002)
+position = Vector2(0.41850853, 12.015725)
+rotation = -2.536206
 scale = Vector2(1.0000001, 1.0000001)
+skew = -0.1954714
 texture = ExtResource("20_uqt1c")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/HandRoot/HandOffset/ColorRoot/HandLeft" unique_id=622737984]
@@ -1761,7 +1793,9 @@ remote_path = NodePath("../../../BorderRoot/HandLeft")
 [node name="ParticleRoot" type="Node2D" parent="RenderRoot/HandRoot/HandOffset" unique_id=670404519]
 
 [node name="WeaponSweetSpotStarParticle" type="GPUParticles2D" parent="RenderRoot/HandRoot/HandOffset/ParticleRoot" unique_id=1093096993]
-position = Vector2(0, -35)
+position = Vector2(-15.971728, 44.812286)
+rotation = -2.536206
+skew = -0.1954714
 emitting = false
 amount = 1
 texture = ExtResource("23_6aj8c")
@@ -1792,7 +1826,9 @@ position = Vector2(0, -21.5)
 shape = SubResource("RectangleShape2D_h1bgi")
 
 [node name="WeaponCollision" type="Area2D" parent="CollisionRoot" unique_id=1406952556]
-position = Vector2(23, -16)
+position = Vector2(20.97688, -3.288124)
+rotation = -2.536206
+skew = -0.1954714
 
 [node name="Hitbox1" type="CollisionShape2D" parent="CollisionRoot/WeaponCollision" unique_id=1972286862]
 position = Vector2(0, -12)
