@@ -13,7 +13,7 @@ public partial class PlayerUnit : Unit
 
     public override void _ProcessSelf(double delta)
     {
-        _mousePositionRelative = GetGlobalMousePosition() - PositionCenterRoot.GetGlobalPosition();
+        _mousePositionRelative = GetGlobalMousePosition() - TransformCenterRoot.GetGlobalPosition();
         
         // Done
         
@@ -40,20 +40,56 @@ public partial class PlayerUnit : Unit
             var inputs = InputBuffer.TakeGroup("attack_main");
             if (inputs.Count > 0)
             {
+                var transition = "";
                 switch (inputs[0].Name)
                 {
                     case "attack_primary":
-                        RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", "primary_1");
+                        transition = "primary_1";
                         break;
                     case "attack_secondary":
-                        RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", "secondary_1");
+                        transition = "secondary_1";
                         break;
                 }
-                RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
-                MainAttackStart();
+
+                if (transition != "")
+                {
+                    RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", transition);
+                    RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+                    MainAttackStart();
+                    TempTransitionName = transition;
+                }
             }
         }
-        
+        else if (IsAttackSequenceAvailable && !TempTransitionDone)
+        {
+            var inputs = InputBuffer.TakeGroup("attack_main");
+            if (inputs.Count > 0)
+            {
+                var transition = "";
+                switch (inputs[0].Name)
+                {
+                    case "attack_primary":
+                        if (TempTransitionName == "primary_1") transition = "primary_2";
+                        if (TempTransitionName == "primary_2")
+                        {
+                            transition = "secondary_1";
+                            TempTransitionDone = true;
+                        }
+                        break;
+                    case "attack_secondary":
+                        if (TempTransitionName is "primary_1" or "primary_2")
+                        {
+                            transition = "secondary_1";
+                            TempTransitionDone = true;
+                        }
+                        break;
+                }
+                RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", transition);
+                // RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
+                TempTransitionName = transition;
+            }
+        }
+
         // Movement
         
         _movementInput = Input.GetVector("move_left", "move_right", "move_up", "move_down");
@@ -70,7 +106,7 @@ public partial class PlayerUnit : Unit
     {
         base.ProcessBodyRendering(delta);
         
-        RenderBodyRoot.Scale = new Vector2(_mousePositionRelative.X < 0 ? -1 : 1, 1);
+        TransformBodyRoot.Scale = new Vector2(TransformHandRoot.Position.X < TransformCenterRoot.Position.X ? -1 : 1, 1);
 
         if (IsMoving)
         {
@@ -92,15 +128,19 @@ public partial class PlayerUnit : Unit
     {
         base.ProcessHandRendering(delta);
         
-        if (LockHandRotationWhenAttacking && IsAttackMainActive) return;
-
-        var normalized = _mousePositionRelative.Normalized();
-        var normalizedAngle = normalized.Angle();
+        var baseAngle = _mousePositionRelative.Angle();
+        var targetAngle = Mathf.LerpAngle(AttackHandRotationLockStart, baseAngle, AttackHandRotationLerp);
+        var normalized = Vector2.Right.Rotated(targetAngle);
         
-        PositionHandRoot.Position = new Vector2(normalized.X * PositionHandRootRangeX, normalized.Y * PositionHandRootRangeY);
-        PositionHandRoot.Scale = new Vector2(_mousePositionRelative.X < 0 ? -1 : 1, 1);
+        TransformHandRoot.Position = new Vector2(normalized.X * TransformHandRootRangeX, normalized.Y * TransformHandRootRangeY);
+        TransformHandRoot.Scale = new Vector2(TransformHandRoot.Position.X < 0 ? -1 : 1, 1);
+        TransformHandOffset.Rotation = TransformHandRoot.Position.X < 0 ? -targetAngle - Mathf.Pi : targetAngle;
+    }
 
-        RenderHandOffset.Position = PositionCenterRoot.Position;
-        RenderHandOffset.Rotation = _mousePositionRelative.X < 0 ? -normalizedAngle - Mathf.Pi : normalizedAngle;
+    public override void MainAttackStart()
+    {
+        base.MainAttackStart();
+        AttackHandRotationLockStart = _mousePositionRelative.Angle();
+        TempTransitionDone = false;
     }
 }

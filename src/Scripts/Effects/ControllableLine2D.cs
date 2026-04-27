@@ -14,7 +14,6 @@ public partial class ControllableLine2D : Line2D
         base._Process(delta);
         if (Target == null) return;
         
-        
         if (!KeepPushing)
         {
             RemovePoint(0);

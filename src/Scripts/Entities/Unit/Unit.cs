@@ -8,16 +8,17 @@ namespace Kaleidoscope.Scripts.Entities.Unit;
 public partial class Unit : CharacterBody2D
 {
     [ExportCategory("Position")]
-    [Export] protected Node2D PositionRoot;
-    [Export] protected Node2D PositionCenterRoot;
-    [Export] protected Node2D PositionHandRoot;
-    [Export] protected float PositionHandRootRangeX = 24f;
-    [Export] protected float PositionHandRootRangeY = 12f;
+    [Export] protected Node2D TransformRoot;
+    [Export] protected Node2D TransformCenterRoot;
+    [Export] protected Node2D TransformBodyRoot;
+    [Export] protected Node2D TransformHandRoot;
+    [Export] protected float TransformHandRootRangeX = 24f;
+    [Export] protected float TransformHandRootRangeY = 12f;
+    [Export] protected Node2D TransformHandOffset;
     
     [ExportCategory("Render")]
     [Export] protected Node2D RenderRoot;
     [Export] protected Node2D RenderBodyRoot;
-    [Export] protected Node2D RenderHandOffset;
     
     [ExportCategory("Render - Animation")]
     [Export] protected AnimationTree RenderAnimationTree;
@@ -44,11 +45,33 @@ public partial class Unit : CharacterBody2D
     [ExportCategory("Attack")]
     [Export] protected bool IsAttackMainActive;
     [Export] protected bool IsAttackSequenceAvailable;
-    [Export] protected bool LockHandRotationWhenAttacking;
+    [Export] protected float AttackHandRotationLockStart;
+    [Export] protected float AttackHandRotationLockMultiplier;
+    [Export] protected int AttackHandRotationLockRecoverFramesStart;
+    [Export] protected int AttackHandRotationLockRecoverFramesCurrent;
+    [Export] protected Curve AttackHandRotationRecoverCurve;
     
     [ExportCategory("External")]
     [Export] protected GameManager GameManager;
 
+    [ExportCategory("Misc")]
+    [Export] protected int FrameCounter;
+
+    protected string TempTransitionName;
+    protected bool TempTransitionDone;
+
+    protected float AttackHandRotationLerp
+    {
+        get
+        {
+            if (IsAttackMainActive)
+                return AttackHandRotationLockMultiplier;
+            if (AttackHandRotationLockRecoverFramesCurrent == 0)
+                return 1;
+            return AttackHandRotationLockMultiplier + (1 - AttackHandRotationLockMultiplier) * AttackHandRotationRecoverCurve.Sample((AttackHandRotationLockRecoverFramesStart - AttackHandRotationLockRecoverFramesCurrent) / (float)AttackHandRotationLockRecoverFramesStart);
+        }
+    }
+    
     public override void _Process(double delta)
     {
         base._Process(delta);
@@ -62,8 +85,8 @@ public partial class Unit : CharacterBody2D
 
     public virtual void _ProcessSelf(double delta)
     {
-        ProcessBodyRendering(delta);
         ProcessHandRendering(delta);
+        ProcessBodyRendering(delta);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -71,6 +94,10 @@ public partial class Unit : CharacterBody2D
         base._PhysicsProcess(delta);
      
         // Before process
+
+        FrameCounter++;
+        
+        if (!IsAttackMainActive) AttackHandRotationLockRecoverFramesCurrent--;
         
         InputBuffer.Process();
         
@@ -117,12 +144,14 @@ public partial class Unit : CharacterBody2D
         weaponSweetSpotActive = active;
     }
     
-    public void MainAttackStart()
+    public virtual void MainAttackStart()
     {
         IsAttackMainActive = true;
+        AttackHandRotationLockRecoverFramesStart = 30;
+        AttackHandRotationLockRecoverFramesCurrent = 30;
     }
     
-    public void MainAttackEnd()
+    public virtual void MainAttackEnd()
     {
         IsAttackMainActive = false;
     }
