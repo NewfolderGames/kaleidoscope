@@ -1,6 +1,6 @@
-# <center>Kaleidoscope</center>
+<h1 align="center">Kaleidoscope</h1>
 
-<center>Roguelike arena survival game</center>
+<div align="center">Roguelike arena survival game</div>
 
 ## Screenshots
 
