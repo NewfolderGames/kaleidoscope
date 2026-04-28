@@ -10,17 +10,14 @@ public partial class GameplayRenderer : ColorRect
 	[Export] private Viewport _worldViewport;
 	[Export] private ShaderMaterial _shaderMaterial;
 
+	static readonly StringName GAME_TEXTURE = new("game_texture");
+	static readonly StringName SIGHT_TEXTURE = new("sight_texture");
+	static readonly StringName WORLD_TEXTURE = new("world_texture");
+	
 	public override void _Ready()
 	{
-		// _gameViewport = GetViewport();
 		_shaderMaterial = GetMaterial() as ShaderMaterial;
 	}
-
-
-    
-    static readonly StringName GAME_TEXTURE = new StringName("game_texture);
-    static readonly StringName SIGHT_TEXTURE = new StringName("sight_texture);
-	static readonly StringName WORLD_TEXTURE = new StringName("world_texture);
 	
 	public override void _Process(double delta)
 	{
