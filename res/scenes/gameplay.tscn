@@ -8,6 +8,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3dldi"]
 shader = ExtResource("1_rtblp")
+shader_parameter/is_fog_of_war_enabled = true
 shader_parameter/fog_of_war_color_multiplier = 0.6
 
 [node name="Gameplay" type="CanvasLayer" unique_id=2036589524]
