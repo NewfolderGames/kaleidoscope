@@ -77,7 +77,7 @@ public partial class PlayerUnit : Unit
                         }
                         break;
                     case "attack_secondary":
-                        if (TempTransitionName is "primary_1" or "primary_2")
+                        if (TempTransitionName is "weapon/primary_1" or "primary_2")
                         {
                             transition = "secondary_1";
                             TempTransitionDone = true;
