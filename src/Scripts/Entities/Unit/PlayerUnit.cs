@@ -5,9 +5,6 @@ namespace Kaleidoscope.Scripts.Entities.Unit;
 
 public partial class PlayerUnit : Unit
 {
-    [ExportCategory("Movement")]
-    [Export] private Vector2 _movementInput;
-    
     [ExportCategory("Render States")]
     [Export] private Vector2 _mousePositionRelative;
 
@@ -34,68 +31,31 @@ public partial class PlayerUnit : Unit
         }
         
         // Attack
-
-        if (!IsAttackMainActive)
+        
+        if (!IsAttackMainActive || IsAttackSequenceAvailable)
         {
             var inputs = InputBuffer.TakeGroup("attack_main");
             if (inputs.Count > 0)
             {
-                var transition = "";
+                var sequence = !IsAttackMainActive ? "" : AttackSequence;
                 switch (inputs[0].Name)
                 {
                     case "attack_primary":
-                        transition = "primary_1";
+	                    sequence += "a";
                         break;
                     case "attack_secondary":
-                        transition = "secondary_1";
+	                    sequence += "b";
                         break;
                 }
-
-                if (transition != "")
-                {
-                    RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", transition);
-                    RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
-                    MainAttackStart();
-                    TempTransitionName = transition;
-                }
+                if (sequence != "") MainAttack(sequence);
             }
         }
-        else if (IsAttackSequenceAvailable && !TempTransitionDone)
-        {
-            var inputs = InputBuffer.TakeGroup("attack_main");
-            if (inputs.Count > 0)
-            {
-                var transition = "";
-                switch (inputs[0].Name)
-                {
-                    case "attack_primary":
-                        if (TempTransitionName == "primary_1") transition = "primary_2";
-                        if (TempTransitionName == "primary_2")
-                        {
-                            transition = "secondary_1";
-                            TempTransitionDone = true;
-                        }
-                        break;
-                    case "attack_secondary":
-                        if (TempTransitionName is "weapon/primary_1" or "primary_2")
-                        {
-                            transition = "secondary_1";
-                            TempTransitionDone = true;
-                        }
-                        break;
-                }
-                RenderAnimationTree.Set("parameters/TransitionHandAttack/transition_request", transition);
-                // RenderAnimationTree.Set("parameters/OneShotHandAttack/request", (int)AnimationNodeOneShot.OneShotRequest.Fire);
-                TempTransitionName = transition;
-            }
-        }
-
+        
         // Movement
         
-        _movementInput = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-        IsMoving = _movementInput != Vector2.Zero;
+        MovementInput = Input.GetVector("move_left", "move_right", "move_up", "move_down");
         
-        AddMovement(_movementInput * MovementSpeed * (float)delta);
+        AddDesiredMovement(MovementInput * MovementSpeed * (float)delta);
         
         // Done
         
@@ -107,20 +67,14 @@ public partial class PlayerUnit : Unit
         base.ProcessBodyRendering(delta);
         
         TransformBodyRoot.Scale = new Vector2(TransformHandRoot.Position.X < TransformCenterRoot.Position.X ? -1 : 1, 1);
-
-        if (IsMoving)
+        
+        if (IsMovementInputting)
         {
-            var isMovingAway = Mathf.Sign(_mousePositionRelative.X) != Mathf.Sign(_movementInput.X);
+            var isMovingAway = Mathf.Sign(_mousePositionRelative.X) != Mathf.Sign(MovementInput.X);
             var speed = (MovementSpeedBase > 0 ? MovementSpeed / MovementSpeedBase : 1) * RenderAnimationMovingSpeedMultiplier * (isMovingAway ? -1 : 1);
-            RenderAnimationTree.Set("parameters/TimeScaleBodyMoving/scale", speed);
-            RenderAnimationTree.Set("parameters/TimeScaleLegsMoving/scale", speed);
-            RenderAnimationTree.Set("parameters/TransitionBody/transition_request", "moving");
-            RenderAnimationTree.Set("parameters/TransitionLegs/transition_request", "moving");
-        }
-        else
-        {
-            RenderAnimationTree.Set("parameters/TransitionBody/transition_request", "idle");
-            RenderAnimationTree.Set("parameters/TransitionLegs/transition_request", "idle");
+            RenderAnimationTree.Set("parameters/BodyStateMachine/moving/TimeScale/scale", speed);
+            RenderAnimationTree.Set("parameters/LegsStateMachine/moving/TimeScale/scale", speed);
+            RenderAnimationTree.Set("parameters/WeaponTree/BaseStateMachine/moving/TimeScale/scale", speed);
         }
     }
     
@@ -137,10 +91,10 @@ public partial class PlayerUnit : Unit
         TransformHandOffset.Rotation = TransformHandRoot.Position.X < 0 ? -targetAngle - Mathf.Pi : targetAngle;
     }
 
-    public override void MainAttackStart()
+    public override void MainAttack(string sequence)
     {
-        base.MainAttackStart();
-        AttackHandRotationLockStart = _mousePositionRelative.Angle();
-        TempTransitionDone = false;
+        if (!IsAttackMainActive) AttackHandRotationLockStart = _mousePositionRelative.Angle();
+        
+        base.MainAttack(sequence);
     }
 }

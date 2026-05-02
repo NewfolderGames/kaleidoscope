@@ -1,0 +1,113 @@
+[gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://btpu0vhv2oxo3"]
+
+[ext_resource type="AnimationNodeStateMachine" uid="uid://eojeh73peh7" path="res://res/animations/nodes/state_machines/unit_weapon_weapon_1_base.tres" id="1_3umll"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3umll"]
+animation = &"weapon/attack_primary_1"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7tm13"]
+animation = &"weapon/attack_primary_2"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0wolh"]
+animation = &"weapon/attack_secondary_1"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7tm13"]
+advance_mode = 2
+
+[sub_resource type="Curve" id="Curve_o62lo"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tcxfb"]
+xfade_time = 0.05
+xfade_curve = SubResource("Curve_o62lo")
+advance_mode = 2
+advance_expression = "AttackSequence == \"ab\""
+
+[sub_resource type="Curve" id="Curve_4s8dw"]
+_data = [Vector2(0, 0.0050188303), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q33ly"]
+xfade_time = 0.05
+xfade_curve = SubResource("Curve_4s8dw")
+advance_mode = 2
+advance_expression = "AttackSequence == \"aa\""
+
+[sub_resource type="Curve" id="Curve_70alf"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tsm2m"]
+xfade_time = 0.05
+xfade_curve = SubResource("Curve_70alf")
+advance_mode = 2
+advance_expression = "AttackSequence == \"aab\""
+
+[sub_resource type="Curve" id="Curve_7quv1"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3byvw"]
+xfade_time = 0.6
+xfade_curve = SubResource("Curve_7quv1")
+priority = 2
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="Curve" id="Curve_hoip0"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wxsid"]
+xfade_time = 0.4
+xfade_curve = SubResource("Curve_hoip0")
+priority = 2
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="Curve" id="Curve_6hrvj"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_22fw5"]
+xfade_time = 0.4
+xfade_curve = SubResource("Curve_6hrvj")
+priority = 2
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="Curve" id="Curve_4yyu0"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_68d70"]
+xfade_time = 0.05
+xfade_curve = SubResource("Curve_4yyu0")
+advance_mode = 2
+advance_expression = "IsAttackMainActive == true && AttackSequence == \"b\""
+
+[sub_resource type="Curve" id="Curve_pbggu"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pxq0w"]
+xfade_time = 0.02
+xfade_curve = SubResource("Curve_pbggu")
+advance_mode = 2
+advance_expression = "IsAttackMainActive == true && AttackSequence == \"a\""
+
+[resource]
+reset_ends = true
+states/BaseStateMachine/node = ExtResource("1_3umll")
+states/BaseStateMachine/position = Vector2(115, 100)
+states/End/position = Vector2(502, 100)
+states/Start/position = Vector2(-208, 100)
+states/attack_primary_1/node = SubResource("AnimationNodeAnimation_3umll")
+states/attack_primary_1/position = Vector2(127, 268)
+states/attack_primary_2/node = SubResource("AnimationNodeAnimation_7tm13")
+states/attack_primary_2/position = Vector2(-83, 352)
+states/attack_secondary_1/node = SubResource("AnimationNodeAnimation_0wolh")
+states/attack_secondary_1/position = Vector2(343, 352)
+transitions = ["Start", "BaseStateMachine", SubResource("AnimationNodeStateMachineTransition_7tm13"), "attack_primary_1", "attack_secondary_1", SubResource("AnimationNodeStateMachineTransition_tcxfb"), "attack_primary_1", "attack_primary_2", SubResource("AnimationNodeStateMachineTransition_q33ly"), "attack_primary_2", "attack_secondary_1", SubResource("AnimationNodeStateMachineTransition_tsm2m"), "attack_primary_2", "BaseStateMachine", SubResource("AnimationNodeStateMachineTransition_3byvw"), "attack_secondary_1", "BaseStateMachine", SubResource("AnimationNodeStateMachineTransition_wxsid"), "attack_primary_1", "BaseStateMachine", SubResource("AnimationNodeStateMachineTransition_22fw5"), "BaseStateMachine", "attack_secondary_1", SubResource("AnimationNodeStateMachineTransition_68d70"), "BaseStateMachine", "attack_primary_1", SubResource("AnimationNodeStateMachineTransition_pxq0w")]
+graph_offset = Vector2(-817, -217)

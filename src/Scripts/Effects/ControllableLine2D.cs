@@ -14,11 +14,11 @@ public partial class ControllableLine2D : Line2D
         base._Process(delta);
         if (Target == null) return;
         
-        if (!KeepPushing)
+        if (!KeepPushing && Points.Length > 0)
         {
-            RemovePoint(0);
-            if (Points.Length > _maxPoints) RemovePoint(0);
+            RemovePoint(Points.Length - 1);
+            if (Points.Length > _maxPoints) RemovePoint(Points.Length - 1);
         }
-        AddPoint(Target.GetGlobalPosition() - GetGlobalPosition());
+        AddPoint(Target.GetGlobalPosition() - GetGlobalPosition(), 0);
     }
 }

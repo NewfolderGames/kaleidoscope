@@ -1,0 +1,28 @@
+[gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://eojeh73peh7"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6q8j1"]
+animation = &"weapon/idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u75fv"]
+animation = &"weapon/moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lvnik"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_58uof"]
+advance_mode = 2
+advance_expression = "IsMovementInputting == true"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jfisb"]
+advance_mode = 2
+advance_expression = "IsMovementInputting == false"
+
+[resource]
+states/End/position = Vector2(751, 100)
+states/Start/position = Vector2(208, 100)
+states/idle/node = SubResource("AnimationNodeAnimation_6q8j1")
+states/idle/position = Vector2(364, 100)
+states/moving/node = SubResource("AnimationNodeAnimation_u75fv")
+states/moving/position = Vector2(574, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_lvnik"), "idle", "moving", SubResource("AnimationNodeStateMachineTransition_58uof"), "moving", "idle", SubResource("AnimationNodeStateMachineTransition_jfisb")]
+graph_offset = Vector2(-435, -155)
