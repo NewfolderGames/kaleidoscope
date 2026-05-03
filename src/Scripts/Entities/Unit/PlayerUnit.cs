@@ -10,15 +10,15 @@ public partial class PlayerUnit : Unit
 
     public override void _ProcessSelf(double delta)
     {
-        _mousePositionRelative = GetGlobalMousePosition() - TransformCenterRoot.GetGlobalPosition();
-        
-        // Done
-        
         base._ProcessSelf(delta);
+
+        _mousePositionRelative = GetGlobalMousePosition() - TransformCenterRoot.GetGlobalPosition();
     }
 
     public override void _PhysicsProcessSelf(double delta)
     {
+        base._PhysicsProcessSelf(delta);
+
         // Input
 
         if (Input.IsActionJustPressed("attack_primary"))
@@ -56,10 +56,6 @@ public partial class PlayerUnit : Unit
         MovementInput = Input.GetVector("move_left", "move_right", "move_up", "move_down");
         
         AddDesiredMovement(MovementInput * MovementSpeed * (float)delta);
-        
-        // Done
-        
-        base._PhysicsProcessSelf(delta);
     }
 
     public override void ProcessBodyRendering(double delta)

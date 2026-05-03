@@ -42,9 +42,9 @@ public partial class Unit : CharacterBody2D
 	
 	[ExportCategory("Weapon")]
 	[Export] protected Weapon Weapon;
-	[Export] protected bool weaponSweetSpotActive;
-	[Export] protected float weaponDamageMultiplerBase = 1f;
-	[Export] protected float weaponDamageSweetSpotMultiplierBase = 1f;
+	[Export] protected bool WeaponSweetSpotActive;
+	[Export] protected float WeaponDamageMultiplierBase = 1f;
+	[Export] protected float WeaponDamageSweetSpotMultiplierBase = 1f;
 
 	[ExportCategory("Attack")]
 	[Export] protected bool IsAttackMainActive;
@@ -52,6 +52,7 @@ public partial class Unit : CharacterBody2D
 	[ExportCategory("Attack - Sequence")]
 	[Export] protected bool IsAttackSequenceAvailable;
 	[Export] protected string AttackSequence;
+	[Export] protected int AttackSequenceNumber;
 	
 	[ExportCategory("Attack - Rotation")]
 	[Export] protected float AttackHandRotationLockStart;
@@ -65,6 +66,10 @@ public partial class Unit : CharacterBody2D
 
 	[ExportCategory("Misc")]
 	[Export] protected int FrameCounter;
+
+	[ExportCategory("Debug")]
+	[Export] protected bool DebugEnabled;
+	[Export] protected Label DebugAttackSequenceLabel;
 
 	protected string TempTransitionName;
 	protected bool TempTransitionDone;
@@ -95,12 +100,23 @@ public partial class Unit : CharacterBody2D
 		// Process
 		
 		_ProcessSelf(delta);
+
+		// Process After
+
+		ProcessHandRendering(delta);
+		ProcessBodyRendering(delta);
+
+		// Debug
+
+		if (DebugEnabled)
+		{
+			DebugAttackSequenceLabel.Text = AttackSequence;
+		}
 	}
 
 	public virtual void _ProcessSelf(double delta)
 	{
-		ProcessHandRendering(delta);
-		ProcessBodyRendering(delta);
+
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -172,7 +188,7 @@ public partial class Unit : CharacterBody2D
 	
 	public void SetWeaponSweetSpotActive(bool active)
 	{
-		weaponSweetSpotActive = active;
+		WeaponSweetSpotActive = active;
 	}
 	
 	public virtual void MainAttack(string sequence)
@@ -181,6 +197,8 @@ public partial class Unit : CharacterBody2D
 
 		IsAttackSequenceAvailable = false;
 		AttackSequence = sequence;
+		if (!IsAttackMainActive) AttackSequenceNumber = 0;
+		AttackSequenceNumber++;
 		
 		// Rotation Lock
 		
