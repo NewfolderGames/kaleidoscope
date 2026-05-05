@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://s03lvrk502nx"]
 
 [ext_resource type="Texture2D" uid="uid://cru3335f6t2jl" path="res://res/textures/background/plain.png" id="1_4x38s"]
-[ext_resource type="Texture2D" uid="uid://d1ag5fqvt6320" path="res://res/textures/player/player.png" id="2_t780s"]
+[ext_resource type="Texture2D" uid="uid://d1ag5fqvt6320" path="res://res/textures/entities/player/player.png" id="2_t780s"]
 [ext_resource type="Texture2D" uid="uid://bmn1rceprutij" path="res://res/textures/weapons/sword.png" id="3_20r78"]
-[ext_resource type="Texture2D" uid="uid://cjvyppcf5as0v" path="res://res/textures/player/player_hand.png" id="4_cv2ct"]
+[ext_resource type="Texture2D" uid="uid://cjvyppcf5as0v" path="res://res/textures/entities/player/player.hand.png" id="4_cv2ct"]
 [ext_resource type="Texture2D" uid="uid://cxwn531ihmlhe" path="res://res/textures/background/plain_border.png" id="5_kweeu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b8435"]

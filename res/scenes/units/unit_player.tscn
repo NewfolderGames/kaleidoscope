@@ -1,0 +1,801 @@
+[gd_scene format=3 uid="uid://dfc01w0eleew5"]
+
+[ext_resource type="PackedScene" uid="uid://bkae3pkiy6w1n" path="res://res/scenes/units/unit.tscn" id="1_1powe"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://btpu0vhv2oxo3" path="res://res/animations/nodes/state_machines/unit_weapon_weapon_1.tres" id="2_dqrda"]
+[ext_resource type="Script" uid="uid://bfd8ao35sde8h" path="res://src/Scripts/Entities/Unit/PlayerUnit.cs" id="2_f0eav"]
+[ext_resource type="AnimationLibrary" uid="uid://cpe5fwwtm1hh8" path="res://res/animations/libraries/unit_entity_player_body.res" id="3_q4xd3"]
+[ext_resource type="SpriteFrames" uid="uid://b4hstmsn0shm1" path="res://res/textures/entities/player/player.ribbon.tres" id="3_rf8uo"]
+[ext_resource type="SpriteFrames" uid="uid://bpmb2vcj34b0" path="res://res/textures/entities/player/player.tail.tres" id="4_kj0i6"]
+[ext_resource type="AnimationLibrary" uid="uid://dxk1d1f1rch12" path="res://res/animations/libraries/unit_entity_player_hand.res" id="4_qbtxi"]
+[ext_resource type="AnimationLibrary" uid="uid://dn53dvp8l2krn" path="res://res/animations/libraries/unit_entity_player_legs.res" id="5_7ab3a"]
+[ext_resource type="SpriteFrames" uid="uid://d1a76qma6nxt1" path="res://res/textures/entities/player/player.ear_left.tres" id="5_e6fc4"]
+[ext_resource type="SpriteFrames" uid="uid://btwj2wvaobb5y" path="res://res/textures/entities/player/player.ear_right.tres" id="6_gyhx4"]
+[ext_resource type="SpriteFrames" uid="uid://cvmmkneeo2tiq" path="res://res/textures/entities/player/player.legs.tres" id="7_1eoaf"]
+[ext_resource type="SpriteFrames" uid="uid://2vbn5uj767d5" path="res://res/textures/entities/player/player.face.tres" id="9_cgpdr"]
+[ext_resource type="SpriteFrames" uid="uid://cf0q018eg01bn" path="res://res/textures/entities/player/player.head.tres" id="9_nutv7"]
+[ext_resource type="SpriteFrames" uid="uid://r8q8vt1asvcn" path="res://res/textures/entities/player/player.hand.tres" id="10_nutv7"]
+[ext_resource type="SpriteFrames" uid="uid://ime7lqnu6odu" path="res://res/textures/entities/player/player.body.tres" id="11_sqi83"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f0eav"]
+resource_local_to_scene = true
+size = Vector2(24, 6)
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_637op"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_egel7"]
+animation = &"unit_body/idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6132g"]
+animation = &"unit_body/moving"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_egel7"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_6q8j1"]
+graph_offset = Vector2(-658, -168)
+nodes/output/position = Vector2(220, 100)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_6132g")
+nodes/Animation/position = Vector2(-160, 100)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_egel7")
+nodes/TimeScale/position = Vector2(40, 100)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u75fv"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lvnik"]
+advance_mode = 2
+advance_expression = "IsMovementInputting == true"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_58uof"]
+advance_mode = 2
+advance_expression = "IsMovementInputting == false"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_jfisb"]
+states/idle/node = SubResource("AnimationNodeAnimation_egel7")
+states/idle/position = Vector2(386, 100)
+states/moving/node = SubResource("AnimationNodeBlendTree_6q8j1")
+states/moving/position = Vector2(552, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_u75fv"), "idle", "moving", SubResource("AnimationNodeStateMachineTransition_lvnik"), "moving", "idle", SubResource("AnimationNodeStateMachineTransition_58uof")]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_pqha3"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8d84r"]
+animation = &"unit_legs/idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u8nhe"]
+animation = &"unit_legs/moving"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_rbpqj"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_6cl0r"]
+graph_offset = Vector2(-974.0923, -57.95514)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_u8nhe")
+nodes/Animation/position = Vector2(-100, 140)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_rbpqj")
+nodes/TimeScale/position = Vector2(120, 140)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7iic7"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ocm64"]
+advance_mode = 2
+advance_expression = "IsMovementInputting == true"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_41yt4"]
+advance_mode = 2
+advance_expression = "IsMovementInputting == false"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ep4kf"]
+states/Start/position = Vector2(217, 100)
+states/idle/node = SubResource("AnimationNodeAnimation_8d84r")
+states/idle/position = Vector2(333, 100)
+states/moving/node = SubResource("AnimationNodeBlendTree_6cl0r")
+states/moving/position = Vector2(463, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_7iic7"), "idle", "moving", SubResource("AnimationNodeStateMachineTransition_ocm64"), "moving", "idle", SubResource("AnimationNodeStateMachineTransition_41yt4")]
+graph_offset = Vector2(-386, -168)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_e6fc4"]
+resource_local_to_scene = true
+graph_offset = Vector2(-525.6758, 464.71484)
+nodes/output/position = Vector2(760, 540)
+nodes/Add/node = SubResource("AnimationNodeAdd2_637op")
+nodes/Add/position = Vector2(600, 460)
+nodes/CharacterAdd/node = SubResource("AnimationNodeAdd2_pqha3")
+nodes/CharacterAdd/position = Vector2(360, 460)
+nodes/WeaponStateMachine/node = ExtResource("2_dqrda")
+nodes/WeaponStateMachine/position = Vector2(340, 740)
+nodes/LegsStateMachine/node = SubResource("AnimationNodeStateMachine_ep4kf")
+nodes/LegsStateMachine/position = Vector2(100, 620)
+nodes/BodyStateMachine/node = SubResource("AnimationNodeStateMachine_jfisb")
+nodes/BodyStateMachine/position = Vector2(100, 360)
+node_connections = [&"output", 0, &"Add", &"Add", 0, &"CharacterAdd", &"Add", 1, &"WeaponStateMachine", &"CharacterAdd", 0, &"BodyStateMachine", &"CharacterAdd", 1, &"LegsStateMachine"]
+
+[sub_resource type="Animation" id="Animation_sqi83"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../TransformRoot/HandRoot/HandOffset/Weapon/WeaponRemoteTransform:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../TransformRoot/HandRoot/HandOffset/Weapon/WeaponRemoteTransform:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("DisplayForegroundRoot/BodyRoot/Main/Legs:animation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("DisplayForegroundRoot/BodyRoot/Main/_Border/Legs:animation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default:border"]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform:scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:scale")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.0112499, 0.98875004)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("DisplayForegroundRoot/BodyRoot/Main/Legs:frame")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("DisplayForegroundRoot/BodyRoot/Main/_Border/Legs:frame")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("../TransformRoot/BodyRoot/Legs/LegsRemoteTransform:position")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("../TransformRoot/BodyRoot/Legs/LegsRemoteTransform:scale")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform:rotation")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft/EarLeftRemoteTransform:skew")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight/EarRightRemoteTransform:skew")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon/RibbonRemoteTransform:skew")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform:skew")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Tail/TailRemoteTransform:rotation")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Tail/TailRemoteTransform:scale")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Tail/TailRemoteTransform:skew")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Tail/TailRemoteTransform:position")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Tail/TailRemoteTransform/TailRibbon/TailRibbonRemoteTransform:rotation")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("../TransformRoot/BodyRoot/BodyRemoteTransform/Tail/TailRemoteTransform/TailRibbon/TailRibbonRemoteTransform:scale")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("../TransformRoot/HandRoot/HandOffset/Weapon/WeaponRemoteTransform:scale")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("../TransformRoot/HandRoot/HandOffset/Weapon/WeaponRemoteTransform:skew")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("DisplayForegroundRoot/HandRoot/Weapon:modulate")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("EffectBackgroundRoot/WeaponTrail:KeepPushing")
+tracks/34/interp = 1
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kj0i6"]
+_data = {
+&"RESET": SubResource("Animation_sqi83")
+}
+
+[node name="Unit_Player" unique_id=1238900979 instance=ExtResource("1_1powe")]
+script = ExtResource("2_f0eav")
+_mousePositionRelative = Vector2(0, 0)
+
+[node name="BodyRoot" parent="TransformRoot" parent_id_path=PackedInt32Array(879819342) index="1" unique_id=1216331950]
+position = Vector2(0, -13)
+
+[node name="Head" type="Node2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform" parent_id_path=PackedInt32Array(422703718) index="0" unique_id=264078775]
+position = Vector2(0, -15)
+
+[node name="HeadRemoteTransform" type="RemoteTransform2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform/Head" index="0" unique_id=683832601]
+remote_path = NodePath("../../../../../RenderRoot/DisplayForegroundRoot/BodyRoot/Main/Head")
+
+[node name="EarLeft" type="Node2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform" index="0" unique_id=552309500]
+position = Vector2(4, -13)
+
+[node name="EarLeftRemoteTransform" type="RemoteTransform2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/EarLeft" index="0" unique_id=1569900754]
+scale = Vector2(1.0112499, 0.98875004)
+remote_path = NodePath("../../../../../../../RenderRoot/DisplayForegroundRoot/BodyRoot/Main/EarLeft")
+
+[node name="EarRight" type="Node2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform" index="1" unique_id=1384476720]
+position = Vector2(-4, -13.000002)
+
+[node name="EarRightRemoteTransform" type="RemoteTransform2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/EarRight" index="0" unique_id=2095181793]
+remote_path = NodePath("../../../../../../../RenderRoot/DisplayForegroundRoot/BodyRoot/Main/EarRight")
+
+[node name="Ribbon" type="Node2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform" index="2" unique_id=1293667139]
+position = Vector2(2, -12)
+rotation = 0.1308997
+
+[node name="RibbonRemoteTransform" type="RemoteTransform2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform/Head/HeadRemoteTransform/Ribbon" index="0" unique_id=831130248]
+remote_path = NodePath("../../../../../../../RenderRoot/DisplayForegroundRoot/BodyRoot/Main/Ribbon")
+
+[node name="Tail" type="Node2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform" parent_id_path=PackedInt32Array(422703718) index="1" unique_id=467916329]
+position = Vector2(-2, 0)
+
+[node name="TailRemoteTransform" type="RemoteTransform2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform/Tail" index="0" unique_id=699673137]
+remote_path = NodePath("../../../../../RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/Tail")
+
+[node name="TailRibbon" type="Node2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform/Tail/TailRemoteTransform" index="0" unique_id=1855853529]
+position = Vector2(-18.274, -12.249)
+rotation = -0.8883726
+
+[node name="TailRibbonRemoteTransform" type="RemoteTransform2D" parent="TransformRoot/BodyRoot/BodyRemoteTransform/Tail/TailRemoteTransform/TailRibbon" index="0" unique_id=1647781740]
+remote_path = NodePath("../../../../../../../RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/TailRibbon")
+
+[node name="WeaponTrailTarget" parent="RenderRoot/EffectBackgroundRoot/WeaponTrail" parent_id_path=PackedInt32Array(598270904) index="0" unique_id=1725693746]
+position = Vector2(7.6332474, -23.5401)
+rotation = 0.28635377
+
+[node name="Tail" type="Node2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot" parent_id_path=PackedInt32Array(1803451428) index="0" unique_id=1365174321]
+
+[node name="_Border" type="Node2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail" index="0" unique_id=586883358]
+modulate = Color(0, 0, 0, 1)
+show_behind_parent = true
+
+[node name="Tail" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/_Border" index="0" unique_id=768475917]
+position = Vector2(-2.0299103, -12.2514925)
+rotation = -0.6518388
+scale = Vector2(0.9876891, 1.01241)
+skew = -0.029064536
+sprite_frames = ExtResource("4_kj0i6")
+animation = &"default:border"
+
+[node name="TailRibbon" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/_Border" index="1" unique_id=769783376]
+modulate = Color(0.8862745, 0.26666668, 0.47058824, 1)
+position = Vector2(-24.184717, -10.937703)
+rotation = -1.6035588
+scale = Vector2(0.980126, 1.0202115)
+skew = 0.031609178
+sprite_frames = ExtResource("3_rf8uo")
+animation = &"default:border"
+
+[node name="Tail" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail" index="1" unique_id=2032356793]
+position = Vector2(-2.0299103, -12.2514925)
+rotation = -0.6518388
+scale = Vector2(0.9876891, 1.01241)
+skew = -0.029064536
+sprite_frames = ExtResource("4_kj0i6")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/Tail" index="0" unique_id=1486484226]
+remote_path = NodePath("../../_Border/Tail")
+
+[node name="TailOverlayRibbon" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/Tail" index="1" unique_id=1568257022]
+modulate = Color(0.8862745, 0.26666668, 0.47058824, 1)
+scale = Vector2(1, 1.0000001)
+sprite_frames = ExtResource("4_kj0i6")
+animation = &"default:overlay"
+
+[node name="TailRibbon" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail" index="2" unique_id=1041567864]
+modulate = Color(0.8862745, 0.26666668, 0.47058824, 1)
+position = Vector2(-24.184717, -10.937703)
+rotation = -1.6035588
+scale = Vector2(0.980126, 1.0202115)
+skew = 0.031609178
+sprite_frames = ExtResource("3_rf8uo")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/TailRibbon" index="0" unique_id=1418127413]
+remote_path = NodePath("../../_Border/TailRibbon")
+
+[node name="Legs" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="0" unique_id=731758092]
+position = Vector2(0, 0)
+sprite_frames = ExtResource("7_1eoaf")
+animation = &"default:border"
+
+[node name="EarLeft" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="1" unique_id=1756579942]
+position = Vector2(4.449589, -40.115734)
+rotation = 0.0890719
+scale = Vector2(1.0089296, 0.98730373)
+skew = 0.008079529
+sprite_frames = ExtResource("5_e6fc4")
+animation = &"default:border"
+
+[node name="EarRight" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="2" unique_id=1836719299]
+position = Vector2(-3.7446558, -40.323364)
+rotation = -0.0383934
+scale = Vector2(1.0131791, 0.9865737)
+skew = -0.004985571
+sprite_frames = ExtResource("6_gyhx4")
+animation = &"default:border"
+
+[node name="Head" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="3" unique_id=1657686302]
+position = Vector2(0, -27.116936)
+rotation = 0.025332911
+scale = Vector2(1.0246092, 0.9756759)
+skew = 0.0015610456
+sprite_frames = ExtResource("9_nutv7")
+animation = &"default:border"
+
+[node name="Ribbon" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="4" unique_id=760191131]
+position = Vector2(2.30853, -38.437843)
+rotation = 0.1500713
+scale = Vector2(1.023598, 0.9767369)
+skew = 0.014177561
+sprite_frames = ExtResource("3_rf8uo")
+animation = &"default:border"
+
+[node name="Body" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="5" unique_id=1372087991]
+position = Vector2(0, -12.2514925)
+scale = Vector2(1.0149552, 0.9850448)
+sprite_frames = ExtResource("11_sqi83")
+
+[node name="Legs" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="1" unique_id=1365554094]
+position = Vector2(0, 0)
+sprite_frames = ExtResource("7_1eoaf")
+
+[node name="EarLeft" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="2" unique_id=1169930021]
+position = Vector2(4.449589, -40.115734)
+rotation = 0.0890719
+scale = Vector2(1.0089296, 0.98730373)
+skew = 0.008079529
+sprite_frames = ExtResource("5_e6fc4")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/EarLeft" index="0" unique_id=335373051]
+remote_path = NodePath("../../_Border/EarLeft")
+
+[node name="EarRight" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="3" unique_id=521352816]
+position = Vector2(-3.7446558, -40.323364)
+rotation = -0.0383934
+scale = Vector2(1.0131791, 0.9865737)
+skew = -0.004985571
+sprite_frames = ExtResource("6_gyhx4")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/EarRight" index="0" unique_id=279424782]
+remote_path = NodePath("../../_Border/EarRight")
+
+[node name="Head" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="4" unique_id=1574008232]
+position = Vector2(0, -27.116936)
+rotation = 0.025332911
+scale = Vector2(1.0246092, 0.9756759)
+skew = 0.0015610456
+sprite_frames = ExtResource("9_nutv7")
+
+[node name="Face" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/Head" index="0" unique_id=1295870920]
+position = Vector2(1, 1)
+sprite_frames = ExtResource("9_cgpdr")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/Head" index="1" unique_id=1290491048]
+remote_path = NodePath("../../_Border/Head")
+
+[node name="Ribbon" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="5" unique_id=1137780374]
+modulate = Color(0.88816196, 0.26720858, 0.47181815, 1)
+position = Vector2(2.30853, -38.437843)
+rotation = 0.1500713
+scale = Vector2(1.023598, 0.9767369)
+skew = 0.014177561
+sprite_frames = ExtResource("3_rf8uo")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/Ribbon" index="0" unique_id=1199543079]
+remote_path = NodePath("../../_Border/Ribbon")
+
+[node name="Body" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="6" unique_id=86658439]
+modulate = Color(0.2, 0.38431373, 0.67058825, 1)
+position = Vector2(0, -12.2514925)
+scale = Vector2(1.0149552, 0.9850448)
+sprite_frames = ExtResource("11_sqi83")
+
+[node name="Face" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/Body" index="1" unique_id=1477113852]
+visible = false
+
+[node name="Weapon" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="0" unique_id=1592666539]
+position = Vector2(-22.004478, -0.997015)
+rotation = 0.28635377
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="HandLeft" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="1" unique_id=2106498155]
+position = Vector2(-24.487951, 0.35663414)
+rotation = 0.28635377
+sprite_frames = ExtResource("10_nutv7")
+animation = &"default:border"
+
+[node name="HandRight" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="2" unique_id=2088741716]
+position = Vector2(-18.844181, -1.1089268)
+rotation = 0.28635377
+scale = Vector2(0.99999994, 0.99999994)
+sprite_frames = ExtResource("10_nutv7")
+animation = &"default:border"
+
+[node name="Weapon" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="1" unique_id=1106315150]
+position = Vector2(0.99552155, -16.997015)
+rotation = 0.28635377
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="HandLeft" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="2" unique_id=2116172918]
+position = Vector2(-1.4879513, -15.643366)
+rotation = 0.28635377
+sprite_frames = ExtResource("10_nutv7")
+
+[node name="HandRight" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="3" unique_id=248107714]
+position = Vector2(4.155819, -17.108927)
+rotation = 0.28635377
+scale = Vector2(0.99999994, 0.99999994)
+sprite_frames = ExtResource("10_nutv7")
+
+[node name="WeaponSweetSpotStarParticle" parent="RenderRoot/EffectRoot" parent_id_path=PackedInt32Array(1293805309) index="0" unique_id=1093096993]
+position = Vector2(33.881493, -50.571823)
+rotation = 0.28635377
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="CollisionBase" parent="." index="2" unique_id=440577969]
+shape = SubResource("RectangleShape2D_f0eav")
+
+[node name="WeaponCollision" parent="CollisionRoot" parent_id_path=PackedInt32Array(1096290881) index="1" unique_id=1406952556]
+position = Vector2(23.995522, -16.997015)
+rotation = 0.28635377
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="AnimationTree" parent="." index="4" unique_id=1919286862]
+active = true
+tree_root = SubResource("AnimationNodeBlendTree_e6fc4")
+
+[node name="AnimationPlayer" parent="." index="5" unique_id=1767796383]
+active = true
+libraries/ = SubResource("AnimationLibrary_kj0i6")
+libraries/unit_body = ExtResource("3_q4xd3")
+libraries/unit_hand = ExtResource("4_qbtxi")
+libraries/unit_legs = ExtResource("5_7ab3a")
+
+[node name="DebugLabel" parent="." index="6" unique_id=1920509320]
+visible = true

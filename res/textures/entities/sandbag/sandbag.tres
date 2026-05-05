@@ -1,0 +1,23 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://1sg6w6qbvx74"]
+
+[ext_resource type="Texture2D" uid="uid://bv8w4dcb4u2xs" path="res://res/textures/entities/sandbag/sandbag.png" id="1_evdeg"]
+[ext_resource type="Texture2D" uid="uid://cca5exge13y6i" path="res://res/textures/entities/sandbag/sandbag.border.png" id="2_8lm16"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_evdeg")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8lm16")
+}],
+"loop": 1,
+"name": &"default:border",
+"speed": 5.0
+}]

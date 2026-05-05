@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c672npqqx7j4d"]
+
+[ext_resource type="Texture2D" uid="uid://dk11i077gdehj" path="res://res/textures/entities/sandbag/sandbag.face.png" id="1_u0ns1"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_u0ns1")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]

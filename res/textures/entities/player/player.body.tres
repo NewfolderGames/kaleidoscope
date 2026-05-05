@@ -1,0 +1,23 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://ime7lqnu6odu"]
+
+[ext_resource type="Texture2D" uid="uid://idjconatc6sx" path="res://res/textures/entities/player/player.body.png" id="1_pumu2"]
+[ext_resource type="Texture2D" uid="uid://berwfe5w6n3yr" path="res://res/textures/entities/player/player.body.border.png" id="2_4ixye"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_pumu2")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4ixye")
+}],
+"loop": 1,
+"name": &"default:border",
+"speed": 5.0
+}]
