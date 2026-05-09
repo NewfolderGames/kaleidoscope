@@ -93,4 +93,10 @@ public partial class PlayerUnit : Unit
         
         base.MainAttack(sequence);
     }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        GD.Print("PlayerUnit disposed");
+    }
 }

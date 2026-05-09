@@ -274,4 +274,9 @@ public partial class Unit : CharacterBody2D
 
 	}
 
+	protected override void Dispose(bool disposing)
+	{
+		base.Dispose(disposing);
+		GD.Print("Unit disposed");
+	}
 }
