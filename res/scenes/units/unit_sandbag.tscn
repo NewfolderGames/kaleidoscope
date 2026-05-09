@@ -1,0 +1,159 @@
+[gd_scene format=3 uid="uid://b4jh0su7bb043"]
+
+[ext_resource type="PackedScene" uid="uid://bkae3pkiy6w1n" path="res://res/scenes/units/unit.tscn" id="1_bnr5i"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://btpu0vhv2oxo3" path="res://res/animations/nodes/state_machines/unit_weapon_weapon_1.tres" id="2_ee2c0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ee2c0"]
+resource_local_to_scene = true
+size = Vector2(24, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bnr5i"]
+size = Vector2(24, 46)
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_637op"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_egel7"]
+animation = &"unit_body/idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6132g"]
+animation = &"unit_body/moving"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_egel7"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_6q8j1"]
+graph_offset = Vector2(-658, -168)
+nodes/output/position = Vector2(220, 100)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_6132g")
+nodes/Animation/position = Vector2(-160, 100)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_egel7")
+nodes/TimeScale/position = Vector2(40, 100)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u75fv"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lvnik"]
+advance_mode = 2
+advance_expression = "IsMovementInputting == true"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_58uof"]
+advance_mode = 2
+advance_expression = "IsMovementInputting == false"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_jfisb"]
+states/idle/node = SubResource("AnimationNodeAnimation_egel7")
+states/idle/position = Vector2(386, 100)
+states/moving/node = SubResource("AnimationNodeBlendTree_6q8j1")
+states/moving/position = Vector2(552, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_u75fv"), "idle", "moving", SubResource("AnimationNodeStateMachineTransition_lvnik"), "moving", "idle", SubResource("AnimationNodeStateMachineTransition_58uof")]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_pqha3"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8d84r"]
+animation = &"unit_legs/idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u8nhe"]
+animation = &"unit_legs/moving"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_rbpqj"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_6cl0r"]
+graph_offset = Vector2(-974.0923, -57.95514)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_u8nhe")
+nodes/Animation/position = Vector2(-100, 140)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_rbpqj")
+nodes/TimeScale/position = Vector2(120, 140)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7iic7"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ocm64"]
+advance_mode = 2
+advance_expression = "IsMovementInputting == true"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_41yt4"]
+advance_mode = 2
+advance_expression = "IsMovementInputting == false"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ep4kf"]
+states/Start/position = Vector2(217, 100)
+states/idle/node = SubResource("AnimationNodeAnimation_8d84r")
+states/idle/position = Vector2(333, 100)
+states/moving/node = SubResource("AnimationNodeBlendTree_6cl0r")
+states/moving/position = Vector2(463, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_7iic7"), "idle", "moving", SubResource("AnimationNodeStateMachineTransition_ocm64"), "moving", "idle", SubResource("AnimationNodeStateMachineTransition_41yt4")]
+graph_offset = Vector2(-386, -168)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_54t4a"]
+resource_local_to_scene = true
+graph_offset = Vector2(-297.53125, 483.91406)
+nodes/output/position = Vector2(760, 540)
+nodes/Add/node = SubResource("AnimationNodeAdd2_637op")
+nodes/Add/position = Vector2(600, 460)
+nodes/CharacterAdd/node = SubResource("AnimationNodeAdd2_pqha3")
+nodes/CharacterAdd/position = Vector2(360, 460)
+nodes/WeaponStateMachine/node = ExtResource("2_ee2c0")
+nodes/WeaponStateMachine/position = Vector2(340, 740)
+nodes/LegsStateMachine/node = SubResource("AnimationNodeStateMachine_ep4kf")
+nodes/LegsStateMachine/position = Vector2(100, 620)
+nodes/BodyStateMachine/node = SubResource("AnimationNodeStateMachine_jfisb")
+nodes/BodyStateMachine/position = Vector2(100, 360)
+node_connections = [&"output", 0, &"Add", &"Add", 0, &"CharacterAdd", &"Add", 1, &"WeaponStateMachine", &"CharacterAdd", 0, &"BodyStateMachine", &"CharacterAdd", 1, &"LegsStateMachine"]
+
+[node name="Unit_Sandbag" unique_id=1238900979 instance=ExtResource("1_bnr5i")]
+Team = "enemy"
+
+[node name="WeaponRemoteTransform" parent="TransformRoot/HandRoot/HandOffset/Weapon" parent_id_path=PackedInt32Array(398934283) index="0" unique_id=621397996]
+position = Vector2(-0.59065795, 0.060438693)
+rotation = 0.33681133
+
+[node name="WeaponTrailTarget" parent="RenderRoot/EffectBackgroundRoot/WeaponTrail" parent_id_path=PackedInt32Array(598270904) index="0" unique_id=1725693746]
+position = Vector2(-0.59058, 0.060216904)
+rotation = 0.33681133
+
+[node name="Weapon" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="0" unique_id=1592666539]
+position = Vector2(-23.590658, 0.06043911)
+rotation = 0.33681133
+
+[node name="HandLeft" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="1" unique_id=2106498155]
+position = Vector2(-23.590683, 0.060451508)
+rotation = 0.33681133
+
+[node name="HandRight" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="2" unique_id=2088741716]
+position = Vector2(-23.590626, 0.06043911)
+rotation = 0.33681133
+
+[node name="Weapon" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="1" unique_id=1106315150]
+position = Vector2(-0.5906582, -15.939561)
+rotation = 0.33681133
+
+[node name="HandLeft" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="2" unique_id=2116172918]
+position = Vector2(-0.590683, -15.9395485)
+rotation = 0.33681133
+
+[node name="HandRight" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="3" unique_id=248107714]
+position = Vector2(-0.59062576, -15.939561)
+rotation = 0.33681133
+
+[node name="WeaponSweetSpotStarParticle" parent="RenderRoot/EffectRoot" parent_id_path=PackedInt32Array(1293805309) index="0" unique_id=1093096993]
+position = Vector2(22.409458, -15.939891)
+rotation = 0.33681133
+
+[node name="CollisionBase" parent="." index="2" unique_id=440577969]
+shape = SubResource("RectangleShape2D_ee2c0")
+
+[node name="BodyCollision" parent="CollisionRoot" parent_id_path=PackedInt32Array(1096290881) index="0" unique_id=383729305]
+collision_layer = 2305
+collision_mask = 458752
+
+[node name="Main" type="CollisionShape2D" parent="CollisionRoot/BodyCollision" index="0" unique_id=201307584]
+position = Vector2(0, -23)
+shape = SubResource("RectangleShape2D_bnr5i")
+
+[node name="WeaponCollision" parent="CollisionRoot" parent_id_path=PackedInt32Array(1096290881) index="1" unique_id=1406952556]
+position = Vector2(22.409342, -15.939561)
+rotation = 0.33681133
+
+[node name="AnimationTree" parent="." index="4" unique_id=1919286862]
+tree_root = SubResource("AnimationNodeBlendTree_54t4a")

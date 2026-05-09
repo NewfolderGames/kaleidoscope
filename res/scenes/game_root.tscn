@@ -5,6 +5,7 @@
 [ext_resource type="Material" uid="uid://cct6o1g1ogqdh" path="res://res/particles/walk_smoke.tres" id="3_t530p"]
 [ext_resource type="PackedScene" uid="uid://dfc01w0eleew5" path="res://res/scenes/units/unit_player.tscn" id="5_07f4r"]
 [ext_resource type="Texture2D" uid="uid://cxwn531ihmlhe" path="res://res/textures/background/plain_border.png" id="5_nug2b"]
+[ext_resource type="PackedScene" uid="uid://b4jh0su7bb043" path="res://res/scenes/units/unit_sandbag.tscn" id="5_s4uip"]
 
 [sub_resource type="Gradient" id="Gradient_lbdwm"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -58,6 +59,15 @@ y_sort_enabled = true
 y_sort_enabled = true
 
 [node name="Unit_Player" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=1238900979 instance=ExtResource("5_07f4r")]
+
+[node name="Unit_Sandbag" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=1203797241 instance=ExtResource("5_s4uip")]
+position = Vector2(-177, -39)
+
+[node name="Unit_Sandbag2" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=1147133900 instance=ExtResource("5_s4uip")]
+position = Vector2(116, -62)
+
+[node name="Unit_Sandbag3" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=592995129 instance=ExtResource("5_s4uip")]
+position = Vector2(19, 77)
 
 [node name="GameEnvironmentForeground" type="Node2D" parent="GameWorld" unique_id=1567045833]
 

@@ -63,6 +63,23 @@ attack_secondary={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="any"
+2d_physics/layer_5="world"
+2d_physics/layer_9="unit"
+2d_physics/layer_10="unit_friendly"
+2d_physics/layer_11="unit_neutral"
+2d_physics/layer_12="unit_enemy"
+2d_physics/layer_17="attack"
+2d_physics/layer_18="attack_friendly"
+2d_physics/layer_19="attack_neutral"
+2d_physics/layer_20="attack_enemy"
+2d_physics/layer_21="projectile"
+2d_physics/layer_22="projectile_friendly"
+2d_physics/layer_23="projectile_neutral"
+2d_physics/layer_24="projectile_enemy"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

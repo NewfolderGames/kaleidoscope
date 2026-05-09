@@ -5,6 +5,8 @@
 [ext_resource type="AnimationLibrary" uid="uid://cmaehkhcx4813" path="res://res/animations/libraries/unit_weapon_melee_base.res" id="5_6q8j1"]
 [ext_resource type="SpriteFrames" uid="uid://c672npqqx7j4d" path="res://res/textures/entities/sandbag/sandbag.face.tres" id="6_08qg8"]
 [ext_resource type="SpriteFrames" uid="uid://1sg6w6qbvx74" path="res://res/textures/entities/sandbag/sandbag.tres" id="6_v0wsk"]
+[ext_resource type="Script" uid="uid://vx8tl65kwygw" path="res://src/Scripts/Entities/Unit/UnitBodyCollision.cs" id="9_d5wb5"]
+[ext_resource type="Script" uid="uid://blan7sx6n4m02" path="res://src/Scripts/Entities/Unit/UnitWeaponCollision.cs" id="10_v0wsk"]
 [ext_resource type="SpriteFrames" uid="uid://0lsbktdb05k7" path="res://res/textures/weapons/sword.border.tres" id="19_41yt4"]
 [ext_resource type="SpriteFrames" uid="uid://b2ki0g2utnfq1" path="res://res/textures/weapons/sword.tres" id="21_t7pht"]
 [ext_resource type="Texture2D" uid="uid://chgw57ixuyttm" path="res://res/textures/particles/tiny_star.png" id="23_3lfok"]
@@ -53,12 +55,6 @@ alpha_curve = SubResource("CurveTexture_s6abk")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b8435"]
 resource_local_to_scene = true
 size = Vector2(24, 6)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1bgi"]
-size = Vector2(24, 46)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_xtnnw"]
-radius = 1.0
 
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_637op"]
 
@@ -137,7 +133,7 @@ graph_offset = Vector2(-386, -168)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_6132g"]
 resource_local_to_scene = true
-graph_offset = Vector2(-379.4297, 371.80078)
+graph_offset = Vector2(-297.53125, 483.91406)
 nodes/output/position = Vector2(760, 540)
 nodes/Add/node = SubResource("AnimationNodeAdd2_637op")
 nodes/Add/position = Vector2(600, 460)
@@ -179,7 +175,7 @@ _data = {
 &"moving": SubResource("Animation_egel7")
 }
 
-[node name="Unit" type="CharacterBody2D" unique_id=1238900979 node_paths=PackedStringArray("TransformRoot", "TransformCenterRoot", "TransformBodyRoot", "TransformHandRoot", "TransformHandOffset", "RenderRoot", "RenderBodyRoot", "RenderAnimationTree", "DebugAttackSequenceLabel")]
+[node name="Unit" type="CharacterBody2D" unique_id=1238900979 node_paths=PackedStringArray("TransformRoot", "TransformCenterRoot", "TransformBodyRoot", "TransformHandRoot", "TransformHandOffset", "RenderRoot", "RenderBodyRoot", "RenderAnimationTree", "AttackCollisionArea2D", "DebugAttackSequenceLabel")]
 y_sort_enabled = true
 script = ExtResource("1_xxflw")
 TransformRoot = NodePath("TransformRoot")
@@ -193,6 +189,7 @@ RenderAnimationTree = NodePath("AnimationTree")
 MovementSpeedBase = 120.0
 MovementSpeed = 120.0
 AttackHandRotationRecoverCurve = SubResource("Curve_bkj7l")
+AttackCollisionArea2D = NodePath("CollisionRoot/WeaponCollision")
 DebugEnabled = true
 DebugAttackSequenceLabel = NodePath("DebugLabel")
 
@@ -225,6 +222,9 @@ position = Vector2(0, -16)
 [node name="Weapon" type="Node2D" parent="TransformRoot/HandRoot/HandOffset" unique_id=398934283]
 
 [node name="WeaponRemoteTransform" type="RemoteTransform2D" parent="TransformRoot/HandRoot/HandOffset/Weapon" unique_id=621397996]
+position = Vector2(0.825893, -0.88392866)
+rotation = 0.32271653
+scale = Vector2(1e-05, 1e-05)
 remote_path = NodePath("../../../../../RenderRoot/DisplayForegroundRoot/HandRoot/Weapon")
 
 [node name="WeaponCollisionRemoteTransform" type="RemoteTransform2D" parent="TransformRoot/HandRoot/HandOffset/Weapon/WeaponRemoteTransform" unique_id=540279609]
@@ -269,8 +269,9 @@ script = ExtResource("24_d08im")
 Target = NodePath("WeaponTrailTarget")
 
 [node name="WeaponTrailTarget" type="Node2D" parent="RenderRoot/EffectBackgroundRoot/WeaponTrail" unique_id=1725693746]
-position = Vector2(0, -23.500004)
-scale = Vector2(1.0000001, 1.0000001)
+position = Vector2(0.8259678, -0.88415146)
+rotation = 0.32271656
+scale = Vector2(1.0000001e-05, 1.0000001e-05)
 
 [node name="DisplayBackgroundRoot" type="Node2D" parent="RenderRoot" unique_id=850588648]
 show_behind_parent = true
@@ -322,6 +323,7 @@ remote_path = NodePath("../../_Border/Body")
 sprite_frames = ExtResource("6_08qg8")
 
 [node name="HandRoot" type="Node2D" parent="RenderRoot/DisplayForegroundRoot" unique_id=1178632298]
+visible = false
 position = Vector2(23, 0)
 
 [node name="_Border" type="Node2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot" unique_id=946584604]
@@ -330,7 +332,9 @@ show_behind_parent = true
 position = Vector2(23, -16)
 
 [node name="Weapon" type="Node2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" unique_id=1592666539]
-position = Vector2(-23, 0)
+position = Vector2(-22.174107, -0.8839283)
+rotation = 0.32271656
+scale = Vector2(1e-05, 1e-05)
 
 [node name="Weapon" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border/Weapon" unique_id=1900618281]
 position = Vector2(0, -16)
@@ -338,14 +342,20 @@ scale = Vector2(0.9999997, 0.9999997)
 sprite_frames = ExtResource("19_41yt4")
 
 [node name="HandLeft" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" unique_id=2106498155]
-position = Vector2(-25, 2.000002)
-scale = Vector2(1.0000001, 1.0000001)
+position = Vector2(-22.174131, -0.88391495)
+rotation = 0.32271656
+scale = Vector2(1.0000001e-05, 1.0000001e-05)
 
 [node name="HandRight" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" unique_id=2088741716]
-position = Vector2(-20, -1)
+position = Vector2(-22.174074, -0.8839283)
+rotation = 0.32271656
+scale = Vector2(1e-05, 1e-05)
 
 [node name="Weapon" type="Node2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot" unique_id=1106315150]
-position = Vector2(0, -16)
+modulate = Color(0, 0, 0, 1)
+position = Vector2(0.8258934, -16.883928)
+rotation = 0.32271656
+scale = Vector2(1e-05, 1e-05)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot/Weapon" unique_id=1912416594]
 remote_path = NodePath("../../_Border/Weapon")
@@ -356,15 +366,18 @@ sprite_frames = ExtResource("21_t7pht")
 
 [node name="HandLeft" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot" unique_id=2116172918]
 modulate = Color(0.07058824, 0.16470589, 0.29411766, 1)
-position = Vector2(-2, -13.999998)
-scale = Vector2(1.0000001, 1.0000001)
+position = Vector2(0.8258686, -16.883915)
+rotation = 0.32271656
+scale = Vector2(1.0000001e-05, 1.0000001e-05)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot/HandLeft" unique_id=622737984]
 remote_path = NodePath("../../_Border/HandLeft")
 
 [node name="HandRight" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot" unique_id=248107714]
 modulate = Color(0.07058824, 0.16470589, 0.29411766, 1)
-position = Vector2(3, -17)
+position = Vector2(0.8259258, -16.883928)
+rotation = 0.32271656
+scale = Vector2(1e-05, 1e-05)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/HandRoot/HandRight" unique_id=1973941038]
 remote_path = NodePath("../../_Border/HandRight")
@@ -373,7 +386,9 @@ remote_path = NodePath("../../_Border/HandRight")
 
 [node name="WeaponSweetSpotStarParticle" type="GPUParticles2D" parent="RenderRoot/EffectRoot" unique_id=1093096993]
 y_sort_enabled = true
-position = Vector2(23, -51)
+position = Vector2(23.826004, -16.88426)
+rotation = 0.32271656
+scale = Vector2(1e-05, 1e-05)
 emitting = false
 amount = 1
 texture = ExtResource("23_3lfok")
@@ -386,34 +401,22 @@ shape = SubResource("RectangleShape2D_b8435")
 
 [node name="CollisionRoot" type="Node2D" parent="." unique_id=1096290881]
 
-[node name="BodyCollision" type="Area2D" parent="CollisionRoot" unique_id=383729305]
+[node name="BodyCollision" type="Area2D" parent="CollisionRoot" unique_id=383729305 node_paths=PackedStringArray("Unit")]
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("9_d5wb5")
+Unit = NodePath("../..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionRoot/BodyCollision" unique_id=717176689]
-position = Vector2(0, -23)
-shape = SubResource("RectangleShape2D_h1bgi")
-
-[node name="WeaponCollision" type="Area2D" parent="CollisionRoot" unique_id=1406952556]
-position = Vector2(23, -16)
-
-[node name="Hitbox1" type="CollisionShape2D" parent="CollisionRoot/WeaponCollision" unique_id=1972286862]
-position = Vector2(0, -12)
-scale = Vector2(10, 10)
-shape = SubResource("CircleShape2D_xtnnw")
-
-[node name="Hitbox2" type="CollisionShape2D" parent="CollisionRoot/WeaponCollision" unique_id=1354513646]
-position = Vector2(0, -21)
-scale = Vector2(10, 10)
-shape = SubResource("CircleShape2D_xtnnw")
-
-[node name="Hitbox3" type="CollisionShape2D" parent="CollisionRoot/WeaponCollision" unique_id=40996154]
-position = Vector2(0, -32)
-scale = Vector2(10, 10)
-shape = SubResource("CircleShape2D_xtnnw")
+[node name="WeaponCollision" type="Area2D" parent="CollisionRoot" unique_id=1406952556 node_paths=PackedStringArray("Unit")]
+process_mode = 4
+position = Vector2(23.825893, -16.883928)
+rotation = 0.32271656
+scale = Vector2(1e-05, 1e-05)
+script = ExtResource("10_v0wsk")
+Unit = NodePath("../..")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1919286862]
-active = false
 root_node = NodePath("../RenderRoot")
-callback_mode_method = 1
 tree_root = SubResource("AnimationNodeBlendTree_6132g")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
@@ -423,7 +426,6 @@ parameters/LegsStateMachine/moving/TimeScale/scale = 1.0
 parameters/BodyStateMachine/moving/TimeScale/scale = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1767796383]
-active = false
 root_node = NodePath("../RenderRoot")
 libraries/ = SubResource("AnimationLibrary_28774")
 libraries/unit_body = SubResource("AnimationLibrary_wi21b")
@@ -436,3 +438,5 @@ offset_left = -20.0
 offset_right = 20.0
 offset_bottom = 24.0
 horizontal_alignment = 1
+
+[connection signal="area_shape_entered" from="CollisionRoot/BodyCollision" to="." method="_OnBodyCollisionEnter"]

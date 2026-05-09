@@ -7,6 +7,9 @@ namespace Kaleidoscope.Scripts.Entities.Unit;
 
 public partial class Unit : CharacterBody2D
 {
+	[ExportCategory("Unit")]
+	[Export] public string Team { get; protected set;  }
+
 	[ExportCategory("Position")]
 	[Export] protected Node2D TransformRoot;
 	[Export] protected Node2D TransformCenterRoot;
@@ -42,25 +45,28 @@ public partial class Unit : CharacterBody2D
 	
 	[ExportCategory("Weapon")]
 	[Export] protected Weapon Weapon;
-	[Export] protected bool WeaponSweetSpotActive;
 	[Export] protected float WeaponDamageMultiplierBase = 1f;
 	[Export] protected float WeaponDamageSweetSpotMultiplierBase = 1f;
 
 	[ExportCategory("Attack")]
 	[Export] protected bool IsAttackMainActive;
-	
+
 	[ExportCategory("Attack - Sequence")]
 	[Export] protected bool IsAttackSequenceAvailable;
 	[Export] protected string AttackSequence;
 	[Export] protected int AttackSequenceNumber;
-	
+
 	[ExportCategory("Attack - Rotation")]
 	[Export] protected float AttackHandRotationLockStart;
 	[Export] protected float AttackHandRotationLockMultiplier;
 	[Export] protected int AttackHandRotationLockRecoverFramesStart;
 	[Export] protected int AttackHandRotationLockRecoverFramesCurrent;
 	[Export] protected Curve AttackHandRotationRecoverCurve;
-	
+
+	[ExportCategory("Attack - Collision")]
+	[Export] protected Area2D AttackCollisionArea2D;
+	[Export] protected bool IsAttackCollisionSweetSpotActive;
+
 	[ExportCategory("External")]
 	[Export] protected GameManager GameManager;
 
@@ -85,6 +91,8 @@ public partial class Unit : CharacterBody2D
 			return AttackHandRotationLockMultiplier + (1 - AttackHandRotationLockMultiplier) * AttackHandRotationRecoverCurve.Sample((AttackHandRotationLockRecoverFramesStart - AttackHandRotationLockRecoverFramesCurrent) / (float)AttackHandRotationLockRecoverFramesStart);
 		}
 	}
+
+	// Godot
 
 	public override void _Ready()
 	{
@@ -148,6 +156,8 @@ public partial class Unit : CharacterBody2D
 		
 	}
 
+	// Movement
+
 	private void Move()
 	{
 		MovementPrev = _movement;
@@ -175,7 +185,9 @@ public partial class Unit : CharacterBody2D
 	{
 		MovementDesired += movement;
 	}
-	
+
+	// Rendering
+
 	public virtual void ProcessHandRendering(double delta)
 	{
 		
@@ -185,12 +197,9 @@ public partial class Unit : CharacterBody2D
 	{
 		
 	}
-	
-	public void SetWeaponSweetSpotActive(bool active)
-	{
-		WeaponSweetSpotActive = active;
-	}
-	
+
+	// Attack
+
 	public virtual void MainAttack(string sequence)
 	{
 		// Sequence
@@ -213,19 +222,56 @@ public partial class Unit : CharacterBody2D
 		
 		IsAttackMainActive = true;
 	}
-	
+
 	public virtual void MainAttackEnd()
 	{
 		IsAttackMainActive = false;
+	}
+
+	public void ActivateAttackCollision()
+	{
+		AttackCollisionArea2D.SetProcessMode(ProcessModeEnum.Always);
+	}
+
+	public void DisableAttackCollision()
+	{
+		AttackCollisionArea2D.SetProcessMode(ProcessModeEnum.Disabled);
+	}
+
+	public void ActivateAttackCollisionSweetSpot()
+	{
+		IsAttackCollisionSweetSpotActive = true;
+	}
+
+	public void DisableAttackCollisionSweetSpot()
+	{
+		IsAttackCollisionSweetSpotActive = true;
 	}
 
 	public void AttackSequenceAvailableStart()
 	{
 		IsAttackSequenceAvailable = true;
 	}
-	
+
 	public void AttackSequenceAvailableEnd()
 	{
 		IsAttackSequenceAvailable = false;
 	}
+
+	// Collision
+
+	public void _OnBodyCollisionEnter(Rid areaRid, Area2D area, int areaShapeIndex, int localShapeIndex)
+	{
+		if (area is UnitWeaponCollision cast && cast.Team != Team)
+		{
+			GD.Print(cast.Team, Team);
+			GD.Print("OUCH");
+		}
+	}
+
+	public void _onWeaponCollisionEnter(Rid areaRid, Area2D area, int areaShapeIndex, int localShapeIndex)
+	{
+
+	}
+
 }
