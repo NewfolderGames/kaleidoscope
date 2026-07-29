@@ -8,7 +8,7 @@ public class BufferedInput
     public readonly int Priority;
     public readonly ulong ValidUntil;
     
-    private static int _nextId = 0;
+    private static int _nextId;
     
     public BufferedInput(string name, string group, int priority, ulong validUntil)
     {

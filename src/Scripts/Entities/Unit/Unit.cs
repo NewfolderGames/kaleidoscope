@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Godot;
 using Kaleidoscope.Core.Resources;
 using Kaleidoscope.Core.System.Input;
@@ -18,7 +20,13 @@ public partial class Unit : CharacterBody2D
 	[Export] protected float TransformHandRootRangeX = 24f;
 	[Export] protected float TransformHandRootRangeY = 12f;
 	[Export] protected Node2D TransformHandOffset;
-	
+
+	[ExportCategory("Health")]
+	[Export] protected long Health = 10;
+	[Export] protected long HealthMax = 10;
+	[Export] protected long Shield;
+	[Export] protected long ShieldMax;
+
 	[ExportCategory("Render")]
 	[Export] protected Node2D RenderRoot;
 	[Export] protected Node2D RenderBodyRoot;
@@ -50,11 +58,17 @@ public partial class Unit : CharacterBody2D
 
 	[ExportCategory("Attack")]
 	[Export] protected bool IsAttackMainActive;
+	[Export] public string AttackUuid { get; protected set; } = Guid.NewGuid().ToString();
 
 	[ExportCategory("Attack - Sequence")]
 	[Export] protected bool IsAttackSequenceAvailable;
 	[Export] protected string AttackSequence;
 	[Export] protected int AttackSequenceNumber;
+	[Export] protected int AttackSequenceHitCount;
+
+	[ExportCategory("Attack - Extension")]
+	[Export] protected int AttackExtensionFramesLeft;
+	[Export] protected int AttackExtensionFramesMax = 5;
 
 	[ExportCategory("Attack - Rotation")]
 	[Export] protected float AttackHandRotationLockStart;
@@ -65,7 +79,7 @@ public partial class Unit : CharacterBody2D
 
 	[ExportCategory("Attack - Collision")]
 	[Export] protected Area2D AttackCollisionArea2D;
-	[Export] protected bool IsAttackCollisionSweetSpotActive;
+	[Export] public bool IsAttackCollisionSweetSpotActive { get; protected set; }
 
 	[ExportCategory("External")]
 	[Export] protected GameManager GameManager;
@@ -76,6 +90,8 @@ public partial class Unit : CharacterBody2D
 	[ExportCategory("Debug")]
 	[Export] protected bool DebugEnabled;
 	[Export] protected Label DebugAttackSequenceLabel;
+
+	protected Dictionary<Rid, (string, int)> HitboxWeaponCollisions = new();
 
 	protected string TempTransitionName;
 	protected bool TempTransitionDone;
@@ -153,7 +169,15 @@ public partial class Unit : CharacterBody2D
 
 	public virtual void _PhysicsProcessSelf(double delta)
 	{
-		
+		if (AttackExtensionFramesLeft > 0)
+		{
+			AttackExtensionFramesLeft--;
+			if (AttackExtensionFramesLeft <= 0)
+			{
+				AttackExtensionFramesLeft = 0;
+				// RenderAnimationTreeWeaponStateMachinePlayback
+			}
+		}
 	}
 
 	// Movement
@@ -208,6 +232,11 @@ public partial class Unit : CharacterBody2D
 		AttackSequence = sequence;
 		if (!IsAttackMainActive) AttackSequenceNumber = 0;
 		AttackSequenceNumber++;
+		AttackSequenceHitCount = 0;
+
+		// Extension
+
+		AttackExtensionFramesLeft = 0;
 		
 		// Rotation Lock
 		
@@ -221,6 +250,10 @@ public partial class Unit : CharacterBody2D
 		// Lock
 		
 		IsAttackMainActive = true;
+
+		// UUID
+
+		AttackUuid = Guid.NewGuid().ToString();
 	}
 
 	public virtual void MainAttackEnd()
@@ -258,18 +291,57 @@ public partial class Unit : CharacterBody2D
 		IsAttackSequenceAvailable = false;
 	}
 
+	public virtual void AttackSequenceHit()
+	{
+		AttackSequenceHitCount++;
+		AttackExtensionFramesLeft++;
+		if (AttackExtensionFramesLeft > AttackExtensionFramesMax) AttackExtensionFramesLeft = AttackExtensionFramesMax;
+	}
+
+	// Health
+
+	public void Damage(long amount)
+	{
+		Health -= amount;
+		if (Health <= 0) Kill();
+	}
+
+	public void Kill()
+	{
+		QueueFree();
+	}
+
 	// Collision
 
 	public void _OnBodyCollisionEnter(Rid areaRid, Area2D area, int areaShapeIndex, int localShapeIndex)
 	{
 		if (area is UnitWeaponCollision cast && cast.Team != Team)
 		{
-			GD.Print(cast.Team, Team);
-			GD.Print("OUCH");
+			// Add to hit registry
+
+			if (HitboxWeaponCollisions.TryAdd(cast.GetRid(), (cast.AttackUuid, 1)))
+			{
+				cast.AttackSequenceHit();
+				Damage(1);
+			}
+			else if (HitboxWeaponCollisions[cast.GetRid()].Item1 != cast.AttackUuid)
+			{
+				HitboxWeaponCollisions[cast.GetRid()] = (cast.AttackUuid, 1);
+				cast.AttackSequenceHit();
+				Damage(1);
+			}
+			else
+			{
+				HitboxWeaponCollisions[cast.GetRid()] = (cast.AttackUuid, HitboxWeaponCollisions[cast.GetRid()].Item2 + 1);
+			}
+
+			// Notify hit
+
+			GD.Print(cast.AttackUuid, cast.Team, Team);
 		}
 	}
 
-	public void _onWeaponCollisionEnter(Rid areaRid, Area2D area, int areaShapeIndex, int localShapeIndex)
+	public void _OnWeaponCollisionEnter(Rid areaRid, Area2D area, int areaShapeIndex, int localShapeIndex, UnitWeaponCollision weaponCollision)
 	{
 
 	}

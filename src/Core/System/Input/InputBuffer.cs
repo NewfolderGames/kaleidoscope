@@ -7,7 +7,7 @@ namespace Kaleidoscope.Core.System.Input;
 public class InputBuffer
 {
     private ulong _frame;
-    private readonly List<BufferedInput> _bufferedInputs = new();
+    private readonly List<BufferedInput> _bufferedInputs = [];
 
     public void Process()
     {

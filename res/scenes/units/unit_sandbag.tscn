@@ -87,7 +87,7 @@ graph_offset = Vector2(-386, -168)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_54t4a"]
 resource_local_to_scene = true
-graph_offset = Vector2(-297.53125, 483.91406)
+graph_offset = Vector2(-426.82422, 382.3711)
 nodes/output/position = Vector2(760, 540)
 nodes/Add/node = SubResource("AnimationNodeAdd2_637op")
 nodes/Add/position = Vector2(600, 460)
@@ -103,42 +103,52 @@ node_connections = [&"output", 0, &"Add", &"Add", 0, &"CharacterAdd", &"Add", 1,
 
 [node name="Unit_Sandbag" unique_id=1238900979 instance=ExtResource("1_bnr5i")]
 Team = "enemy"
+Health = 3
+HealthMax = 3
 
 [node name="WeaponRemoteTransform" parent="TransformRoot/HandRoot/HandOffset/Weapon" parent_id_path=PackedInt32Array(398934283) index="0" unique_id=621397996]
-position = Vector2(-0.59065795, 0.060438693)
-rotation = 0.33681133
+position = Vector2(-0.16171694, -0.22552204)
+rotation = 0.3049601
 
 [node name="WeaponTrailTarget" parent="RenderRoot/EffectBackgroundRoot/WeaponTrail" parent_id_path=PackedInt32Array(598270904) index="0" unique_id=1725693746]
-position = Vector2(-0.59058, 0.060216904)
-rotation = 0.33681133
+position = Vector2(-0.16164589, -0.22574615)
+rotation = 0.30496013
+scale = Vector2(1e-05, 1e-05)
 
 [node name="Weapon" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="0" unique_id=1592666539]
-position = Vector2(-23.590658, 0.06043911)
-rotation = 0.33681133
+position = Vector2(-23.161716, -0.22552109)
+rotation = 0.3049601
+scale = Vector2(9.999999e-06, 9.999999e-06)
 
 [node name="HandLeft" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="1" unique_id=2106498155]
-position = Vector2(-23.590683, 0.060451508)
-rotation = 0.33681133
+position = Vector2(-23.161741, -0.22550774)
+rotation = 0.30496013
+scale = Vector2(1e-05, 1e-05)
 
 [node name="HandRight" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="2" unique_id=2088741716]
-position = Vector2(-23.590626, 0.06043911)
-rotation = 0.33681133
+position = Vector2(-23.161684, -0.22552109)
+rotation = 0.3049601
+scale = Vector2(9.999999e-06, 9.999999e-06)
 
 [node name="Weapon" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="1" unique_id=1106315150]
-position = Vector2(-0.5906582, -15.939561)
-rotation = 0.33681133
+position = Vector2(-0.16171646, -16.225521)
+rotation = 0.3049601
+scale = Vector2(9.999999e-06, 9.999999e-06)
 
 [node name="HandLeft" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="2" unique_id=2116172918]
-position = Vector2(-0.590683, -15.9395485)
-rotation = 0.33681133
+position = Vector2(-0.16174126, -16.225508)
+rotation = 0.30496013
+scale = Vector2(1e-05, 1e-05)
 
 [node name="HandRight" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="3" unique_id=248107714]
-position = Vector2(-0.59062576, -15.939561)
-rotation = 0.33681133
+position = Vector2(-0.16168404, -16.225521)
+rotation = 0.3049601
+scale = Vector2(9.999999e-06, 9.999999e-06)
 
 [node name="WeaponSweetSpotStarParticle" parent="RenderRoot/EffectRoot" parent_id_path=PackedInt32Array(1293805309) index="0" unique_id=1093096993]
-position = Vector2(22.409458, -15.939891)
-rotation = 0.33681133
+position = Vector2(22.838388, -16.225855)
+rotation = 0.3049601
+scale = Vector2(9.999999e-06, 9.999999e-06)
 
 [node name="CollisionBase" parent="." index="2" unique_id=440577969]
 shape = SubResource("RectangleShape2D_ee2c0")
@@ -151,9 +161,11 @@ collision_mask = 458752
 position = Vector2(0, -23)
 shape = SubResource("RectangleShape2D_bnr5i")
 
-[node name="WeaponCollision" parent="CollisionRoot" parent_id_path=PackedInt32Array(1096290881) index="1" unique_id=1406952556]
-position = Vector2(22.409342, -15.939561)
-rotation = 0.33681133
+[node name="WeaponCollision" parent="CollisionRoot" parent_id_path=PackedInt32Array(1096290881) index="1" unique_id=1406952556 node_paths=PackedStringArray("SweetSpotCollisionShapes")]
+position = Vector2(22.838284, -16.225521)
+rotation = 0.3049601
+scale = Vector2(9.999999e-06, 9.999999e-06)
+SweetSpotCollisionShapes = []
 
 [node name="AnimationTree" parent="." index="4" unique_id=1919286862]
 tree_root = SubResource("AnimationNodeBlendTree_54t4a")

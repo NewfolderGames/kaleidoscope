@@ -17,6 +17,7 @@ dest_files=["res://.godot/imported/player.legs.border.frames.0003.png-cd87a0a7b7
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
