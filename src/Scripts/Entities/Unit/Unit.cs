@@ -29,17 +29,24 @@ public partial class Unit : CharacterBody2D
 
 	[ExportCategory("Render")]
 	[Export] protected Node2D RenderRoot;
+	[Export] protected Node2D RenderForegroundRoot;
 	[Export] protected Node2D RenderBodyRoot;
-	
+
 	[ExportCategory("Render - Animation")]
 	[Export] protected AnimationTree RenderAnimationTree;
+	[Export] protected AnimationPlayer RenderAnimationPlayer;
 	[Export] protected float RenderAnimationMovingSpeedMultiplier = 1f;
 	protected AnimationNodeStateMachinePlayback RenderAnimationTreeWeaponStateMachinePlayback;
+
+	[ExportCategory("Render - Effects")]
+	[Export] protected Color RenderEffectHitColor = Color.Color8(255, 255, 255);
+	[Export] protected int RenderEffectHitDurationLeft;
+	[Export] protected int RenderEffectHitDuration = 5;
 
 	[ExportCategory("Input")]
 	[Export] protected bool AllowInput;
 	protected readonly InputBuffer InputBuffer = new();
-	
+
 	[ExportCategory("Movement")]
 	[Export] private Vector2 _movement;
 	[Export] protected Vector2 MovementPrev;
@@ -50,7 +57,7 @@ public partial class Unit : CharacterBody2D
 	[Export] protected float MovementSpeed = 5f;
 	protected bool IsMoving => MovementDesired != Vector2.Zero;
 	protected bool IsMovementInputting => MovementInput != Vector2.Zero;
-	
+
 	[ExportCategory("Weapon")]
 	[Export] protected Weapon Weapon;
 	[Export] protected float WeaponDamageMultiplierBase = 1f;
@@ -58,7 +65,7 @@ public partial class Unit : CharacterBody2D
 
 	[ExportCategory("Attack")]
 	[Export] protected bool IsAttackMainActive;
-	[Export] public string AttackUuid { get; protected set; } = Guid.NewGuid().ToString();
+	[Export] public string AttackUuid { get; protected set; } = "";
 
 	[ExportCategory("Attack - Sequence")]
 	[Export] protected bool IsAttackSequenceAvailable;
@@ -68,7 +75,7 @@ public partial class Unit : CharacterBody2D
 
 	[ExportCategory("Attack - Extension")]
 	[Export] protected int AttackExtensionFramesLeft;
-	[Export] protected int AttackExtensionFramesMax = 5;
+	[Export] protected int AttackExtensionFramesMax = 30;
 
 	[ExportCategory("Attack - Rotation")]
 	[Export] protected float AttackHandRotationLockStart;
@@ -114,21 +121,22 @@ public partial class Unit : CharacterBody2D
 	{
 		RenderAnimationTreeWeaponStateMachinePlayback = (AnimationNodeStateMachinePlayback)RenderAnimationTree.Get("parameters/WeaponStateMachine/playback");
 	}
-	
+
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
-		
+
 		// Before process
-		
+
 		// Process
-		
+
 		_ProcessSelf(delta);
 
 		// Process After
 
 		ProcessHandRendering(delta);
 		ProcessBodyRendering(delta);
+		ProcessAfterRendering(delta);
 
 		// Debug
 
@@ -146,38 +154,45 @@ public partial class Unit : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
-	 
+
 		// Before process
 
 		FrameCounter++;
-		
+
 		if (!IsAttackMainActive) AttackHandRotationLockRecoverFramesCurrent--;
-		
+
 		InputBuffer.Process();
-		
+
 		MovementNext = Vector2.Zero;
 		MovementDesired = Vector2.Zero;
-		
+
+		if (RenderEffectHitDurationLeft > 0)
+		{
+			RenderEffectHitDurationLeft--;
+		}
+
+		if (AttackExtensionFramesLeft > 0)
+		{
+			AttackExtensionFramesLeft--;
+			RenderAnimationTree.Set("parameters/WeaponTimeScale/scale", 0);
+			if (AttackExtensionFramesLeft <= 0)
+			{
+				AttackExtensionFramesLeft = 0;
+				RenderAnimationTree.Set("parameters/WeaponTimeScale/scale", 1);
+			}
+		}
+
 		// Process
-		
+
 		_PhysicsProcessSelf(delta);
-		
+
 		// After process
-		
+
 		Move();
 	}
 
 	public virtual void _PhysicsProcessSelf(double delta)
 	{
-		if (AttackExtensionFramesLeft > 0)
-		{
-			AttackExtensionFramesLeft--;
-			if (AttackExtensionFramesLeft <= 0)
-			{
-				AttackExtensionFramesLeft = 0;
-				// RenderAnimationTreeWeaponStateMachinePlayback
-			}
-		}
 	}
 
 	// Movement
@@ -186,7 +201,7 @@ public partial class Unit : CharacterBody2D
 	{
 		MovementPrev = _movement;
 		_movement = MovementNext + MovementDesired;
-		
+
 		MoveAndCollide(_movement);
 	}
 
@@ -194,17 +209,17 @@ public partial class Unit : CharacterBody2D
 	{
 		MovementNext = movement;
 	}
-	
+
 	public virtual void AddMovement(Vector2 movement)
 	{
 		MovementNext += movement;
 	}
-	
+
 	public virtual void ChangeDesiredMovement(Vector2 movement)
 	{
 		MovementDesired = movement;
 	}
-	
+
 	public virtual void AddDesiredMovement(Vector2 movement)
 	{
 		MovementDesired += movement;
@@ -214,12 +229,24 @@ public partial class Unit : CharacterBody2D
 
 	public virtual void ProcessHandRendering(double delta)
 	{
-		
+
 	}
-	
+
 	public virtual void ProcessBodyRendering(double delta)
 	{
-		
+
+	}
+
+	public virtual void ProcessAfterRendering(double delta)
+	{
+		if (RenderEffectHitDurationLeft > 0)
+		{
+			RenderForegroundRoot.SetModulate(RenderEffectHitColor);
+		}
+		else
+		{
+			RenderForegroundRoot.SetModulate(Color.Color8(255, 255, 255));
+		}
 	}
 
 	// Attack
@@ -237,18 +264,19 @@ public partial class Unit : CharacterBody2D
 		// Extension
 
 		AttackExtensionFramesLeft = 0;
-		
+
 		// Rotation Lock
-		
+
 		AttackHandRotationLockRecoverFramesStart = 30;
 		AttackHandRotationLockRecoverFramesCurrent = 30;
-		
+
 		// Animation
 
+		RenderAnimationTree.Set("parameters/WeaponTimeScale/scale", 1);
 		RenderAnimationTreeWeaponStateMachinePlayback.Next();
-		
+
 		// Lock
-		
+
 		IsAttackMainActive = true;
 
 		// UUID
@@ -294,7 +322,7 @@ public partial class Unit : CharacterBody2D
 	public virtual void AttackSequenceHit()
 	{
 		AttackSequenceHitCount++;
-		AttackExtensionFramesLeft++;
+		AttackExtensionFramesLeft += 2;
 		if (AttackExtensionFramesLeft > AttackExtensionFramesMax) AttackExtensionFramesLeft = AttackExtensionFramesMax;
 	}
 
@@ -303,6 +331,7 @@ public partial class Unit : CharacterBody2D
 	public void Damage(long amount)
 	{
 		Health -= amount;
+		RenderEffectHitDurationLeft = RenderEffectHitDuration;
 		if (Health <= 0) Kill();
 	}
 

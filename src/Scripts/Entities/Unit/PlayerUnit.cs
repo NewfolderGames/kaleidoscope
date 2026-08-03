@@ -29,9 +29,9 @@ public partial class PlayerUnit : Unit
         {
             InputBuffer.Add("attack_secondary", "attack_main", 1, 15);
         }
-        
+
         // Attack
-        
+
         if (!IsAttackMainActive || IsAttackSequenceAvailable)
         {
             var inputs = InputBuffer.TakeGroup("attack_main");
@@ -50,38 +50,36 @@ public partial class PlayerUnit : Unit
                 if (sequence != "") MainAttack(sequence);
             }
         }
-        
+
         // Movement
-        
+
         MovementInput = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-        
+
         AddDesiredMovement(MovementInput * MovementSpeed * (float)delta);
     }
 
     public override void ProcessBodyRendering(double delta)
     {
         base.ProcessBodyRendering(delta);
-        
+
         TransformBodyRoot.Scale = new Vector2(TransformHandRoot.Position.X < TransformCenterRoot.Position.X ? -1 : 1, 1);
-        
+
         if (IsMovementInputting)
         {
             var isMovingAway = Mathf.Sign(_mousePositionRelative.X) != Mathf.Sign(MovementInput.X);
             var speed = (MovementSpeedBase > 0 ? MovementSpeed / MovementSpeedBase : 1) * RenderAnimationMovingSpeedMultiplier * (isMovingAway ? -1 : 1);
-            RenderAnimationTree.Set("parameters/BodyStateMachine/moving/TimeScale/scale", speed);
-            RenderAnimationTree.Set("parameters/LegsStateMachine/moving/TimeScale/scale", speed);
-            RenderAnimationTree.Set("parameters/WeaponTree/BaseStateMachine/moving/TimeScale/scale", speed);
+            RenderAnimationTree.Set("parameters/CharacterTimeScale/scale", speed);
         }
     }
-    
+
     public override void ProcessHandRendering(double delta)
     {
         base.ProcessHandRendering(delta);
-        
+
         var baseAngle = _mousePositionRelative.Angle();
         var targetAngle = Mathf.LerpAngle(AttackHandRotationLockStart, baseAngle, AttackHandRotationLerp);
         var normalized = Vector2.Right.Rotated(targetAngle);
-        
+
         TransformHandRoot.Position = new Vector2(normalized.X * TransformHandRootRangeX, normalized.Y * TransformHandRootRangeY);
         TransformHandRoot.Scale = new Vector2(TransformHandRoot.Position.X < 0 ? -1 : 1, 1);
         TransformHandOffset.Rotation = TransformHandRoot.Position.X < 0 ? -targetAngle - Mathf.Pi : targetAngle;
@@ -90,7 +88,7 @@ public partial class PlayerUnit : Unit
     public override void MainAttack(string sequence)
     {
         if (!IsAttackMainActive) AttackHandRotationLockStart = _mousePositionRelative.Angle();
-        
+
         base.MainAttack(sequence);
     }
 

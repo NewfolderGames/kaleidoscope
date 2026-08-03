@@ -69,6 +69,18 @@ position = Vector2(116, -62)
 [node name="Unit_Sandbag3" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=592995129 instance=ExtResource("5_s4uip")]
 position = Vector2(19, 77)
 
+[node name="Unit_Sandbag4" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=2128001069 instance=ExtResource("5_s4uip")]
+position = Vector2(103, 11)
+
+[node name="Unit_Sandbag5" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=1533767772 instance=ExtResource("5_s4uip")]
+position = Vector2(95, 20)
+
+[node name="Unit_Sandbag6" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=1823449292 instance=ExtResource("5_s4uip")]
+position = Vector2(102, 38)
+
+[node name="Unit_Sandbag7" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=234107665 instance=ExtResource("5_s4uip")]
+position = Vector2(90, 50)
+
 [node name="GameEnvironmentForeground" type="Node2D" parent="GameWorld" unique_id=1567045833]
 
 [node name="Sprite2D" type="Sprite2D" parent="GameWorld/GameEnvironmentForeground" unique_id=1114967092]
