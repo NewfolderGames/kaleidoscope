@@ -601,8 +601,8 @@ rotation = 0.0
 scale = Vector2(1, 1)
 
 [node name="WeaponTrailTarget" parent="RenderRoot/EffectBackgroundRoot/WeaponTrail" parent_id_path=PackedInt32Array(598270904) index="0" unique_id=1725693746]
-position = Vector2(8.867649, -22.622013)
-rotation = 0.3642523
+position = Vector2(9.486031, -19.511547)
+rotation = 0.5102861
 scale = Vector2(1.0000001, 1.0000001)
 
 [node name="Tail" type="Node2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot" parent_id_path=PackedInt32Array(1803451428) index="0" unique_id=1365174321]
@@ -612,27 +612,27 @@ modulate = Color(0, 0, 0, 1)
 show_behind_parent = true
 
 [node name="Tail" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/_Border" index="0" unique_id=768475917]
-position = Vector2(-2.019915, -12.418082)
-rotation = -0.5988431
-scale = Vector2(1.0042807, 0.9958118)
-skew = -0.018676639
+position = Vector2(-1.9701599, -13.2473345)
+rotation = -0.5585268
+scale = Vector2(1.0118756, 0.98804003)
+skew = 0.026462317
 sprite_frames = ExtResource("4_kj0i6")
 animation = &"default:border"
 
 [node name="TailRibbon" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/_Border" index="1" unique_id=769783376]
 modulate = Color(0.8862745, 0.26666668, 0.47058824, 1)
-position = Vector2(-24.241285, -12.018158)
-rotation = -1.465259
-scale = Vector2(0.9982063, 1.0016462)
-skew = -0.0056015253
+position = Vector2(-23.790981, -13.877724)
+rotation = -1.3755008
+scale = Vector2(1.0247978, 0.97542566)
+skew = -0.026738763
 sprite_frames = ExtResource("3_rf8uo")
 animation = &"default:border"
 
 [node name="Tail" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail" index="1" unique_id=2032356793]
-position = Vector2(-2.019915, -12.418082)
-rotation = -0.5988431
-scale = Vector2(1.0042807, 0.9958118)
-skew = -0.018676639
+position = Vector2(-1.9701599, -13.2473345)
+rotation = -0.5585268
+scale = Vector2(1.0118756, 0.98804003)
+skew = 0.026462317
 sprite_frames = ExtResource("4_kj0i6")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/Tail" index="0" unique_id=1486484226]
@@ -646,10 +646,10 @@ animation = &"default:overlay"
 
 [node name="TailRibbon" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail" index="2" unique_id=1041567864]
 modulate = Color(0.8862745, 0.26666668, 0.47058824, 1)
-position = Vector2(-24.241285, -12.018158)
-rotation = -1.465259
-scale = Vector2(0.9982063, 1.0016462)
-skew = -0.0056015253
+position = Vector2(-23.790981, -13.877724)
+rotation = -1.3755008
+scale = Vector2(1.0247978, 0.97542566)
+skew = -0.026738763
 sprite_frames = ExtResource("3_rf8uo")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Tail/TailRibbon" index="0" unique_id=1418127413]
@@ -661,39 +661,39 @@ animation = &"default:border"
 offset = Vector2(0, -12)
 
 [node name="Body" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="1" unique_id=1372087991]
-position = Vector2(0, -12.418082)
-scale = Vector2(1.0099576, 0.99004245)
+position = Vector2(0, -13.2473345)
+scale = Vector2(0.98507994, 1.01492)
 sprite_frames = ExtResource("11_sqi83")
 
 [node name="EarLeft" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="2" unique_id=1756579942]
-position = Vector2(4.274385, -40.824776)
-rotation = 0.09647714
-scale = Vector2(0.9941623, 1.0055444)
-skew = 0.0037411451
+position = Vector2(3.554845, -42.45684)
+rotation = 0.044210337
+scale = Vector2(0.95950747, 1.0200438)
+skew = -0.0055042505
 sprite_frames = ExtResource("5_e6fc4")
 animation = &"default:border"
 
 [node name="EarRight" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="3" unique_id=1836719299]
-position = Vector2(-3.800283, -40.962357)
-rotation = -0.062395316
-scale = Vector2(0.99428093, 1.0054287)
-skew = -0.0023750067
+position = Vector2(-4.23421, -42.247818)
+rotation = -0.097852334
+scale = Vector2(0.98335314, 1.0165232)
+skew = 0.008583307
 sprite_frames = ExtResource("6_gyhx4")
 animation = &"default:border"
 
 [node name="Head" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="4" unique_id=1657686302]
-position = Vector2(0, -27.523933)
-rotation = 0.017036553
-scale = Vector2(1.00948, 0.99051064)
-skew = 0.00069212914
+position = Vector2(0, -28.915775)
+rotation = -0.026828827
+scale = Vector2(0.9739824, 1.0263546)
+skew = 0.0015536547
 sprite_frames = ExtResource("9_nutv7")
 animation = &"default:border"
 
 [node name="Ribbon" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/_Border" parent_id_path=PackedInt32Array(298473286) index="5" unique_id=760191131]
-position = Vector2(2.2042398, -39.208668)
-rotation = 0.14551504
-scale = Vector2(1.0090711, 0.99092716)
-skew = 0.005578518
+position = Vector2(1.6237612, -41.157093)
+rotation = 0.11105206
+scale = Vector2(0.97469205, 1.0256807)
+skew = -0.012060642
 sprite_frames = ExtResource("3_rf8uo")
 animation = &"default:border"
 
@@ -707,38 +707,38 @@ remote_path = NodePath("../../_Border/Legs")
 
 [node name="Body" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="2" unique_id=86658439]
 modulate = Color(0.2, 0.38431373, 0.67058825, 1)
-position = Vector2(0, -12.418082)
-scale = Vector2(1.0099576, 0.99004245)
+position = Vector2(0, -13.2473345)
+scale = Vector2(0.98507994, 1.01492)
 sprite_frames = ExtResource("11_sqi83")
 
 [node name="Face" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/Body" index="1" unique_id=1477113852]
 visible = false
 
 [node name="EarLeft" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="3" unique_id=1169930021]
-position = Vector2(4.274385, -40.824776)
-rotation = 0.09647714
-scale = Vector2(0.9941623, 1.0055444)
-skew = 0.0037411451
+position = Vector2(3.554845, -42.45684)
+rotation = 0.044210337
+scale = Vector2(0.95950747, 1.0200438)
+skew = -0.0055042505
 sprite_frames = ExtResource("5_e6fc4")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/EarLeft" index="0" unique_id=335373051]
 remote_path = NodePath("../../_Border/EarLeft")
 
 [node name="EarRight" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="4" unique_id=521352816]
-position = Vector2(-3.800283, -40.962357)
-rotation = -0.062395316
-scale = Vector2(0.99428093, 1.0054287)
-skew = -0.0023750067
+position = Vector2(-4.23421, -42.247818)
+rotation = -0.097852334
+scale = Vector2(0.98335314, 1.0165232)
+skew = 0.008583307
 sprite_frames = ExtResource("6_gyhx4")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/EarRight" index="0" unique_id=279424782]
 remote_path = NodePath("../../_Border/EarRight")
 
 [node name="Head" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="5" unique_id=1574008232]
-position = Vector2(0, -27.523933)
-rotation = 0.017036553
-scale = Vector2(1.00948, 0.99051064)
-skew = 0.00069212914
+position = Vector2(0, -28.915775)
+rotation = -0.026828827
+scale = Vector2(0.9739824, 1.0263546)
+skew = 0.0015536547
 sprite_frames = ExtResource("9_nutv7")
 
 [node name="Face" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/Head" index="0" unique_id=1295870920]
@@ -750,10 +750,10 @@ remote_path = NodePath("../../_Border/Head")
 
 [node name="Ribbon" type="AnimatedSprite2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main" parent_id_path=PackedInt32Array(2011237609) index="6" unique_id=1137780374]
 modulate = Color(0.88816196, 0.26720858, 0.47181815, 1)
-position = Vector2(2.2042398, -39.208668)
-rotation = 0.14551504
-scale = Vector2(1.0090711, 0.99092716)
-skew = 0.005578518
+position = Vector2(1.6237612, -41.157093)
+rotation = 0.11105206
+scale = Vector2(0.97469205, 1.0256807)
+skew = -0.012060642
 sprite_frames = ExtResource("3_rf8uo")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="RenderRoot/DisplayForegroundRoot/BodyRoot/Main/Ribbon" index="0" unique_id=1199543079]
@@ -763,45 +763,45 @@ remote_path = NodePath("../../_Border/Ribbon")
 visible = true
 
 [node name="Weapon" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="0" unique_id=1592666539]
-position = Vector2(-22.504246, -0.6638355)
-rotation = 0.36425233
+position = Vector2(-24.992004, 0.99466896)
+rotation = 0.5102861
 scale = Vector2(1, 1)
 
 [node name="HandLeft" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="1" unique_id=2106498155]
-position = Vector2(-25.085527, 0.492445)
-rotation = 0.3642523
+position = Vector2(-27.71407, 1.7630262)
+rotation = 0.5102861
 scale = Vector2(1.0000001, 1.0000001)
 sprite_frames = ExtResource("10_nutv7")
 animation = &"default:border"
 
 [node name="HandRight" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="2" unique_id=2088741716]
-position = Vector2(-19.344824, -0.52947426)
-rotation = 0.36425233
+position = Vector2(-21.885763, 1.5873451)
+rotation = 0.5102861
 scale = Vector2(1, 1)
 sprite_frames = ExtResource("10_nutv7")
 animation = &"default:border"
 
 [node name="Weapon" parent="RenderRoot/DisplayForegroundRoot/HandRoot" index="1" unique_id=1106315150]
 modulate = Color(1, 1, 1, 1)
-position = Vector2(0.49575424, -16.663836)
-rotation = 0.36425233
+position = Vector2(-1.9920044, -15.005331)
+rotation = 0.5102861
 scale = Vector2(1, 1)
 
 [node name="HandLeft" parent="RenderRoot/DisplayForegroundRoot/HandRoot" index="2" unique_id=2116172918]
-position = Vector2(-2.0855274, -15.507555)
-rotation = 0.3642523
+position = Vector2(-4.7140694, -14.236974)
+rotation = 0.5102861
 scale = Vector2(1.0000001, 1.0000001)
 sprite_frames = ExtResource("10_nutv7")
 
 [node name="HandRight" parent="RenderRoot/DisplayForegroundRoot/HandRoot" index="3" unique_id=248107714]
-position = Vector2(3.6551762, -16.529474)
-rotation = 0.36425233
+position = Vector2(1.1142368, -14.412655)
+rotation = 0.5102861
 scale = Vector2(1, 1)
 sprite_frames = ExtResource("10_nutv7")
 
 [node name="WeaponSweetSpotStarParticle" parent="RenderRoot/EffectRoot" parent_id_path=PackedInt32Array(1293805309) index="0" unique_id=1093096993]
-position = Vector2(35.96453, -49.3675)
-rotation = 0.36425233
+position = Vector2(38.102936, -45.5465)
+rotation = 0.5102861
 scale = Vector2(1, 1)
 
 [node name="CollisionBase" parent="." index="2" unique_id=440577969]
@@ -815,13 +815,12 @@ collision_mask = 851968
 position = Vector2(0, -19)
 shape = SubResource("RectangleShape2D_e6fc4")
 
-[node name="WeaponCollision" parent="CollisionRoot" parent_id_path=PackedInt32Array(1096290881) index="1" unique_id=1406952556 node_paths=PackedStringArray("SweetSpotCollisionShapes")]
-position = Vector2(23.495754, -16.663836)
-rotation = 0.36425233
+[node name="WeaponCollision" parent="CollisionRoot" parent_id_path=PackedInt32Array(1096290881) index="1" unique_id=1406952556]
+position = Vector2(21.007996, -15.005331)
+rotation = 0.5102861
 scale = Vector2(1, 1)
 collision_layer = 196608
 collision_mask = 3072
-SweetSpotCollisionShapes = []
 
 [node name="Hitbox1" type="CollisionShape2D" parent="CollisionRoot/WeaponCollision" index="0" unique_id=1097219522]
 position = Vector2(0, -12)

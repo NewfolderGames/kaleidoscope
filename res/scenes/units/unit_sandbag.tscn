@@ -107,48 +107,45 @@ Health = 3
 HealthMax = 3
 
 [node name="WeaponRemoteTransform" parent="TransformRoot/HandRoot/HandOffset/Weapon" parent_id_path=PackedInt32Array(398934283) index="0" unique_id=621397996]
-position = Vector2(-0.16171694, -0.22552204)
-rotation = 0.3049601
+position = Vector2(-1.9891769, 0.99278456)
+rotation = 0.51119435
 
 [node name="WeaponTrailTarget" parent="RenderRoot/EffectBackgroundRoot/WeaponTrail" parent_id_path=PackedInt32Array(598270904) index="0" unique_id=1725693746]
-position = Vector2(-0.16164589, -0.22574615)
-rotation = 0.30496013
-scale = Vector2(1e-05, 1e-05)
+position = Vector2(-1.9890633, 0.99257946)
+rotation = 0.51119435
 
 [node name="Weapon" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="0" unique_id=1592666539]
-position = Vector2(-23.161716, -0.22552109)
-rotation = 0.3049601
-scale = Vector2(9.999999e-06, 9.999999e-06)
+position = Vector2(-24.989178, 0.9927845)
+rotation = 0.51119435
+scale = Vector2(1.0000001e-05, 1.0000001e-05)
 
 [node name="HandLeft" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="1" unique_id=2106498155]
-position = Vector2(-23.161741, -0.22550774)
-rotation = 0.30496013
-scale = Vector2(1e-05, 1e-05)
+position = Vector2(-24.989204, 0.9927921)
+rotation = 0.51119435
 
 [node name="HandRight" parent="RenderRoot/DisplayForegroundRoot/HandRoot/_Border" parent_id_path=PackedInt32Array(946584604) index="2" unique_id=2088741716]
-position = Vector2(-23.161684, -0.22552109)
-rotation = 0.3049601
-scale = Vector2(9.999999e-06, 9.999999e-06)
+position = Vector2(-24.989147, 0.9927902)
+rotation = 0.51119435
+scale = Vector2(1.0000001e-05, 1.0000001e-05)
 
 [node name="Weapon" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="1" unique_id=1106315150]
-position = Vector2(-0.16171646, -16.225521)
-rotation = 0.3049601
-scale = Vector2(9.999999e-06, 9.999999e-06)
+position = Vector2(-1.9891777, -15.0072155)
+rotation = 0.51119435
+scale = Vector2(1.0000001e-05, 1.0000001e-05)
 
 [node name="HandLeft" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="2" unique_id=2116172918]
-position = Vector2(-0.16174126, -16.225508)
-rotation = 0.30496013
-scale = Vector2(1e-05, 1e-05)
+position = Vector2(-1.9892044, -15.007208)
+rotation = 0.51119435
 
 [node name="HandRight" parent="RenderRoot/DisplayForegroundRoot/HandRoot" parent_id_path=PackedInt32Array(1178632298) index="3" unique_id=248107714]
-position = Vector2(-0.16168404, -16.225521)
-rotation = 0.3049601
-scale = Vector2(9.999999e-06, 9.999999e-06)
+position = Vector2(-1.9891472, -15.00721)
+rotation = 0.51119435
+scale = Vector2(1.0000001e-05, 1.0000001e-05)
 
 [node name="WeaponSweetSpotStarParticle" parent="RenderRoot/EffectRoot" parent_id_path=PackedInt32Array(1293805309) index="0" unique_id=1093096993]
-position = Vector2(22.838388, -16.225855)
-rotation = 0.3049601
-scale = Vector2(9.999999e-06, 9.999999e-06)
+position = Vector2(21.010994, -15.007521)
+rotation = 0.51119435
+scale = Vector2(1.0000001e-05, 1.0000001e-05)
 
 [node name="CollisionBase" parent="." index="2" unique_id=440577969]
 shape = SubResource("RectangleShape2D_ee2c0")
@@ -161,11 +158,10 @@ collision_mask = 458752
 position = Vector2(0, -23)
 shape = SubResource("RectangleShape2D_bnr5i")
 
-[node name="WeaponCollision" parent="CollisionRoot" parent_id_path=PackedInt32Array(1096290881) index="1" unique_id=1406952556 node_paths=PackedStringArray("SweetSpotCollisionShapes")]
-position = Vector2(22.838284, -16.225521)
-rotation = 0.3049601
-scale = Vector2(9.999999e-06, 9.999999e-06)
-SweetSpotCollisionShapes = []
+[node name="WeaponCollision" parent="CollisionRoot" parent_id_path=PackedInt32Array(1096290881) index="1" unique_id=1406952556]
+position = Vector2(21.010822, -15.0072155)
+rotation = 0.51119435
+scale = Vector2(1.0000001e-05, 1.0000001e-05)
 
 [node name="AnimationTree" parent="." index="4" unique_id=1919286862]
 tree_root = SubResource("AnimationNodeBlendTree_54t4a")
