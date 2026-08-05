@@ -5,96 +5,103 @@ namespace Kaleidoscope.Scripts.Entities.Unit;
 
 public partial class PlayerUnit : Unit
 {
-    [ExportCategory("Render States")]
-    [Export] private Vector2 _mousePositionRelative;
+	[ExportCategory("Render States")]
+	[Export] private Vector2 _mousePositionRelative;
 
-    public override void _ProcessSelf(double delta)
-    {
-        base._ProcessSelf(delta);
+	public override void _ProcessSelf(double delta)
+	{
+		base._ProcessSelf(delta);
 
-        _mousePositionRelative = GetGlobalMousePosition() - TransformCenterRoot.GetGlobalPosition();
-    }
+		_mousePositionRelative = GetGlobalMousePosition() - TransformCenterRoot.GetGlobalPosition();
+	}
 
-    public override void _PhysicsProcessSelf(double delta)
-    {
-        base._PhysicsProcessSelf(delta);
+	public override void _PhysicsProcessSelf(double delta)
+	{
+		base._PhysicsProcessSelf(delta);
 
-        // Input
+		// Input
 
-        if (Input.IsActionJustPressed("attack_primary"))
-        {
-            InputBuffer.Add("attack_primary", "attack_main", 1, 15);
-        }
-        if (Input.IsActionJustPressed("attack_secondary"))
-        {
-            InputBuffer.Add("attack_secondary", "attack_main", 1, 15);
-        }
+		if (Input.IsActionJustPressed("attack_primary"))
+		{
+			InputBuffer.Add("attack_primary", "attack_main", 1, 15);
+		}
+		if (Input.IsActionJustPressed("attack_secondary"))
+		{
+			InputBuffer.Add("attack_secondary", "attack_main", 1, 15);
+		}
 
-        // Attack
+		// Attack
 
-        if (!IsAttackMainActive || IsAttackSequenceAvailable)
-        {
-            var inputs = InputBuffer.TakeGroup("attack_main");
-            if (inputs.Count > 0)
-            {
-                var sequence = !IsAttackMainActive ? "" : AttackSequence;
-                switch (inputs[0].Name)
-                {
-                    case "attack_primary":
-	                    sequence += "a";
-                        break;
-                    case "attack_secondary":
-	                    sequence += "b";
-                        break;
-                }
-                if (sequence != "") MainAttack(sequence);
-            }
-        }
+		if (!IsAttackMainActive || IsAttackSequenceAvailable)
+		{
+			var inputs = InputBuffer.TakeGroup("attack_main");
+			if (inputs.Count > 0)
+			{
+				var sequence = !IsAttackMainActive ? "" : AttackSequence;
+				switch (inputs[0].Name)
+				{
+					case "attack_primary":
+						sequence += "a";
+						break;
+					case "attack_secondary":
+						sequence += "b";
+						break;
+				}
+				if (sequence != "") MainAttack(sequence);
+			}
+		}
 
-        // Movement
+		// Movement
 
-        MovementInput = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+		MovementInput = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 
-        AddDesiredMovement(MovementInput * MovementSpeed * (float)delta);
-    }
+		AddDesiredMovement(MovementInput * MovementSpeed * (float)delta);
+	}
 
-    public override void ProcessBodyRendering(double delta)
-    {
-        base.ProcessBodyRendering(delta);
+	public override void ProcessBodyRendering(double delta)
+	{
+		base.ProcessBodyRendering(delta);
 
-        TransformBodyRoot.Scale = new Vector2(TransformHandRoot.Position.X < TransformCenterRoot.Position.X ? -1 : 1, 1);
+		TransformBodyRoot.Scale = new Vector2(TransformHandRoot.Position.X < TransformCenterRoot.Position.X ? -1 : 1, 1);
 
-        if (IsMovementInputting)
-        {
-            var isMovingAway = Mathf.Sign(_mousePositionRelative.X) != Mathf.Sign(MovementInput.X);
-            var speed = (MovementSpeedBase > 0 ? MovementSpeed / MovementSpeedBase : 1) * RenderAnimationMovingSpeedMultiplier * (isMovingAway ? -1 : 1);
-            RenderAnimationTree.Set("parameters/CharacterTimeScale/scale", speed);
-        }
-    }
+		if (IsMovementInputting)
+		{
+			var isMovingAway = Mathf.Sign(_mousePositionRelative.X) != Mathf.Sign(MovementInput.X);
+			var speed = (MovementSpeedBase > 0 ? MovementSpeed / MovementSpeedBase : 1) * RenderAnimationMovingSpeedMultiplier * (isMovingAway ? -1 : 1);
+			RenderAnimationTree.Set("parameters/CharacterTimeScale/scale", speed);
+		}
+	}
 
-    public override void ProcessHandRendering(double delta)
-    {
-        base.ProcessHandRendering(delta);
+	public override void ProcessHandRendering(double delta)
+	{
+		base.ProcessHandRendering(delta);
 
-        var baseAngle = _mousePositionRelative.Angle();
-        var targetAngle = Mathf.LerpAngle(AttackHandRotationLockStart, baseAngle, AttackHandRotationLerp);
-        var normalized = Vector2.Right.Rotated(targetAngle);
+		var baseAngle = _mousePositionRelative.Angle();
+		var targetAngle = Mathf.LerpAngle(AttackHandRotationLockStart, baseAngle, AttackHandRotationLerp);
+		var normalized = Vector2.Right.Rotated(targetAngle);
 
-        TransformHandRoot.Position = new Vector2(normalized.X * TransformHandRootRangeX, normalized.Y * TransformHandRootRangeY);
-        TransformHandRoot.Scale = new Vector2(TransformHandRoot.Position.X < 0 ? -1 : 1, 1);
-        TransformHandOffset.Rotation = TransformHandRoot.Position.X < 0 ? -targetAngle - Mathf.Pi : targetAngle;
-    }
+		TransformHandRoot.Position = new Vector2(normalized.X * TransformHandRootRangeX, normalized.Y * TransformHandRootRangeY);
+		TransformHandRoot.Scale = new Vector2(TransformHandRoot.Position.X < 0 ? -1 : 1, 1);
+		TransformHandOffset.Rotation = TransformHandRoot.Position.X < 0 ? -targetAngle - Mathf.Pi : targetAngle;
+	}
 
-    public override void MainAttack(string sequence)
-    {
-        if (!IsAttackMainActive) AttackHandRotationLockStart = _mousePositionRelative.Angle();
+	public override void MainAttack(string sequence)
+	{
+		if (!IsAttackMainActive) AttackHandRotationLockStart = _mousePositionRelative.Angle();
 
-        base.MainAttack(sequence);
-    }
+		base.MainAttack(sequence);
+	}
 
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        GD.Print("PlayerUnit disposed");
-    }
+	public override void AttackSequenceHit()
+	{
+		base.AttackSequenceHit();
+
+		GameManager.AddCameraShake(2f, 0.2f);
+	}
+
+	protected override void Dispose(bool disposing)
+	{
+		base.Dispose(disposing);
+		GD.Print("PlayerUnit disposed");
+	}
 }

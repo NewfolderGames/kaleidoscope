@@ -98,7 +98,7 @@ public partial class Unit : CharacterBody2D
 	[Export] protected bool DebugEnabled;
 	[Export] protected Label DebugAttackSequenceLabel;
 
-	protected Dictionary<Rid, (string, int)> HitboxWeaponCollisions = new();
+	protected readonly Dictionary<Rid, (string, int)> HitboxWeaponCollisions = new();
 
 	protected string TempTransitionName;
 	protected bool TempTransitionDone;
@@ -201,6 +201,11 @@ public partial class Unit : CharacterBody2D
 	{
 		MovementPrev = _movement;
 		_movement = MovementNext + MovementDesired;
+
+		if (MovementDesired != Vector2.Zero)
+		{
+			// GameManager?.SpawnEffectAt("WalkSmokeParticles", GlobalPosition);
+		}
 
 		MoveAndCollide(_movement);
 	}

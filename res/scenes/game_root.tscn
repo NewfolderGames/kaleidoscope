@@ -14,8 +14,12 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 gradient = SubResource("Gradient_lbdwm")
 width = 1
 
-[node name="GameRoot" type="Node2D" unique_id=954784124]
+[node name="GameRoot" type="Node2D" unique_id=954784124 node_paths=PackedStringArray("_gameCamera", "_effects")]
 script = ExtResource("1_s4uip")
+_gameCamera = NodePath("GameCameraRoot/GameCamera")
+_effects = {
+&"WalkSmokeParticles": NodePath("GameWorld/GameWorld/GameWorldParticles/WalkSmokeParticles")
+}
 
 [node name="GameCameraRoot" type="Node2D" parent="." unique_id=479378271]
 z_index = 4096
@@ -39,7 +43,6 @@ texture = ExtResource("1_t530p")
 y_sort_enabled = true
 
 [node name="GameWorldParticles" type="Node2D" parent="GameWorld/GameWorld" unique_id=2125919023]
-visible = false
 y_sort_enabled = true
 
 [node name="WalkSmokeParticles" type="GPUParticles2D" parent="GameWorld/GameWorld/GameWorldParticles" unique_id=1224449504]
@@ -58,7 +61,8 @@ y_sort_enabled = true
 [node name="GameWorldEntities" type="Node2D" parent="GameWorld/GameWorld" unique_id=700927690]
 y_sort_enabled = true
 
-[node name="Unit_Player" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=1238900979 instance=ExtResource("5_07f4r")]
+[node name="Unit_Player" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=1238900979 node_paths=PackedStringArray("GameManager") instance=ExtResource("5_07f4r")]
+GameManager = NodePath("../../../..")
 
 [node name="Unit_Sandbag" parent="GameWorld/GameWorld/GameWorldEntities" unique_id=1203797241 instance=ExtResource("5_s4uip")]
 position = Vector2(-177, -39)

@@ -203,3 +203,4 @@ textures/decals/filter=0
 textures/light_projectors/filter=0
 environment/glow/upscale_mode=0
 environment/volumetric_fog/use_filter=0
+environment/defaults/default_clear_color=Color(0.26666668, 0.28627452, 0.1764706, 1)

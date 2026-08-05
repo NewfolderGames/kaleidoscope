@@ -51,9 +51,12 @@ audio_listener_enable_2d = true
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 
-[node name="GameRoot" parent="GameplayViewport/GameSubViewport" unique_id=954784124 node_paths=PackedStringArray("_sightWorkerCamera", "_worldWorkerCamera") instance=ExtResource("1_b8435")]
+[node name="GameRoot" parent="GameplayViewport/GameSubViewport" unique_id=954784124 node_paths=PackedStringArray("_sightWorkerCamera", "_worldWorkerCamera", "_effects") instance=ExtResource("1_b8435")]
 _sightWorkerCamera = NodePath("../../WorkerSightSubViewport/SightWorkerCamera")
 _worldWorkerCamera = NodePath("../../WorkerWorldSubViewport/WorldWorkerCamera")
+_effects = {
+&"WalkSmokeParticles": NodePath("GameWorld/GameWorld/GameWorldParticles/WalkSmokeParticles")
+}
 
 [node name="GameplayRenderer" type="ColorRect" parent="." unique_id=267475855 node_paths=PackedStringArray("_gameViewport", "_sightViewport", "_worldViewport")]
 process_mode = 3
